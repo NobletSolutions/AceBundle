@@ -76,7 +76,7 @@
             <![endif]-->
 
             <script type="text/javascript">
-                    if("ontouchend" in document) document.write("<script src='{{asset('/bundles/nsace/js/jquery.mobile.custom.min.js')}}'>"+"<"+"/script>");
+                if("ontouchend" in document) document.write("<script src='{{asset('/bundles/nsace/js/jquery.mobile.custom.min.js')}}'>"+"<"+"/script>");
             </script>
 
             <script src="{{asset('/bundles/nsace/js/bootstrap.min.js')}}"></script>
@@ -241,9 +241,6 @@
     </div><!--/.main-container-->
 
     {%block footer %}{%endblock footer %}
-        
-
-        {% include "PunkAveFileUploaderBundle:Default:templates.html.twig" %}
-
+    {% include "PunkAveFileUploaderBundle:Default:templates.html.twig" %}
 </body>
 </html>
