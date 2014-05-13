@@ -119,7 +119,7 @@
     {%block topbar%}
         <div class="navbar navbar-default" id="navbar">
          <script type="text/javascript">
-                try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+            try{ace.settings.check('navbar' , 'fixed')}catch(e){}
          </script>
 
           <div class="navbar-container" id="navbar-container">
@@ -153,36 +153,36 @@
              {%block sidenav%}
                 <a class="menu-toggler" id="menu-toggler" href="#"><span class="menu-text"></span></a>
                 <div class="sidebar" id="sidebar">
-                        <script type="text/javascript">
+                    <script type="text/javascript">
                         try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
-                        </script>
+                    </script>
 
-                        {%block sidenav_shortcuts%}
-                            <div class="sidebar-shortcuts" id="sidebar-shortcuts">
-                                <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-                                    <button class="btn btn-success"><i class="icon-signal"></i></button>
-                                    <button class="btn btn-info"><i class="icon-pencil"></i></button>
-                                    <button class="btn btn-warning"><i class="icon-group"></i></button>
-                                    <button class="btn btn-danger"><i class="icon-cogs"></i></button>
-                                </div>
-                                <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
-                                    <span class="btn btn-success"></span>
-                                    <span class="btn btn-info"></span>
-                                    <span class="btn btn-warning"></span>
-                                    <span class="btn btn-danger"></span>
-                                </div>
-                            </div><!-- #sidebar-shortcuts -->
-                        {%endblock%}
+                    {%block sidenav_shortcuts%}
+                        <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+                            <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                                <button class="btn btn-success"><i class="icon-signal"></i></button>
+                                <button class="btn btn-info"><i class="icon-pencil"></i></button>
+                                <button class="btn btn-warning"><i class="icon-group"></i></button>
+                                <button class="btn btn-danger"><i class="icon-cogs"></i></button>
+                            </div>
+                            <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                                <span class="btn btn-success"></span>
+                                <span class="btn btn-info"></span>
+                                <span class="btn btn-warning"></span>
+                                <span class="btn btn-danger"></span>
+                            </div>
+                        </div><!-- #sidebar-shortcuts -->
+                    {%endblock%}
 
-                        {%block sidenav_menu%}{%endblock%}
+                    {%block sidenav_menu%}{%endblock%}
 
-                        <div class="sidebar-collapse" id="sidebar-collapse">
-                            <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
-                        </div>
+                    <div class="sidebar-collapse" id="sidebar-collapse">
+                        <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                    </div>
 
-                        <script type="text/javascript">
+                    <script type="text/javascript">
                         try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
-                        </script>
+                    </script>
                 </div>
             {%endblock%}
 
@@ -193,6 +193,7 @@
                     {% set _pdescription = block('pagedescription') %}
                     {% if _ptitle is not empty %}
                         <div class="page-header">
+                            {%block pageactions%}{%endblock%}
                             <h1>{{ _ptitle|raw }} {%if _pdescription is not empty %}<small><i class="icon-double-angle-right"></i> {{_pdescription|raw}}</small>{%endif%}</h1>
                         </div>
                     {% endif %}
@@ -211,7 +212,7 @@
             {%block ace_settings %}
             <div class="ace-settings-container" id="ace-settings-container">
                 <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
-                        <i class="icon-cog bigger-150"></i>
+                    <i class="icon-cog bigger-150"></i>
                 </div>
                 <div class="ace-settings-box" id="ace-settings-box">
                     <div>
@@ -241,9 +242,7 @@
     </div><!--/.main-container-->
 
     {%block footer %}{%endblock footer %}
-        
 
-        {% include "PunkAveFileUploaderBundle:Default:templates.html.twig" %}
-
+    {% include "PunkAveFileUploaderBundle:Default:templates.html.twig" %}
 </body>
 </html>
