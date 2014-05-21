@@ -20,7 +20,7 @@ class DateTimePickerType extends AbstractType
         parent::setDefaultOptions($resolver);
         $resolver->setDefaults(array(
             'date_widget'    => 'single_text',
-            'date_format'    => 'MM/dd/yyyy',
+            'date-format'    => 'm/d/Y',
             'time_widget'    => 'single_text',
         ));
     }
@@ -29,7 +29,7 @@ class DateTimePickerType extends AbstractType
     {
         parent::buildView($view, $form, $options);
 
-//        $view->vars['attr']['data-date-format'] = $this->dateformatToJQueryUI($options['format']);
+        $view->vars['attr']['data-date-format'] = $this->dateformatToJS($options['date-format']);
         $view->vars['type'] = 'text';
     }
     
@@ -43,79 +43,59 @@ class DateTimePickerType extends AbstractType
         return 'datetime';
     }
 
-   /*
-    * Matches each symbol of PHP date format standard
-    * with jQuery equivalent codeword
-    * @author Tristan Jahier
-    */
-   private function dateformatToJQueryUI($php_format)
-   {
-       $SYMBOLS_MATCHING = array(
-           // Day
-           'd' => 'dd',
-           'D' => 'D',
-           'j' => 'd',
-           'l' => 'DD',
-           'N' => '',
-           'S' => '',
-           'w' => '',
-           'z' => 'o',
-           // Week
-           'W' => '',
-           // Month
-           'F' => 'MM',
-           'm' => 'mm',
-           'M' => 'M',
-           'n' => 'm',
-           't' => '',
-           // Year
-           'L' => '',
-           'o' => '',
-           'Y' => 'yy',
-           'y' => 'y',
-           // Time
-           'a' => '',
-           'A' => '',
-           'B' => '',
-           'g' => '',
-           'G' => '',
-           'h' => '',
-           'H' => '',
-           'i' => '',
-           's' => '',
-           'u' => ''
-       );
+    private function dateformatToJS($php_format)
+    {
+        $SYMBOLS_MATCHING_CLEAN = array(
+            // Day
+            'l' => 'llll',
+            'D' => 'DDD',
+            'd' => 'dd',
+            'j' => 'j',
+            'N' => '',
+            'S' => '',
+            'w' => '',
+            'z' => 'o',
+            // Week
+            'W' => '',
+            // Month
+            'F' => 'FFFF',
+            'M' => 'MMM',
+            'm' => 'mm',
+            'n' => 'n',
+            't' => '',
+            // Year
+            'L' => '',
+            'o' => '',
+            'Y' => 'YYYY',
+            'y' => 'yy',
+            // Time
+            'a' => '',
+            'A' => '',
+            'B' => '',
+            'g' => '',
+            'G' => '',
+            'h' => '',
+            'H' => '',
+            'i' => '',
+            's' => '',
+            'u' => ''
+        );
 
-       $jqueryui_format = "";
-       $escaping        = false;
+        $SYMBOLS_MATCHING = array(
+            // Day
+            'l' => 'd',
+            'D' => 'd',
+            'j' => 'd',
+            'z' => 'o',
+            // Month
+            'F' => 'm',
+            'M' => 'm',
+            'n' => 'm',
+            // Year
+            'Y' => 'y',
+        );
 
-       for($i = 0; $i < strlen($php_format); $i++)
-       {
-           $char = $php_format[$i];
-           if($char === '\\') // PHP date format escaping character
-           {
-               $i++;
-               if($escaping) 
-                   $jqueryui_format .= $php_format[$i];
-               else 
-                   $jqueryui_format .= '\'' . $php_format[$i];
-               
-               $escaping = true;
-           }
-           else
-           {
-                if($escaping) 
-                { 
-                    $jqueryui_format .= "'";
-                    $escaping = false;
-                }
-                if(isset($SYMBOLS_MATCHING[$char]))
-                   $jqueryui_format .= $SYMBOLS_MATCHING[$char];
-                else
-                   $jqueryui_format .= $char;
-           }
-       }
-       
-       return $jqueryui_format;
-   }
+        $str =  str_replace(array_keys($SYMBOLS_MATCHING_CLEAN), $SYMBOLS_MATCHING_CLEAN, $php_format);
+        return str_replace(array_keys($SYMBOLS_MATCHING), $SYMBOLS_MATCHING, $str);
+    }
 }
