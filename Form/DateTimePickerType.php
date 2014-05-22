@@ -2,6 +2,7 @@
 
 namespace NS\AceBundle\Form;
 
+use IntlDateFormatter;
 use NS\AceBundle\Service\DateFormatConverter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
@@ -27,7 +28,7 @@ class DateTimePickerType extends AbstractType
         parent::setDefaultOptions($resolver);
         $resolver->setDefaults(array(
             'date_widget'    => 'single_text',
-            'date-format'    => $this->converter->getFormat(),
+            'date_format'    => $this->converter->getFormat(IntlDateFormatter::MEDIUM),
             'time_widget'    => 'single_text',
         ));
     }
@@ -35,8 +36,8 @@ class DateTimePickerType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         parent::buildView($view, $form, $options);
-        $view->vars['attr']['data-date-format'] = $options['date-format'];
-        $view->vars['attr']['placeholder'] = $options['date-format'];
+        $view->vars['attr']['data-date-format'] = strtolower($options['date_format']);
+        $view->vars['attr']['placeholder'] = $options['date_format'];
         $view->vars['type'] = 'text';
     }
     
