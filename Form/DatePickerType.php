@@ -2,10 +2,11 @@
 
 namespace NS\AceBundle\Form;
 
-use \Symfony\Component\Form\AbstractType;
-use \Symfony\Component\Form\FormView;
-use \Symfony\Component\Form\FormInterface;
-use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use NS\AceBundle\Service\DateFormatConverter;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Description of DatePickerType
@@ -14,13 +15,20 @@ use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class DatePickerType extends AbstractType
 {
+    protected $converter;
+    
+    public function __construct(DateFormatConverter $converter)
+    {
+        $this->converter = $converter;
+    }
+    
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
         $resolver->setDefaults(array(
-            'widget'    => 'single_text',
-            'compound'  => false,
-            'date-format'    => 'm/d/Y',
+            'widget'      => 'single_text',
+            'compound'    => false,
+            'date-format' => $this->converter->getFormat(),
         ));
     }
 
@@ -35,7 +43,8 @@ class DatePickerType extends AbstractType
 
         $view->vars['type'] = 'text';
         
-        $view->vars['attr']['data-date-format'] = $this->dateformatToJS($options['date-format']);
+        $view->vars['attr']['data-date-format'] = $options['date-format'];
+        $view->vars['attr']['placeholder'] = $options['date-format'];
     }
     
     public function getName()
@@ -46,61 +55,5 @@ class DatePickerType extends AbstractType
     public function getParent()
     {
         return 'date';
-    }
-    
-    private function dateformatToJS($php_format)
-    {
-        $SYMBOLS_MATCHING_CLEAN = array(
-            // Day
-            'l' => 'llll',
-            'D' => 'DDD',
-            'd' => 'dd',
-            'j' => 'j',
-            'N' => '',
-            'S' => '',
-            'w' => '',
-            'z' => 'o',
-            // Week
-            'W' => '',
-            // Month
-            'F' => 'FFFF',
-            'M' => 'MMM',
-            'm' => 'mm',
-            'n' => 'n',
-            't' => '',
-            // Year
-            'L' => '',
-            'o' => '',
-            'Y' => 'YYYY',
-            'y' => 'yy',
-            // Time
-            'a' => '',
-            'A' => '',
-            'B' => '',
-            'g' => '',
-            'G' => '',
-            'h' => '',
-            'H' => '',
-            'i' => '',
-            's' => '',
-            'u' => ''
-        );
-
-        $SYMBOLS_MATCHING = array(
-            // Day
-            'l' => 'd',
-            'D' => 'd',
-            'j' => 'd',
-            'z' => 'o',
-            // Month
-            'F' => 'm',
-            'M' => 'm',
-            'n' => 'm',
-            // Year
-            'Y' => 'y',
-        );
-
-        $str =  str_replace(array_keys($SYMBOLS_MATCHING_CLEAN), $SYMBOLS_MATCHING_CLEAN, $php_format);
-        return str_replace(array_keys($SYMBOLS_MATCHING), $SYMBOLS_MATCHING, $str);
     }
 }

@@ -110,7 +110,7 @@
         </span>
     </div>
     <div class="input-group bootstrap-timepicker input-datetime-group">
-        {{form_widget(form.time,{attr: tattr})}}
+        {{form_widget(form.time,{attr: tattr|merge({placeholder:''})})}}
         {{form_errors(form.time)}}
         <span class="input-group-addon">
             <i class="icon-time bigger-110"></i>
