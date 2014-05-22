@@ -29,7 +29,7 @@ class DatePickerType extends AbstractType
         $resolver->setDefaults(array(
             'widget'      => 'single_text',
             'compound'    => false,
-            'format' => $this->converter->getFormat(IntlDateFormatter::MEDIUM),
+            'format' => $this->converter->getFormat(true),
         ));
     }
 

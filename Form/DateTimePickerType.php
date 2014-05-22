@@ -28,7 +28,7 @@ class DateTimePickerType extends AbstractType
         parent::setDefaultOptions($resolver);
         $resolver->setDefaults(array(
             'date_widget'    => 'single_text',
-            'date_format'    => $this->converter->getFormat(IntlDateFormatter::MEDIUM),
+            'date_format'    => $this->converter->getFormat(true),
             'time_widget'    => 'single_text',
         ));
     }
