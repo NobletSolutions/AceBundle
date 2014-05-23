@@ -151,3 +151,14 @@ label {
 .input-group-addon {
     cursor: pointer;
 }
+
+.input-group input[type=checkbox] {
+    clear: left;
+    float: left;
+    margin-left: 1em;
+    margin-right: 0.5em;
+}
+
+.input-group input[type=checkbox]+label {
+    float: left;
+}

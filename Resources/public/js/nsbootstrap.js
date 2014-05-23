@@ -77,43 +77,73 @@ $(document).ready(function() {
         $(this).parents('.widget-box').find('div.filter_container .sonata-filter-option').toggle();
     });
 
-    $('[data-context-child]').each(function(i, el)
+    $('input[data-context-child], select[data-context-child], textarea[data-context-child], div[data-context-child] input').each(function(i, el)
     {
+        //Add event handlers
         el.contextState = 'active';
         $(el).change(function(event)
         {
             toggleContextFields(el);
         });
 
+        //Call on init for pre-filled fields
         toggleContextFields(el);
     });
 
     function toggleContextFields(el)
     {
+        //Initialize
+        el.values       = [];
         var value = $(el).val();
 
+        //I... don't remember why I did this :S
         if(el.tagName.toLowerCase() === 'input' && (el.type.toLowerCase() === 'radio' || el.type.toLowerCase() === 'checkbox') && !el.checked)
             value = 0;
-
-        $('[data-context-parent='+$(el).data('context-child')+'][data-context-value]').each(function(i, input)
+        
+        //If we're dealing with a multiselect/multiple checkboxes, store the currently selected values in an array
+        if(!$(el).data('context-child'))
         {
+            $(el).parent('[data-context-child]').find('input:checked').each(function(ii, ipt)
+            {
+                el.values.push($(ipt).val().toString());
+            });
+        }
+        else
+            el.values = [value];
+        
+        //Find all the fields that are watching the parent/container for multiselects/checkboxes
+        $('[data-context-parent='+($(el).data('context-child')?$(el).data('context-child'):$(el).parent('[data-context-child]').data('context-child'))+'][data-context-value]').each(function(i, input)
+        {
+            
             input.parent = el;
             var f       = $(input).data('context-value');
             var fields  = typeof f === 'object' ? f.join().split(',') : [f.toString()]; //hacky way to get around variable typing in indexOf; find a better way to do this.
             var label   = $('label[for='+input.id+']');
             var element = $(input).parent().hasClass('input-group') ? $(input).parent() : input;
-
-            if(fields.indexOf(value.toString()) >= 0 && input.parent.contextState === 'active')
+            
+            var result = false;
+            
+            //Find out if any of the values we're watching for appear in our array of selected values
+            for(var a = 0; a < fields.length; a++)
+            {
+                if($.inArray(fields[a], el.values) > -1)
+                {
+                    result = true;
+                    break;
+                }
+            }
+        
+            if(result/* && input.parent.contextState === 'active'*/)
             {
                 element.show();
                 label.show();
-                input.contextState = 'active';
+//                input.contextState = 'active';
             }
             else
             {
                 element.hide();
                 label.hide();
-                input.contextState = 'inactive';
+//                input.contextState = 'inactive';
             }
 
             toggleContextFields(input);
