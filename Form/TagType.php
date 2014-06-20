@@ -20,7 +20,6 @@ class TagType extends AbstractType
     {
         parent::setDefaultOptions($resolver);
         $resolver->setDefaults( array(
-            'source'              => [],
             'caseInsensitive'     => true,
             'allowDuplicates'     => false,
             'autocompleteOnComma' => false
@@ -31,8 +30,13 @@ class TagType extends AbstractType
     {
         parent::buildView($view, $form, $options);
         
-        sort($options['source']);
-        $view->vars['attr']['data-source']                = json_encode($options['source']);
+        if(isset($options['source']))
+        {
+            sort($options['source']);
+            $view->vars['attr']['data-source']                = json_encode($options['source']);
+        }
+        
+        $view->vars['attr']['class']                      = 'nsTag';
         $view->vars['attr']['data-case-insensitive']      = $options['caseInsensitive'];
         $view->vars['attr']['data-allow-duplicates']      = $options['allowDuplicates'];
         $view->vars['attr']['data-autocomplete-on-comma'] = $options['autocompleteOnComma'];

@@ -42,8 +42,14 @@ $(document).ready(function() {
     
     $('input.nsTag').each(function(i, el)
     {
-        $(el).tag({source:$(el).data('source'), caseInsensitive:$(el).data('case-insensitive'), allowDuplicates:$(el).data('case-allow-duplicates'), autocompleteOnComma:$(el).data('autocomplete-on-comma')});
+        var params = {caseInsensitive:$(el).data('case-insensitive'), allowDuplicates:$(el).data('case-allow-duplicates'), autocompleteOnComma:$(el).data('autocomplete-on-comma')};
+        
+        if($(el).data('source'))
+            params.source = $(el).data('source');
+        
+        $(el).tag(params);
     });
+    
 
     $('input.nsSpinner').each(function(i, el)
     {
