@@ -155,4 +155,7 @@ $(document).ready(function() {
             toggleContextFields(input);
         });
     }
+    
+    $('[data-rel=tooltip]').tooltip({container:'body'});
+    $('[data-rel=popover]').popover({container:'body'});
 });
