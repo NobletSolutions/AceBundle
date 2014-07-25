@@ -2,6 +2,10 @@ $(document).ready(function() {
     $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
         $(this).prev().focus();
     });
+    
+    $('.date-range').daterangepicker({autoclose:true}).next().on(ace.click_event, function(){
+        $(this).prev().focus();
+    });
 
     $('input[type=file]:not([multiple])').ace_file_input({
         no_file:'No File ...',

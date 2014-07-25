@@ -39,6 +39,12 @@ services:
       arguments: [ @ns_ace.date_format_converter ]
       tags:
         - { name: form.type, alias: acedatepicker }
+        
+    ns_ace.form.type.acedaterange:
+      class: NS\AceBundle\Form\DateRangeType
+      arguments: [ @ns_ace.date_format_converter ]
+      tags:
+        - { name: form.type, alias: acedaterange }
 
     ns_ace.form.type.acedatetimepicker:
       class: NS\AceBundle\Form\DateTimePickerType

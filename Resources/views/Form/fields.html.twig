@@ -96,6 +96,23 @@
 </div>
 {%endblock %}
 
+{%block acedaterange_widget %}
+<input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/><span class="input-group-addon">
+            <i class="icon-calendar bigger-110"></i>
+        </span>
+{%endblock %}
+
+{%block acedaterange_row %}
+<div class="form-group">
+    {{form_label(form)}}
+    <div class="input-group input-large">
+        {{form_widget(form)}}
+        
+    </div>
+    {{form_errors(form)}}
+</div>
+{%endblock %}
+
 {%block acedatetime_row %}
 {% set dattr = attr|merge({ class: 'form-control date-picker' }) %}
 {% set tattr = attr|merge({ class: 'form-control time-picker' }) %}
