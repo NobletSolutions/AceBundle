@@ -6,6 +6,8 @@ use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use \Symfony\Component\Form\FormBuilderInterface;
+use NS\ApiBundle\Form\Transformer\TextToArrayTransformer;
 
 /**
  * Description of SwitchType
@@ -22,7 +24,8 @@ class TagType extends AbstractType
         $resolver->setDefaults( array(
             'caseInsensitive'     => true,
             'allowDuplicates'     => false,
-            'autocompleteOnComma' => false
+            'autocompleteOnComma' => false,
+            'arrayOutput'         => false,
         ));
     }
 
@@ -40,6 +43,12 @@ class TagType extends AbstractType
         $view->vars['attr']['data-case-insensitive']      = $options['caseInsensitive'];
         $view->vars['attr']['data-allow-duplicates']      = $options['allowDuplicates'];
         $view->vars['attr']['data-autocomplete-on-comma'] = $options['autocompleteOnComma'];
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        if($options['arrayOutput'])
+            $builder->addViewTransformer(new TextToArrayTransformer());
     }
 
     public function getParent()

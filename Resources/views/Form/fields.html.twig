@@ -80,7 +80,7 @@
 {%endblock %}
 
 {%block acedatepicker_widget %}
-<input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+<input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}/>
 {%endblock %}
 
 {%block acedatepicker_row %}
@@ -97,7 +97,7 @@
 {%endblock %}
 
 {%block acedaterange_widget %}
-<input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/><span class="input-group-addon">
+<input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}/><span class="input-group-addon">
             <i class="icon-calendar bigger-110"></i>
         </span>
 {%endblock %}
@@ -158,7 +158,7 @@
 <div class="form-group">
     {{form_label(form)}}
     <div class="input-group">
-        <input type="text" {{ block('widget_attributes') }} />
+        <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}/>
     </div>
 </div>
 {% endblock %}
@@ -167,7 +167,7 @@
 <div class="form-group">
     {{form_label(form)}}
     <div class="input-group">
-        <input class="nsSpinner" type="text" {{ block('widget_attributes') }} />
+        <input class="nsSpinner" type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}"/>
     </div>
 </div>
 {% endblock %}
@@ -176,7 +176,7 @@
 <div class="form-group">
     {{form_label(form)}}
     <div class="input-group">
-        <input class="input-small nsKnob" type="text" {{ block('widget_attributes') }} />
+        <input class="input-small nsKnob" type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}"/>
     </div>
 </div>
 {% endblock %}
@@ -185,7 +185,7 @@
 <div class="form-group">
     {{form_label(form)}}
     <div class="input-group">
-        <input class="nsMasked" type="text" {{ block('widget_attributes') }} />
+        <input class="nsMasked" type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}"/>
     </div>
 </div>
 {% endblock %}
