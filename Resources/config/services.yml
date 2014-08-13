@@ -2,6 +2,11 @@ parameters:
 #    ns_ace.example.class: NS\AceBundle\Example
 
 services:
+    ns_ace.form.iconbutton_extension:
+      class: NS\SentinelBundle\Form\Extensions\ButtonTypeExtension
+      tags:
+        - { name: form.type_extension, alias: submit }
+
     ns_ace.form.iconbutton:
       class: NS\AceBundle\Form\IconButtonType
       tags:
