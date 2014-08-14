@@ -3,7 +3,7 @@ parameters:
 
 services:
     ns_ace.form.iconbutton_extension:
-      class: NS\SentinelBundle\Form\Extensions\ButtonTypeExtension
+      class: NS\AceBundle\Form\Extensions\ButtonTypeExtension
       tags:
         - { name: form.type_extension, alias: submit }
 
