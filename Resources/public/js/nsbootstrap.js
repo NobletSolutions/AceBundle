@@ -83,9 +83,10 @@ $(document).ready(function() {
         var icon = $(this).find('i');
         icon.toggleClass('icon-chevron-down').toggleClass('icon-chevron-up');
         $(this).find('span').html((icon.hasClass('icon-chevron-up')?'Simple':'Advanced'));
-        
         $(this).parents('.widget-box').find('div.filter_container .sonata-filter-option').toggle();
     });
+        
+    $('div.filter_container .sonata-filter-option').toggle();
 
     $('input[data-context-child], select[data-context-child], textarea[data-context-child], div[data-context-child] input').each(function(i, el)
     {

@@ -162,3 +162,24 @@ label {
 .input-group input[type=checkbox]+label {
     float: left;
 }
+
+.sonata-filter-form .control-label {
+    text-align: left;
+}
+
+.sonata-filter-form .input-group {
+    border-bottom: 1px solid #eeeeee;
+    width: 100%;
+}
+
+.sonata-filter-form .sonata-filter-option {
+    background: #ffffbb;
+    padding: 0.5em;
+    margin: 0 0 0.5em 0;
+    float: left;
+}
+
+.sonata-filter-form .sonata-filter-value {
+    float: left;
+    margin: 0.5em 0;
+}
