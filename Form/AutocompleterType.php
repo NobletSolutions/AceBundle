@@ -16,11 +16,20 @@ use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class AutocompleterType extends AbstractType
 {
+    private $router;
+
+    public function setRouter(\Symfony\Component\Routing\RouterInterface $router)
+    {
+        $this->router = $router;
+    }
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
+
+        $resolver->setOptional(array('route','autocompleteUrl'));
+
         $resolver->setDefaults( array(
-            'autocompleteUrl' => false,
             'method'          =>'POST',
             'queryParam'      =>'q',
             'minChars'        => 2,
@@ -36,11 +45,13 @@ class AutocompleterType extends AbstractType
         parent::buildView($view, $form, $options);
 
         $opts = array();
-        
+
         foreach(array('method', 'queryParam', 'minChars', 'prePopulate', 'hintText', 'noResultsText', 'searchingText') as $opt)
             $opts[$opt] = $options[$opt];
 
-        if($options['autocompleteUrl'])
+        if(!isset($options['autocompleteUrl']) && $this->router && isset($options['route']))
+            $view->vars['attr']['data-autocompleteUrl'] = $this->router->generate($options['route']);
+        else if(isset($options['autocompleteUrl']))
             $view->vars['attr']['data-autocompleteUrl'] = $options['autocompleteUrl'];
 
         $view->vars['attr']['data-options'] = json_encode($opts);

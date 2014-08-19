@@ -64,6 +64,8 @@ services:
 
     ns_ace.form.type.autocompleter:
       class: NS\AceBundle\Form\AutocompleterType
+      calls:
+        - [ setRouter, [ @router ]]
       tags:
         - { name: form.type, alias: autocompleter }
 
