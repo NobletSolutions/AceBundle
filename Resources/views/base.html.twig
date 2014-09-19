@@ -2,7 +2,7 @@
 <html lang="{{ app.request.locale }}">
     <head>
 	<meta charset="utf-8" />
-        <title>{%block sitetitle %}{%endblock %} {% block pagetitle %}{% endblock %}</title>
+        <title>{%block windowtitle %}{%block sitetitle %}{%endblock %} {% block pagetitle %}{% endblock %}{% endblock %}</title>
 <!--	<meta name="description" content="{ {page.description} }" />-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -192,10 +192,15 @@
                     {% set _ptitle = block('pagetitle') %}
                     {% set _pdescription = block('pagedescription') %}
                     {% if _ptitle is not empty %}
-                        <div class="page-header">
-                            {%block pageactions%}{%endblock%}
-                            <h1>{{ _ptitle|raw }} {%if _pdescription is not empty %}<small><i class="icon-double-angle-right"></i> {{_pdescription|raw}}</small>{%endif%}</h1>
-                        </div>
+                        {% set _pheader = block('pageheader') %}
+                        {% if _pheader is empty %}
+                            <div class="page-header">
+                                {%block pageactions%}{%endblock%}
+                                <h1>{{ _ptitle|raw }} {%if _pdescription is not empty %}<small><i class="icon-double-angle-right"></i> {{_pdescription|raw}}</small>{%endif%}</h1>
+                            </div>
+                        {% else %}
+                            {{ _pheader|raw }}
+                        {% endif %}
                     {% endif %}
 
                     <div class="row">
