@@ -146,13 +146,13 @@ $(document).ready(function() {
         
             if(result/* && input.parent.contextState === 'active'*/)
             {
-                element.show();
+                $(element).show();
                 label.show();
 //                input.contextState = 'active';
             }
             else
             {
-                element.hide();
+                $(element).hide();
                 label.hide();
 //                input.contextState = 'inactive';
             }
