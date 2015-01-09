@@ -162,10 +162,10 @@
                     {% block sidenav_shortcuts %}
                         <div class="sidebar-shortcuts" id="sidebar-shortcuts">
                             <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-                                <button class="btn btn-success"><i class="icon-signal"></i></button>
-                                <button class="btn btn-info"><i class="icon-pencil"></i></button>
-                                <button class="btn btn-warning"><i class="icon-group"></i></button>
-                                <button class="btn btn-danger"><i class="icon-cogs"></i></button>
+                                <button class="btn btn-success"><i class="fa fa-signal"></i></button>
+                                <button class="btn btn-info"><i class="fa fa-pencil"></i></button>
+                                <button class="btn btn-warning"><i class="fa fa-group"></i></button>
+                                <button class="btn btn-danger"><i class="fa fa-cogs"></i></button>
                             </div>
                             <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
                                 <span class="btn btn-success"></span>
@@ -179,7 +179,7 @@
                     {% block sidenav_menu %}{% endblock %}
 
                     <div class="sidebar-collapse" id="sidebar-collapse">
-                        <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                        <i class="fa fa-double-angle-left" data-icon1="fa fa-double-angle-left" data-icon2="fa fa-double-angle-right"></i>
                     </div>
 
                     <script type="text/javascript">
@@ -198,7 +198,7 @@
                         {% if _pheader is empty %}
                             <div class="page-header">
                                 {% block pageactions %}{% endblock %}
-                                <h1>{{ _ptitle|raw }} {%if _pdescription is not empty %}<small><i class="icon-double-angle-right"></i> {{_pdescription|raw}}</small>{%endif%}</h1>
+                                <h1>{{ _ptitle|raw }} {%if _pdescription is not empty %}<small><i class="fa fa-double-angle-right"></i> {{_pdescription|raw}}</small>{%endif%}</h1>
                             </div>
                         {% else %}
                             {{ _pheader|raw }}
@@ -219,7 +219,7 @@
             {% block ace_settings %}
             <div class="ace-settings-container" id="ace-settings-container">
                 <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
-                    <i class="icon-cog bigger-150"></i>
+                    <i class="fa fa-cog bigger-150"></i>
                 </div>
                 <div class="ace-settings-box" id="ace-settings-box">
                     <div>
@@ -244,7 +244,7 @@
         </div><!--/.main-container-inner-->
 
         <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-            <i class="icon-double-angle-up icon-only bigger-110"></i>
+            <i class="fa fa-double-angle-up fa-only bigger-110"></i>
         </a>
     </div><!--/.main-container-->
 
