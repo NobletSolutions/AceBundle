@@ -91,3 +91,8 @@ services:
         
     ns_ace.date_format_converter:
       class: NS\AceBundle\Service\DateFormatConverter
+
+    ns_ace.twig.bundle_existence:
+      class: NS\AceBundle\Twig\BundleExistence
+      tags:
+        - { name: twig.extension }
