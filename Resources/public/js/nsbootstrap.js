@@ -15,29 +15,43 @@ $(document).click(function(ev)
         collection.append(newForm);
         $(document).trigger('nsFormUpdate');
     }
+    
+    if(target.is('[data-toggle=modal]'))
+    {
+        setTimeout(function()
+        {
+            $(document).trigger('nsFormUpdate');
+        }, 200);
+    }
 });
 
 $(document).on('nsFormUpdate', function(ev)
 {
     $('.date-picker').each(function(i, el)
     {
-        if($(el).nsFieldActive !== true)
+        if($(el).is(':visible'))
         {
-            $(el).nsFieldActive = true;
-            $(el).datepicker({autoclose:true}).next().on(ace.click_event, function(){
-                $(this).prev().focus();
-            });
+            if($(el).nsFieldActive !== true)
+            {
+                $(el).nsFieldActive = true;
+                $(el).datepicker({autoclose:true}).next().on(ace.click_event, function(){
+                    $(this).prev().focus();
+                });
+            }
         }
     });
     
     $('.date-range').each(function(i, el)
     {
-        if($(el).nsFieldActive !== true)
+        if($(el).is(':visible'))
         {
-            $(el).nsFieldActive = true;
-            $(el).daterangepicker({autoclose:true}).next().on(ace.click_event, function(){
-                $(this).prev().focus();
-            });
+            if($(el).nsFieldActive !== true)
+            {
+                $(el).nsFieldActive = true;
+                $(el).daterangepicker({autoclose:true}).next().on(ace.click_event, function(){
+                    $(this).prev().focus();
+                });
+            }
         }
     });
 
@@ -140,18 +154,21 @@ $(document).on('nsFormUpdate', function(ev)
 
     $('input.time-picker').each(function(i, el)
     {
-        if($(el).nsFieldActive !== true)
+        if($(el).is(':visible'))
         {
-            $(el).nsFieldActive = true;
-            $(el).timepicker({
-                    minuteStep: 1,
-                    showSeconds: ($(this).data('showSeconds') === 'true'),
-                    showMeridian: ($(this).data('showMeridian') === 'true'),
-                    defaultTime: false
-            }).next().on(ace.click_event, function()
+            if($(el).nsFieldActive !== true)
             {
-                $(this).prev().focus();
-            });
+                $(el).nsFieldActive = true;
+                $(el).timepicker({
+                        minuteStep: 1,
+                        showSeconds: ($(this).data('showSeconds') === 'true'),
+                        showMeridian: ($(this).data('showMeridian') === 'true'),
+                        defaultTime: false
+                }).next().on(ace.click_event, function()
+                {
+                    $(this).prev().focus();
+                });
+            }
         }
     });
     
