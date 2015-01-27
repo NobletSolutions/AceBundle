@@ -138,6 +138,10 @@ div.input-datetime-group {
     padding-right: 12px;
 }
 
+div.datepicker-dropdown {
+    z-index: 1050 !important;
+}
+
 .form-group:after {
     content: " ";
     clear: both;
