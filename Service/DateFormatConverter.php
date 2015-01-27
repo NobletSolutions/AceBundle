@@ -8,8 +8,8 @@ use Locale;
  *
  * @author mark
  */
-class DateFormatConverter {
-     
+class DateFormatConverter
+{
     public function getFormat($longyear = false)
     {
         $formatter = new \IntlDateFormatter(
