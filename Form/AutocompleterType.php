@@ -31,6 +31,10 @@ class AutocompleterType extends AbstractType
      */
     private $entityMgr;
 
+    /**
+     * @param RouterInterface $router
+     * @param ObjectManager $entityMgr
+     */
     public function __construct(RouterInterface $router, ObjectManager $entityMgr)
     {
         $this->router    = $router;

@@ -15,11 +15,18 @@ class RecordsPerPageType extends AbstractType
 {
     private $session;
 
+    /**
+     *
+     * @param SessionInterface $session
+     */
     public function __construct(SessionInterface $session)
     {
         $this->session = $session;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -29,11 +36,17 @@ class RecordsPerPageType extends AbstractType
         ));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParent()
     {
         return 'choice';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'recordsperpage';

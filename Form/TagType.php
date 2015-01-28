@@ -18,9 +18,11 @@ use NS\AceBundle\Form\Transformer\TextToArrayTransformer;
  */
 class TagType extends AbstractType
 {
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
         $resolver->setDefaults( array(
             'caseInsensitive'     => true,
             'allowDuplicates'     => false,
@@ -29,10 +31,12 @@ class TagType extends AbstractType
         ));
     }
 
+    /**
+     * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        parent::buildView($view, $form, $options);
-        
         if(isset($options['source']))
         {
             sort($options['source']);
@@ -45,17 +49,26 @@ class TagType extends AbstractType
         $view->vars['attr']['data-autocomplete-on-comma'] = $options['autocompleteOnComma'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if($options['arrayOutput'])
             $builder->addViewTransformer(new TextToArrayTransformer());
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParent()
     {
         return 'text';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'tag';

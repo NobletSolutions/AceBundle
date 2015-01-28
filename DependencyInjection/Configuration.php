@@ -18,8 +18,8 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('ns_ace');
-
+        $treeBuilder->root('ns_ace');
+//        $rootNode = $treeBuilder->root('ns_ace');
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.

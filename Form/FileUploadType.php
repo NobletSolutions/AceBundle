@@ -14,16 +14,20 @@ use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class FileUploadType extends AbstractType
 {
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
         $resolver->setDefaults( array('uploadUrl' => false, 'viewUrl'=>false));
     }
 
+    /**
+     * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        parent::buildView($view, $form, $options);
-
         if($options['uploadUrl'])
             $view->vars['attr']['data-uploadurl'] = $options['uploadUrl'];
 
@@ -31,11 +35,17 @@ class FileUploadType extends AbstractType
             $view->vars['attr']['data-viewurl'] = $options['viewUrl'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParent()
     {
         return 'file';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'fileupload';
