@@ -23,6 +23,12 @@ $(document).click(function(ev)
             $(document).trigger('nsFormUpdate');
         }, 200);
     }
+    
+    if(target.is('[data-showelement]'))
+    {
+        $(target.data('showelement')).show();
+        $(document).trigger('nsFormUpdate');
+    }
 });
 
 $(document).on('nsFormUpdate', function(ev)

@@ -188,6 +188,14 @@ label {
     margin: 0.5em 0;
 }
 
+ul.token-input-list {
+    font-size: 14px;
+}
+
+ul.token-input-list input {
+    padding: 5px 4px 6px;
+}
+
 .modal-dialog.modal-12 {
     width: 100%;
 }
