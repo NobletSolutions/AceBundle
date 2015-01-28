@@ -17,15 +17,21 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class DateRangeType extends AbstractType
 {
     protected $converter;
-    
+
+    /**
+     *
+     * @param DateFormatConverter $converter
+     */
     public function __construct(DateFormatConverter $converter)
     {
         $this->converter = $converter;
     }
     
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
         $resolver->setDefaults(array(
             'widget'      => 'single_text',
             'compound'    => false,
@@ -33,10 +39,12 @@ class DateRangeType extends AbstractType
         ));
     }
 
+    /**
+     * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        parent::buildView($view, $form, $options);
-
         if(isset($view->vars['attr']['class']))
             $view->vars['attr']['class'] .= 'form-control date-range';
         else
@@ -47,12 +55,18 @@ class DateRangeType extends AbstractType
         $view->vars['attr']['data-date-format'] = strtolower($options['format']);
         $view->vars['attr']['placeholder'] = $options['format'];
     }
-    
+
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'acedaterange';
     }
-    
+
+    /**
+     * {@inheritdoc}
+     */
     public function getParent()
     {
         return 'date';

@@ -5,6 +5,7 @@ namespace NS\AceBundle\Listener;
 use \Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 use \Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use \Symfony\Component\HttpFoundation\Response;
 
 /**
  * Description of AccessDenied
@@ -15,13 +16,23 @@ class AccessDenied implements AccessDeniedHandlerInterface
 {
     private $twig;
 
+    /**
+     * @param \Twig_Environment $twig
+     */
     public function __construct(\Twig_Environment $twig)
     {
         $this->twig = $twig;
     }
 
+    /**
+     *
+     * @param Request $request
+     * @param AccessDeniedException $accessDeniedException
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function handle(Request $request, AccessDeniedException $accessDeniedException)
     {
-        return new \Symfony\Component\HttpFoundation\Response("Access Denied!"); // $this->twig->render("NSAceBundle:Exceptions:AccessDenied.html.twig");
+        return new Response("Access Denied!");
     }
 }

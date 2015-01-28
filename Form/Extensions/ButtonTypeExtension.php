@@ -14,6 +14,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class ButtonTypeExtension extends AbstractTypeExtension
 {
+    /**
+     * @return string
+     */
     public function getExtendedType()
     {
         return 'submit';
@@ -30,6 +33,12 @@ class ButtonTypeExtension extends AbstractTypeExtension
         $resolver->setAllowedTypes(array('icon'=>'string'));
     }
 
+    /**
+     * @param FormView $view
+     * @param FormInterface $form
+     * @param array $options
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if(isset($options['icon']))

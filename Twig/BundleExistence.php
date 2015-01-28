@@ -13,11 +13,18 @@ class BundleExistence extends \Twig_Extension
 {
     protected $container;
 
+    /**
+     *
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getFunctions()
     {
         return array(
@@ -25,11 +32,20 @@ class BundleExistence extends \Twig_Extension
         );
     }
 
+    /**
+     *
+     * @param string $bundle
+     * @return boolean
+     */
     public function bundleExists($bundle)
     {
         return array_key_exists($bundle, $this->container->getParameter('kernel.bundles'));
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'ms_ace_bundle_existence';

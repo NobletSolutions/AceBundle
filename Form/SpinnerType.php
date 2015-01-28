@@ -16,9 +16,11 @@ use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class SpinnerType extends AbstractType
 {
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
         $resolver->setDefaults( array(
             'min'           => 0,
             'max'           => 100,
@@ -29,10 +31,12 @@ class SpinnerType extends AbstractType
         ));
     }
 
+    /**
+     * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        parent::buildView($view, $form, $options);
-
         $opts = array();
 
         foreach(array('min', 'max', 'step', 'on_sides') as $opt)
@@ -47,11 +51,17 @@ class SpinnerType extends AbstractType
         $view->vars['attr']['data-options'] = json_encode($opts);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParent()
     {
         return 'text';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'spinner';

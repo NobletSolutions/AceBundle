@@ -18,15 +18,20 @@ class AutocompleterType extends AbstractType
 {
     private $router;
 
+    /**
+     *
+     * @param \Symfony\Component\Routing\RouterInterface $router
+     */
     public function setRouter(\Symfony\Component\Routing\RouterInterface $router)
     {
         $this->router = $router;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
         $resolver->setOptional(array('route','autocompleteUrl'));
 
         $resolver->setDefaults( array(
@@ -40,10 +45,12 @@ class AutocompleterType extends AbstractType
         ));
     }
 
+    /**
+     * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        parent::buildView($view, $form, $options);
-
         $opts = array();
 
         foreach(array('method', 'queryParam', 'minChars', 'prePopulate', 'hintText', 'noResultsText', 'searchingText') as $opt)
@@ -57,11 +64,17 @@ class AutocompleterType extends AbstractType
         $view->vars['attr']['data-options'] = json_encode($opts);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParent()
     {
         return 'text';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'autocompleter';

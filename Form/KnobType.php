@@ -18,10 +18,11 @@ class KnobType extends AbstractType
 {
     private $defaults;
 
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
         $this->defaults = array(
             'min'             => false,
             'max'             => false,
@@ -39,19 +40,28 @@ class KnobType extends AbstractType
         $resolver->setDefaults($this->defaults);
     }
 
+    /**
+     * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        parent::buildView($view, $form, $options);
-
         foreach($this->defaults as $opt => $val)
             $view->vars['attr']['data-'.$opt] = $options[$opt];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParent()
     {
         return 'text';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'knob';
