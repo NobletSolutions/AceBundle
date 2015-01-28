@@ -1,3 +1,8 @@
+setup:
+    composer:
+        action: "install"
+        prefer_dist: true
+
 test:
     php_mess_detector:
         allow_failures: true
