@@ -9,7 +9,7 @@ use \Symfony\Component\Form\FormView;
 use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Description of DatePickerType
+ * Description of DateTimePickerType
  *
  * @author gnat
  */
@@ -32,9 +32,10 @@ class DateTimePickerType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'date_widget'    => 'single_text',
-            'date_format'    => $this->converter->getFormat(true),
-            'time_widget'    => 'single_text',
+            'date_widget' => 'single_text',
+            'date_format' => $this->converter->getFormat(true),
+            'time_widget' => 'single_text',
+            'input'       => 'datetime',
         ));
     }
 
@@ -45,8 +46,7 @@ class DateTimePickerType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['attr']['data-date-format'] = strtolower($options['date_format']);
-        $view->vars['attr']['placeholder'] = $options['date_format'];
-        $view->vars['type'] = 'text';
+        $view->vars['attr']['placeholder']      = $options['date_format'];
     }
 
     /**
