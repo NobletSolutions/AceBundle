@@ -192,7 +192,7 @@ ul.token-input-list {
     font-size: 14px;
 }
 
-ul.token-input-list input {
+ul.token-input-list li input {
     padding: 5px 4px 6px;
 }
 
