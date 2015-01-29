@@ -12,6 +12,9 @@ use \NS\AceBundle\Form\SpinnerType;
  */
 class SpinnerTypeTest extends BaseFormTestType
 {
+    /**
+     *
+     */
     public function testFormType()
     {
         $formData = array(

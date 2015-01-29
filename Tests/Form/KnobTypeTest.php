@@ -12,6 +12,9 @@ use \NS\AceBundle\Form\KnobType;
  */
 class KnobTypeTest extends BaseFormTestType
 {
+    /**
+     *
+     */
     public function testFormType()
     {
         $formData = array(

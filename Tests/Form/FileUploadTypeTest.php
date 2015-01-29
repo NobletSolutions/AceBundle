@@ -3,31 +3,28 @@
 namespace NS\AceBundle\Tests\Form;
 
 use \NS\AceBundle\Tests\BaseFormTestType;
-use \NS\AceBundle\Form\MaskedType;
+use \NS\AceBundle\Form\FileUploadType;
 
 /**
- * Description of KnobType
+ * Description of SwitchType
  *
  * @author gnat
  */
-class MaskedTypeTest extends BaseFormTestType
+class FileUploadTypeTest extends BaseFormTestType
 {
-    /**
-     *
-     */
     public function testFormType()
     {
         $formData = array(
-            'masked' => 1,
+            'file' => 1,
         );
 
         $formBuilder = $this->factory->createBuilder();
-        $formBuilder->add('masked', new MaskedType());
+        $formBuilder->add('file', new FileUploadType());
         $form        = $formBuilder->getForm();
         $form->submit($formData);
         $object      = $form->getData();
 
-        $this->assertEquals($formData['masked'], $object['masked']);
+        $this->assertEquals($formData['file'], $object['file']);
         $this->commonTest($form, $formData);
     }
 }

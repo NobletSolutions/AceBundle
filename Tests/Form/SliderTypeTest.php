@@ -12,7 +12,9 @@ use \NS\AceBundle\Form\SliderType;
  */
 class SliderTypeTest extends BaseFormTestType
 {
-
+    /**
+     *
+     */
     public function testFormType()
     {
         $formData = array(

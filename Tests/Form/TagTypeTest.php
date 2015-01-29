@@ -12,7 +12,9 @@ use \NS\AceBundle\Form\TagType;
  */
 class TagTypeTest extends BaseFormTestType
 {
-
+    /**
+     *
+     */
     public function testFormType()
     {
         $formData = array(

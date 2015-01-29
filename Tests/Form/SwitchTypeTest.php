@@ -12,6 +12,9 @@ use \NS\AceBundle\Form\SwitchType;
  */
 class SwitchTypeTest extends BaseFormTestType
 {
+    /**
+     *
+     */
     public function testFormType()
     {
         $formData = array(
