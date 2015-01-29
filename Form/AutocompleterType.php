@@ -2,10 +2,15 @@
 
 namespace NS\AceBundle\Form;
 
+use \Doctrine\Common\Persistence\ObjectManager;
 use \Symfony\Component\Form\AbstractType;
-use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
+use \Symfony\Component\Form\FormBuilderInterface;
+use \Symfony\Component\Form\FormView;
 use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use \Symfony\Component\Routing\RouterInterface;
+use \NS\AceBundle\Form\Transformer\EntityToJson;
+use \NS\AceBundle\Form\Transformer\CollectionToJson;
 
 /**
  * Description of SwitchType
@@ -16,52 +21,89 @@ use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class AutocompleterType extends AbstractType
 {
+    /**
+     *  @var $router RouterInterface
+     */
     private $router;
 
-    public function setRouter(\Symfony\Component\Routing\RouterInterface $router)
+    /**
+     *  @var $entityMgr ObjectManager
+     */
+    private $entityMgr;
+
+    /**
+     * @param RouterInterface $router
+     * @param ObjectManager $entityMgr
+     */
+    public function __construct(RouterInterface $router, ObjectManager $entityMgr)
     {
-        $this->router = $router;
+        $this->router    = $router;
+        $this->entityMgr = $entityMgr;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        if (isset($options['class']))
+        {
+            $transformer = ($options['multiple'] == true) ? new CollectionToJson($this->entityMgr, $options['class']) : new EntityToJson($this->entityMgr, $options['class']);
+
+            $builder->addModelTransformer($transformer);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        $resolver->setOptional(array('route', 'autocompleteUrl', 'class'));
 
-        $resolver->setOptional(array('route','autocompleteUrl'));
-
-        $resolver->setDefaults( array(
-            'method'          =>'POST',
-            'queryParam'      =>'q',
-            'minChars'        => 2,
-            'prePopulate'     => null,
-            'hintText'        => 'Enter a search term',
-            'noResultsText'   => 'No results',
-            'searchingText'   => 'Searching'
+        $resolver->setDefaults(array(
+            'method'        => 'POST',
+            'queryParam'    => 'q',
+            'minChars'      => 2,
+            'prePopulate'   => null,
+            'hintText'      => 'Enter a search term',
+            'noResultsText' => 'No results',
+            'searchingText' => 'Searching',
+            'multiple'      => false,
+            'attr'          => array('class' => 'nsAutocompleter'),
         ));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        parent::buildView($view, $form, $options);
-
         $opts = array();
+        $ar   = array('method', 'queryParam', 'minChars', 'prePopulate', 'hintText','noResultsText', 'searchingText');
 
-        foreach(array('method', 'queryParam', 'minChars', 'prePopulate', 'hintText', 'noResultsText', 'searchingText') as $opt)
+        foreach ($ar as $opt)
             $opts[$opt] = $options[$opt];
 
-        if(!isset($options['autocompleteUrl']) && $this->router && isset($options['route']))
+        if (!isset($options['autocompleteUrl']) && $this->router && isset($options['route']))
             $view->vars['attr']['data-autocompleteUrl'] = $this->router->generate($options['route']);
-        else if(isset($options['autocompleteUrl']))
+        else if (isset($options['autocompleteUrl']))
             $view->vars['attr']['data-autocompleteUrl'] = $options['autocompleteUrl'];
 
         $view->vars['attr']['data-options'] = json_encode($opts);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParent()
     {
         return 'text';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'autocompleter';

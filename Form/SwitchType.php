@@ -14,28 +14,38 @@ use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class SwitchType extends AbstractType
 {
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
         $resolver->setDefaults(array('switchtype' => 1));
         $resolver->setAllowedValues(array('switchtype' => range(1,7)));
     }
 
+    /**
+     * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        parent::buildView($view, $form, $options);
-
         if(isset($view->vars['attr']['class']))
             $view->vars['attr']['class'] .= 'ace ace-switch ace-switch-'.$options['switchtype'];
         else
             $view->vars['attr']['class'] = 'ace ace-switch ace-switch-'.$options['switchtype'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'switch';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParent()
     {
         return 'checkbox';

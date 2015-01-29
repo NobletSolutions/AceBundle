@@ -14,29 +14,42 @@ use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class SliderType extends AbstractType
 {
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-        $resolver->setDefaults( array('color' => 'green'));
+        $colors      = array('green', 'red', 'purple', 'orange', 'dark');
+        $switchtypes = array(1, 2, 3, 4, 5, 6, 7);
+        $resolver->setDefaults(array('color' => 'green', 'switchtype' => 1));
+        $resolver->setRequired(array('switchtype'));
+        $resolver->setAllowedValues(array('color' => $colors, 'switchtype' => $switchtypes));
         
-        $resolver->setAllowedValues(array('color'=>  array('green','red','purple','orange','dark')));
     }
 
+    /**
+     * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        parent::buildView($view, $form, $options);
-
         if(isset($view->vars['attr']['class']))
             $view->vars['attr']['class'] .= 'ace ace-switch ace-switch-'.$options['switchtype'];
         else
             $view->vars['attr']['class'] = 'ace ace-switch ace-switch-'.$options['switchtype'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'slider';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParent()
     {
         return 'checkbox';

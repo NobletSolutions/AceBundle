@@ -138,6 +138,10 @@ div.input-datetime-group {
     padding-right: 12px;
 }
 
+div.datepicker-dropdown {
+    z-index: 1050 !important;
+}
+
 .form-group:after {
     content: " ";
     clear: both;
@@ -182,4 +186,60 @@ label {
 .sonata-filter-form .sonata-filter-value {
     float: left;
     margin: 0.5em 0;
+}
+
+ul.token-input-list {
+    font-size: 14px;
+}
+
+ul.token-input-list li input {
+    padding: 5px 4px 6px;
+}
+
+.modal-dialog.modal-12 {
+    width: 100%;
+}
+
+.modal-dialog.modal-11 {
+    width: 91.666%;
+}
+
+.modal-dialog.modal-10 {
+    width: 83.334%;
+}
+
+.modal-dialog.modal-9 {
+    width: 75%;
+}
+
+.modal-dialog.modal-8 {
+    width: 66.668%;
+}
+
+.modal-dialog.modal-7 {
+    width: 58.335%;
+}
+
+.modal-dialog.modal-6 {
+    width: 50%;
+}
+
+.modal-dialog.modal-5 {
+    width: 41.669%;
+}
+
+.modal-dialog.modal-4 {
+    width: 33.336%;
+}
+
+.modal-dialog.modal-3 {
+    width: 25%;
+}
+
+.modal-dialog.modal-2 {
+    width: 16.667%;
+}
+
+.modal-dialog.modal-1 {
+    width: 8.337%;
 }

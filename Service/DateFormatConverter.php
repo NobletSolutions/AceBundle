@@ -1,42 +1,53 @@
 <?php
 namespace NS\AceBundle\Service;
 
-use IntlDateFormatter;
+use \IntlDateFormatter;
 use Locale;
+
 /**
  * Description of DateFormatConverter
  *
  * @author mark
  */
-class DateFormatConverter {
-     
+class DateFormatConverter
+{
+    /**
+     *
+     * @param boolean $longyear
+     * @return string
+     */
     public function getFormat($longyear = false)
     {
-        $formatter = new \IntlDateFormatter(
+        $formatter = new IntlDateFormatter(
                 Locale::getDefault(),
                 IntlDateFormatter::SHORT,
                 IntlDateFormatter::NONE,
                 'UTC',
-                \IntlDateFormatter::GREGORIAN,
+                IntlDateFormatter::GREGORIAN,
                 null
             );
-        
+
         $formatter->setLenient(false);
-        
+
         $pattern = $formatter->getPattern();
-        
-        if($longyear && strpos($pattern, 'yyyy') === false)
+
+        if ($longyear && strpos($pattern, 'yyyy') === false)
             $pattern = str_replace('yy', 'yyyy', $pattern);
-        
+
         if(strpos($pattern, 'MM') === false)
             $pattern = str_replace('M', 'MM', $pattern);
-        
+
         if(strpos($pattern, 'dd') === false)
             $pattern = str_replace('d', 'dd', $pattern);
-        
+
         return trim(str_replace(' ', '', $pattern), './-');
     }
-    
+
+    /**
+     *
+     * @param string $pattern
+     * @return string
+     */
     public function fromFormat($pattern)
     {
         if(strpos($pattern, 'yyyy') !== false)

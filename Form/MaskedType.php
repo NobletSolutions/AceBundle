@@ -10,18 +10,17 @@ use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * Description of KnobType
  *
- * @author gnat
  * @author mark
- * @author https://github.com/digitalBush/jquery.maskedinput
  */
 class MaskedType extends AbstractType
 {
     private $defaults;
 
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
         $this->defaults = array(
             'mask'            => false,//ex: "99/99/9999", "(999) 999-9999", "99-999-9999-99"; ? = optional, ex: "(999) 999-9999? x999" for optional phone extension
             'placeholder'     => '_', //Placeholder to use for masked characters
@@ -34,24 +33,38 @@ class MaskedType extends AbstractType
              */
         );
 
-        $resolver->setDefaults($this->defaults);
+        $resolver->setDefaults(
+            array_merge(
+                $this->defaults,
+                array('attr' => array('class' => 'nsMasked'))
+            )
+        );
     }
 
+    /**
+     * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        parent::buildView($view, $form, $options);
-
         $options['definitions'] = json_encode($options['definitions']);
 
         foreach($this->defaults as $opt => $val)
             $view->vars['attr']['data-'.$opt] = $options[$opt];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParent()
     {
         return 'text';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'masked';

@@ -2,12 +2,11 @@
 
 namespace NS\AceBundle\Form;
 
-use IntlDateFormatter;
-use NS\AceBundle\Service\DateFormatConverter;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use \NS\AceBundle\Service\DateFormatConverter;
+use \Symfony\Component\Form\AbstractType;
+use \Symfony\Component\Form\FormInterface;
+use \Symfony\Component\Form\FormView;
+use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Description of DateRangeType
@@ -17,42 +16,54 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class DateRangeType extends AbstractType
 {
     protected $converter;
-    
+
+    /**
+     *
+     * @param DateFormatConverter $converter
+     */
     public function __construct(DateFormatConverter $converter)
     {
         $this->converter = $converter;
     }
-    
+
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
         $resolver->setDefaults(array(
-            'widget'      => 'single_text',
-            'compound'    => false,
-            'format' => $this->converter->getFormat(true),
+            'widget'   => 'single_text',
+            'compound' => false,
+            'format'   => $this->converter->getFormat(true),
         ));
     }
 
+    /**
+     * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        parent::buildView($view, $form, $options);
-
-        if(isset($view->vars['attr']['class']))
+        if (isset($view->vars['attr']['class']))
             $view->vars['attr']['class'] .= 'form-control date-range';
         else
             $view->vars['attr']['class'] = 'form-control date-range';
 
-        $view->vars['type'] = 'text';
-        
         $view->vars['attr']['data-date-format'] = strtolower($options['format']);
-        $view->vars['attr']['placeholder'] = $options['format'];
+        $view->vars['attr']['placeholder']      = $options['format'];
     }
-    
+
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'acedaterange';
     }
-    
+
+    /**
+     * {@inheritdoc}
+     */
     public function getParent()
     {
         return 'date';

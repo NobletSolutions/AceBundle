@@ -16,23 +16,28 @@ use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class SpinnerType extends AbstractType
 {
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
         $resolver->setDefaults( array(
             'min'           => 0,
             'max'           => 100,
             'step'          => 1,
             'touchscreen'   => false, //built for touchscreen
             'on_sides'      => false,
-            'pos_neg'       => false
+            'pos_neg'     => false,
+            'attr'        => array('class' => 'nsSpinner')
         ));
     }
 
+    /**
+     * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        parent::buildView($view, $form, $options);
-
         $opts = array();
 
         foreach(array('min', 'max', 'step', 'on_sides') as $opt)
@@ -47,11 +52,17 @@ class SpinnerType extends AbstractType
         $view->vars['attr']['data-options'] = json_encode($opts);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParent()
     {
         return 'text';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'spinner';
