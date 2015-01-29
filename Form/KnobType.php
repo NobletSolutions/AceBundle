@@ -37,7 +37,8 @@ class KnobType extends AbstractType
             'linecap'         => 'butt', //"round"
         );
 
-        $resolver->setDefaults($this->defaults);
+        $resolver->setDefaults(array_merge($this->defaults, array('attr' => array(
+                'class' => 'input-small nsKnob'))));
     }
 
     /**

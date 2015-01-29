@@ -48,6 +48,6 @@ class BundleExistence extends \Twig_Extension
      */
     public function getName()
     {
-        return 'ms_ace_bundle_existence';
+        return 'ns_ace_bundle_existence';
     }
 }

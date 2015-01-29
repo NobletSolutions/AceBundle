@@ -19,7 +19,12 @@ class FileUploadType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults( array('uploadUrl' => false, 'viewUrl'=>false));
+        $defaults = array(
+            'uploadUrl' => false,
+            'viewUrl'   => false,
+            'attr'      => array('class' => 'nsFileUpload'),
+        );
+        $resolver->setDefaults($defaults);
     }
 
     /**

@@ -7,7 +7,7 @@ use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use \Symfony\Component\Form\FormBuilderInterface;
-use NS\AceBundle\Form\Transformer\TextToArrayTransformer;
+use \NS\AceBundle\Form\Transformer\TextToArrayTransformer;
 
 /**
  * Description of SwitchType

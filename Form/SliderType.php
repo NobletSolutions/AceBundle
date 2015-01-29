@@ -19,9 +19,12 @@ class SliderType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults( array('color' => 'green'));
+        $colors      = array('green', 'red', 'purple', 'orange', 'dark');
+        $switchtypes = array(1, 2, 3, 4, 5, 6, 7);
+        $resolver->setDefaults(array('color' => 'green', 'switchtype' => 1));
+        $resolver->setRequired(array('switchtype'));
+        $resolver->setAllowedValues(array('color' => $colors, 'switchtype' => $switchtypes));
         
-        $resolver->setAllowedValues(array('color'=>  array('green','red','purple','orange','dark')));
     }
 
     /**

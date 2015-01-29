@@ -10,9 +10,7 @@ use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * Description of KnobType
  *
- * @author gnat
  * @author mark
- * @author https://github.com/digitalBush/jquery.maskedinput
  */
 class MaskedType extends AbstractType
 {
@@ -35,7 +33,12 @@ class MaskedType extends AbstractType
              */
         );
 
-        $resolver->setDefaults($this->defaults);
+        $resolver->setDefaults(
+            array_merge(
+                $this->defaults,
+                array('attr' => array('class' => 'nsMasked'))
+            )
+        );
     }
 
     /**

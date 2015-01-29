@@ -1,7 +1,7 @@
 <?php
 namespace NS\AceBundle\Service;
 
-use IntlDateFormatter;
+use \IntlDateFormatter;
 use Locale;
 
 /**
@@ -18,12 +18,12 @@ class DateFormatConverter
      */
     public function getFormat($longyear = false)
     {
-        $formatter = new \IntlDateFormatter(
+        $formatter = new IntlDateFormatter(
                 Locale::getDefault(),
                 IntlDateFormatter::SHORT,
                 IntlDateFormatter::NONE,
                 'UTC',
-                \IntlDateFormatter::GREGORIAN,
+                IntlDateFormatter::GREGORIAN,
                 null
             );
 

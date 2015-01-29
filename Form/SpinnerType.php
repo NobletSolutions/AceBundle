@@ -27,7 +27,8 @@ class SpinnerType extends AbstractType
             'step'          => 1,
             'touchscreen'   => false, //built for touchscreen
             'on_sides'      => false,
-            'pos_neg'       => false
+            'pos_neg'     => false,
+            'attr'        => array('class' => 'nsSpinner')
         ));
     }
 

@@ -137,7 +137,7 @@
 {% block fileupload_row %}
 <div class="form-group">
     {{form_label(form)}}
-    <div class="nsFileUpload" {{ block('widget_attributes') }}>
+    <div {{ block('widget_attributes') }}>
         <div class="nsUploader"></div>
     </div>
 </div>
@@ -165,7 +165,7 @@
 <div class="form-group">
     {{form_label(form)}}
     <div class="input-group">
-        <input class="nsSpinner" type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}"/>
+        <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}"/>
     </div>
 </div>
 {% endblock %}
@@ -174,7 +174,7 @@
 <div class="form-group">
     {{form_label(form)}}
     <div class="input-group">
-        <input class="input-small nsKnob" type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}"/>
+        <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}"/>
     </div>
 </div>
 {% endblock %}
@@ -183,7 +183,7 @@
 <div class="form-group">
     {{form_label(form)}}
     <div class="input-group">
-        <input class="nsMasked" type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}"/>
+        <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}"/>
     </div>
 </div>
 {% endblock %}
