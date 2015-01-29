@@ -12,6 +12,9 @@ use \NS\AceBundle\Form\FileUploadType;
  */
 class FileUploadTypeTest extends BaseFormTestType
 {
+    /**
+     *
+     */
     public function testFormType()
     {
         $formData = array(
