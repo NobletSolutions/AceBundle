@@ -1,6 +1,6 @@
 <?php
 
-namespace NS\AceBundle\Tests\Form;
+namespace NS\AceBundle\Tests\Form\Fixtures;
 
 /**
  * Description of Entity
@@ -10,6 +10,8 @@ namespace NS\AceBundle\Tests\Form;
 class Entity
 {
     private $id;
+
+    private $name;
 
     /**
      * @param integer $id
@@ -26,6 +28,27 @@ class Entity
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     *
+     * @param string $name
+     * @return \NS\AceBundle\Tests\Form\Fixtures\Entity
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     /**

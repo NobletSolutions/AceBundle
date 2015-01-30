@@ -4,6 +4,7 @@ namespace NS\AceBundle\Tests\Form;
 
 use \NS\AceBundle\Form\Transformer\CollectionToJson;
 use \NS\AceBundle\Form\Transformer\EntityToJson;
+use \NS\AceBundle\Tests\Form\Fixtures\Entity;
 
 /**
  * Description of TransformerTest
@@ -101,7 +102,7 @@ class TransformerTest extends \PHPUnit_Framework_TestCase
         $class   = new Entity(1);
 
         $entityMgrMock = $this->getEntityManager();
-        $transformer   = new EntityToJson($entityMgrMock, 'NS\AceBundle\Tests\Form\Entity');
+        $transformer   = new EntityToJson($entityMgrMock, 'NS\AceBundle\Tests\Form\Fixtures\Entity');
         $obj           = $transformer->transform($class);
 
         $this->assertEquals($jsonStr, $obj);
@@ -134,7 +135,7 @@ class TransformerTest extends \PHPUnit_Framework_TestCase
         $class   = new Entity(1);
 
         $entityMgrMock = $this->getEntityManager();
-        $transformer   = new EntityToJson($entityMgrMock, 'NS\AceBundle\Tests\Form\Entity', 'someProperty');
+        $transformer   = new EntityToJson($entityMgrMock, 'NS\AceBundle\Tests\Form\Fixtures\Entity', 'someProperty');
         $obj           = $transformer->transform($class);
 
         $this->assertEquals($jsonStr, $obj);

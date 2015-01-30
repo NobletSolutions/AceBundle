@@ -4,6 +4,7 @@ namespace NS\AceBundle\Tests\Form;
 
 use \NS\AceBundle\Form\AutocompleterType;
 use \NS\AceBundle\Tests\BaseFormTestType;
+use \NS\AceBundle\Tests\Form\Fixtures\Entity;
 
 /**
  * Description of AutocompleterTypeTest
