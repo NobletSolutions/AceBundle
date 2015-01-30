@@ -2,8 +2,9 @@
 
 namespace NS\AceBundle\Form\Transformer;
 
-use \Symfony\Component\Form\DataTransformerInterface;
 use \Doctrine\Common\Persistence\ObjectManager;
+use \Symfony\Component\Form\DataTransformerInterface;
+use \Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
  * Description of AbstractObjectToJson
@@ -18,16 +19,20 @@ abstract class AbstractObjectToJson implements DataTransformerInterface
     /* @var $class string */
     protected $class;
 
+    /* @var $propertyMethod string */
+    protected $propertyMethod;
+
     /**
      *
      * @param ObjectManager $entityMgr
-     * @param type $class
+     * @param string $class
      * @return \NS\AceBundle\Form\Transformer\EntityToJson
      */
-    public function __construct(ObjectManager $entityMgr, $class)
+    public function __construct(ObjectManager $entityMgr, $class, $propertyMethod = null)
     {
-        $this->entityMgr = $entityMgr;
-        $this->class     = $class;
+        $this->entityMgr      = $entityMgr;
+        $this->class          = $class;
+        $this->propertyMethod = $propertyMethod;
 
         return $this;
     }
@@ -52,6 +57,47 @@ abstract class AbstractObjectToJson implements DataTransformerInterface
 
     /**
      *
+     * @return string
+     */
+    public function getPropertyMethod()
+    {
+        return $this->propertyMethod;
+    }
+
+    /**
+     *
+     * @param Object $entity
+     * @return string
+     * @throws \RuntimeException
+     */
+    public function getProperty($entity)
+    {
+        if ($this->getPropertyMethod())
+        {
+            $accessor = PropertyAccess::createPropertyAccessor();
+
+            return $accessor->getValue($entity, $this->getPropertyMethod());
+        }
+
+        if (!method_exists($entity, '__toString'))
+            throw new \RuntimeException(sprintf("Object of class %s has no __toString", get_class($entity)));
+
+        return $entity->__toString();
+    }
+
+    /**
+     *
+     * @param string $propertyMethod
+     * @return \NS\AceBundle\Form\Transformer\AbstractObjectToJson
+     */
+    public function setPropertyMethod($propertyMethod)
+    {
+        $this->propertyMethod = $propertyMethod;
+        return $this;
+    }
+
+    /**
+     *
      * @param ObjectManager $entityMgr
      * @return \NS\AceBundle\Form\Transformer\AbstractObjectToJson
      */
@@ -70,5 +116,27 @@ abstract class AbstractObjectToJson implements DataTransformerInterface
     {
         $this->class = $class;
         return $this;
+    }
+
+    /**
+     *
+     * @param array $item
+     * @param mixed $key
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function walk(&$item, $key)
+    {
+        $item = $this->getReference($item['id']);
+    }
+
+    /**
+     *
+     * @param integer $id
+     * @param mixed $key
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function getReference($id)
+    {
+        return $this->entityMgr->getReference($this->class, $id);
     }
 }

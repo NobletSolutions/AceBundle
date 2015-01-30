@@ -32,10 +32,10 @@ class AutocompleterType extends AbstractType
     private $entityMgr;
 
     /**
-     * @param RouterInterface $router
      * @param ObjectManager $entityMgr
+     * @param RouterInterface $router
      */
-    public function __construct(RouterInterface $router, ObjectManager $entityMgr)
+    public function __construct(ObjectManager $entityMgr, RouterInterface $router = null)
     {
         $this->router    = $router;
         $this->entityMgr = $entityMgr;
@@ -48,7 +48,8 @@ class AutocompleterType extends AbstractType
     {
         if (isset($options['class']))
         {
-            $transformer = ($options['multiple'] == true) ? new CollectionToJson($this->entityMgr, $options['class']) : new EntityToJson($this->entityMgr, $options['class']);
+            $property    = (isset($options['property'])) ? $options['property'] : null;
+            $transformer = ($options['multiple'] == true) ? new CollectionToJson($this->entityMgr, $options['class'], $property) : new EntityToJson($this->entityMgr, $options['class'], $property);
 
             $builder->addModelTransformer($transformer);
         }
@@ -59,7 +60,7 @@ class AutocompleterType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setOptional(array('route', 'autocompleteUrl', 'class'));
+        $resolver->setOptional(array('route', 'autocompleteUrl', 'class', 'property'));
 
         $resolver->setDefaults(array(
             'method'        => 'POST',
@@ -79,11 +80,17 @@ class AutocompleterType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $opts = array();
-        $ar   = array('method', 'queryParam', 'minChars', 'prePopulate', 'hintText','noResultsText', 'searchingText');
+        $ar   = array(
+            'method'        => null,
+            'queryParam'    => null,
+            'minChars'      => null,
+            'prePopulate'   => null,
+            'hintText'      => null,
+            'noResultsText' => null,
+            'searchingText' => null
+        );
 
-        foreach ($ar as $opt)
-            $opts[$opt] = $options[$opt];
+        $opts = array_intersect_key($options, $ar);
 
         if (!isset($options['autocompleteUrl']) && $this->router && isset($options['route']))
             $view->vars['attr']['data-autocompleteUrl'] = $this->router->generate($options['route']);

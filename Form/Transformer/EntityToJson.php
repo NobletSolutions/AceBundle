@@ -10,7 +10,7 @@ namespace NS\AceBundle\Form\Transformer;
 class EntityToJson extends AbstractObjectToJson
 {
     /**
-     * Transforms an object (issue) to a json {id: integer, string: string }
+     * Transforms an object (issue) to a json {"id": integer, "name": "string" }
      *
      * @param  Entity|null $entity
      * @return string
@@ -23,7 +23,7 @@ class EntityToJson extends AbstractObjectToJson
         if (!$entity instanceof $this->class)
             throw new \InvalidArgumentException(sprintf("Expecting entity of type '%s' but received '%s'", $this->class, get_class($entity)));
 
-        return json_encode(array('id' => $entity->getId(), 'string' => $entity));
+        return json_encode(array('id' => $entity->getId(), 'name' => $this->getProperty($entity)));
     }
 
     /**
@@ -37,8 +37,8 @@ class EntityToJson extends AbstractObjectToJson
         if ($jsonStr === null)
             return null;
 
-        $obj = json_decode($jsonStr, false);
+        $obj = json_decode($jsonStr, true);
 
-        return $this->getEntityManager()->getReference($this->getClass(), $obj['id']);
+        return $this->getReference($obj['id']);
     }
 }
