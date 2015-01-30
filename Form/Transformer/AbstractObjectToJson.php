@@ -89,7 +89,7 @@ abstract class AbstractObjectToJson implements DataTransformerInterface
      * @param mixed $key
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function getReference(&$id)
+    public function getReference($id)
     {
         return $this->entityMgr->getReference($this->class, $id);
     }

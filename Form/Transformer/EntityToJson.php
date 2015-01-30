@@ -10,7 +10,7 @@ namespace NS\AceBundle\Form\Transformer;
 class EntityToJson extends AbstractObjectToJson
 {
     /**
-     * Transforms an object (issue) to a json {id: integer, name: string }
+     * Transforms an object (issue) to a json {"id": integer, "name": "string" }
      *
      * @todo allow configuration of the entity toString method
      *
