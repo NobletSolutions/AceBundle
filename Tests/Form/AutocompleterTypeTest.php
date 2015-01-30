@@ -17,7 +17,7 @@ class AutocompleterTypeTest extends BaseFormTestType
     {
         $entity    = new Entity(1);
         $className = get_class($entity);
-        $formData  = array('auto' => '{"id":1,"name":"Does Not Matter"}');
+        $formData  = array('auto' => '1');
         $routeName = 'routename';
         $router    = $this->getRouter();
         $router->expects($this->once())
@@ -57,7 +57,7 @@ class AutocompleterTypeTest extends BaseFormTestType
         $entities = array(new Entity(1), new Entity(2));
 
         $className = get_class($entities[0]);
-        $formData  = array('auto' => '[{"id":1,"name":"Does Not Matter"},{"id":2,"name":"Does Not Matter"}]');
+        $formData  = array('auto' => '1,2');
         $routeName = 'routename';
         $router    = $this->getRouter();
 
@@ -110,7 +110,7 @@ class AutocompleterTypeTest extends BaseFormTestType
         $this->assertNull($viewData);
         $form->setData(array('auto' => $entity));
         $view     = $form->createView();
-        $this->assertEquals('{"id":1,"name":"It Matters"}', $view['auto']->vars['value']);
+        $this->assertEquals('[{"id":1,"name":"It Matters"}]', $view['auto']->vars['value']);
     }
 
     public function testFormWithDataToString()
@@ -130,7 +130,7 @@ class AutocompleterTypeTest extends BaseFormTestType
         $this->assertNull($viewData);
         $form->setData(array('auto' => $entity));
         $view     = $form->createView();
-        $this->assertEquals('{"id":1,"name":"Does Not Matter"}', $view['auto']->vars['value']);
+        $this->assertEquals('[{"id":1,"name":"Does Not Matter"}]', $view['auto']->vars['value']);
     }
 
     private function getRouter()

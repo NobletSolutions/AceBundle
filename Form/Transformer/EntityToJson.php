@@ -23,22 +23,20 @@ class EntityToJson extends AbstractObjectToJson
         if (!$entity instanceof $this->class)
             throw new \InvalidArgumentException(sprintf("Expecting entity of type '%s' but received '%s'", $this->class, get_class($entity)));
 
-        return json_encode(array('id' => $entity->getId(), 'name' => $this->getProperty($entity)));
+        return json_encode(array(array('id' => $entity->getId(), 'name' => $this->getProperty($entity))));
     }
 
     /**
      * Transforms an json string to an entity
      *
-     * @param  string|null $jsonStr
+     * @param  string|null $id
      * @return Entity
      */
-    public function reverseTransform($jsonStr)
+    public function reverseTransform($id)
     {
-        if ($jsonStr === null)
+        if ($id === null)
             return null;
 
-        $obj = json_decode($jsonStr, true);
-
-        return $this->getReference($obj['id']);
+        return $this->getReference($id);
     }
 }

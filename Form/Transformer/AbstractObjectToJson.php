@@ -126,7 +126,7 @@ abstract class AbstractObjectToJson implements DataTransformerInterface
      */
     public function walk(&$item, $key)
     {
-        $item = $this->getReference($item['id']);
+        $item = $this->getReference($item);
     }
 
     /**

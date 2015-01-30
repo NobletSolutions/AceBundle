@@ -25,9 +25,9 @@ class TransformerTest extends \PHPUnit_Framework_TestCase
         $entityMgrMock = $this->getEntityManager();
 
         $map = array(
-            array($className, 1, $classes[0]),
-            array($className, 2, $classes[1]),
-            array($className, 3, $classes[2]),
+            array($className, '1', $classes[0]),
+            array($className, '2', $classes[1]),
+            array($className, '3', $classes[2]),
         );
 
         // Configure the stub.
@@ -36,12 +36,7 @@ class TransformerTest extends \PHPUnit_Framework_TestCase
             ->method('getReference')
             ->will($this->returnValueMap($map));
 
-        $jsonStr = json_encode(array(
-            array('id' => $classes[0]->getId(), 'name' => 'Does Not Matter'),
-            array('id' => $classes[1]->getId(), 'name' => 'Does Not Matter'),
-            array('id' => $classes[2]->getId(), 'name' => 'Does Not Matter'),
-        ));
-
+        $jsonStr     = sprintf("%d,%d,%d", $classes[0]->getId(), $classes[1]->getId(), $classes[2]->getId());
         $transformer = new CollectionToJson($entityMgrMock, $className);
         $obj         = $transformer->reverseTransform($jsonStr);
 
@@ -91,9 +86,8 @@ class TransformerTest extends \PHPUnit_Framework_TestCase
             ->with($className, 1)
             ->willReturn($class);
 
-        $jsonStr     = json_encode(array('id' => $class->getId(), 'name' => 'Does Not Matter'));
         $transformer = new EntityToJson($entityMgrMock, $className);
-        $obj         = $transformer->reverseTransform($jsonStr);
+        $obj         = $transformer->reverseTransform($class->getId());
 
         $this->assertEquals($class, $obj);
     }
@@ -103,7 +97,7 @@ class TransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testEntityToJsonTransform()
     {
-        $jsonStr = '{"id":1,"name":"Does Not Matter"}';
+        $jsonStr = '[{"id":1,"name":"Does Not Matter"}]';
         $class   = new Entity(1);
 
         $entityMgrMock = $this->getEntityManager();
@@ -136,7 +130,7 @@ class TransformerTest extends \PHPUnit_Framework_TestCase
 
     public function testEntityToJsonTransformCustomMethod()
     {
-        $jsonStr = '{"id":1,"name":"It Matters"}';
+        $jsonStr = '[{"id":1,"name":"It Matters"}]';
         $class   = new Entity(1);
 
         $entityMgrMock = $this->getEntityManager();

@@ -42,19 +42,19 @@ class CollectionToJson extends AbstractObjectToJson
     /**
      * Transforms an json string to an entity
      *
-     * @param  string|null $jsonStr
+     * @param  string|null $ids
      * @return Entity
      * @throws UnexpectedTypeException
      */
-    public function reverseTransform($jsonStr)
+    public function reverseTransform($ids)
     {
-        if ('' === $jsonStr || null === $jsonStr)
+        if ('' === $ids || null === $ids || empty($ids))
             return new ArrayCollection();
 
-        if (!is_string($jsonStr))
-            throw new UnexpectedTypeException($jsonStr, 'string');
+        if (!is_string($ids))
+            throw new UnexpectedTypeException($ids, 'string');
 
-        $idsArray = json_decode($jsonStr, true);
+        $idsArray = explode(',', $ids);
 
         if (empty($idsArray))
             return new ArrayCollection();
