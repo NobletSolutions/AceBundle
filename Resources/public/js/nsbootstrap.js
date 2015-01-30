@@ -144,6 +144,11 @@ $(document).on('nsFormUpdate', function(ev)
         if(el.nsFieldActive !== true)
         {
             el.nsFieldActive = true;
+            var options = $(el).data('options');
+            
+            if($(el).val())
+                options.prePopulate = JSON.parse($(el).val());
+            
             $(el).tokenInput($(el).data('autocompleteurl'), $(el).data('options'));
         }
     });
