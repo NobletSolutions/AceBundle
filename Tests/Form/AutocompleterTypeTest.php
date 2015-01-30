@@ -44,6 +44,7 @@ class AutocompleterTypeTest extends BaseFormTestType
         $data = $form['auto']->getData();
 
         $this->assertEquals($data, $entity);
+        $this->assertInstanceOf($className, $data);
         $this->assertArrayHasKey('auto', $view);
         $this->assertArrayHasKey('attr', $view['auto']->vars);
         $this->assertArrayHasKey('data-autocompleteUrl', $view['auto']->vars['attr']);
@@ -74,8 +75,8 @@ class AutocompleterTypeTest extends BaseFormTestType
             ->createBuilder()
             ->add('auto', new AutocompleterType($entityMgr, $router), array(
                 'autocompleteUrl' => $routeName,
-                'class'    => $className,
-                'multiple' => true))
+                'class'           => $className,
+                'multiple'        => true))
             ->getForm();
 
         $view = $form->createView();
@@ -87,6 +88,49 @@ class AutocompleterTypeTest extends BaseFormTestType
         $this->assertArrayHasKey('attr', $view['auto']->vars);
         $this->assertArrayHasKey('data-autocompleteUrl', $view['auto']->vars['attr']);
         $this->assertEquals($view['auto']->vars['attr']['data-autocompleteUrl'], $routeName);
+    }
+
+    public function testFormWithDataCustomProperty()
+    {
+        $entity     = new Entity(1);
+        $className  = get_class($entity);
+        $properties = array(
+            'property' => 'someProperty',
+            'class'    => $className,
+        );
+
+        $router    = $this->getRouter();
+        $entityMgr = $this->getEntityManager();
+        $form      = $this->factory
+            ->createBuilder()
+            ->add('auto', new AutocompleterType($entityMgr, $router), $properties)
+            ->getForm();
+
+        $viewData = $form->getViewData();
+        $this->assertNull($viewData);
+        $form->setData(array('auto' => $entity));
+        $view     = $form->createView();
+        $this->assertEquals('{"id":1,"name":"It Matters"}', $view['auto']->vars['value']);
+    }
+
+    public function testFormWithDataToString()
+    {
+        $entity    = new Entity(1);
+        $className = get_class($entity);
+
+        $router    = $this->getRouter();
+        $entityMgr = $this->getEntityManager();
+
+        $form = $this->factory
+            ->createBuilder()
+            ->add('auto', new AutocompleterType($entityMgr, $router), array('class' => $className,))
+            ->getForm();
+
+        $viewData = $form->getViewData();
+        $this->assertNull($viewData);
+        $form->setData(array('auto' => $entity));
+        $view     = $form->createView();
+        $this->assertEquals('{"id":1,"name":"Does Not Matter"}', $view['auto']->vars['value']);
     }
 
     private function getRouter()

@@ -32,8 +32,8 @@ class AutocompleterType extends AbstractType
     private $entityMgr;
 
     /**
-     * @param RouterInterface $router
      * @param ObjectManager $entityMgr
+     * @param RouterInterface $router
      */
     public function __construct(ObjectManager $entityMgr, RouterInterface $router = null)
     {
@@ -48,7 +48,8 @@ class AutocompleterType extends AbstractType
     {
         if (isset($options['class']))
         {
-            $transformer = ($options['multiple'] == true) ? new CollectionToJson($this->entityMgr, $options['class']) : new EntityToJson($this->entityMgr, $options['class']);
+            $property    = (isset($options['property'])) ? $options['property'] : null;
+            $transformer = ($options['multiple'] == true) ? new CollectionToJson($this->entityMgr, $options['class'], $property) : new EntityToJson($this->entityMgr, $options['class'], $property);
 
             $builder->addModelTransformer($transformer);
         }
@@ -59,7 +60,7 @@ class AutocompleterType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setOptional(array('route', 'autocompleteUrl', 'class'));
+        $resolver->setOptional(array('route', 'autocompleteUrl', 'class', 'property'));
 
         $resolver->setDefaults(array(
             'method'        => 'POST',
