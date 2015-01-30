@@ -118,8 +118,11 @@ class TransformerTest extends \PHPUnit_Framework_TestCase
      */
     private function getEntityManager()
     {
-        return $this->getMockBuilder('Doctrine\ORM\EntityManager')
+        return $this->getMockBuilder('Doctrine\Common\Persistence\ObjectManager')
                 ->disableOriginalConstructor()
+                ->setMethods(array('getReference', 'find', 'persist', 'merge', 'clear',
+                    'detach', 'refresh', 'flush', 'getRepository', 'remove', 'getClassMetadata',
+                    'getMetadataFactory', 'initializeObject', 'contains'))
                 ->getMock();
     }
 }

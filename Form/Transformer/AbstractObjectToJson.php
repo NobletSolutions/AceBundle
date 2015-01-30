@@ -21,7 +21,7 @@ abstract class AbstractObjectToJson implements DataTransformerInterface
     /**
      *
      * @param ObjectManager $entityMgr
-     * @param type $class
+     * @param string $class
      * @return \NS\AceBundle\Form\Transformer\EntityToJson
      */
     public function __construct(ObjectManager $entityMgr, $class)
