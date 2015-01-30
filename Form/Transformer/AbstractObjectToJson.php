@@ -64,6 +64,12 @@ abstract class AbstractObjectToJson implements DataTransformerInterface
         return $this->propertyMethod;
     }
 
+    /**
+     *
+     * @param Object $entity
+     * @return string
+     * @throws \RuntimeException
+     */
     public function getProperty($entity)
     {
         if ($this->getPropertyMethod())
