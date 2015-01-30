@@ -80,17 +80,11 @@ class AutocompleterType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $ar   = array(
-            'method'        => null,
-            'queryParam'    => null,
-            'minChars'      => null,
-            'prePopulate'   => null,
-            'hintText'      => null,
-            'noResultsText' => null,
-            'searchingText' => null
-        );
+        $ar   = array('method', 'queryParam', 'minChars', 'prePopulate', 'hintText',
+            'noResultsText', 'searchingText');
+        $opts = array_intersect_key($options, array_flip($ar));
 
-        $opts = array_intersect_key($options, $ar);
+        $opts['tokenLimit'] = $options['multiple'] ? null : 1;
 
         if (!isset($options['autocompleteUrl']) && $this->router && isset($options['route']))
             $view->vars['attr']['data-autocompleteUrl'] = $this->router->generate($options['route']);
