@@ -1,5 +1,32 @@
 $(document).ready(function() {
     $(this).trigger('nsFormUpdate');
+    
+    $('.entity-modal').on('hidden.bs.modal', function(ev)
+    {
+        var modal = $(this);
+        var vals  = false;
+
+        modal.find(':input').each(function()
+        {
+            if((this.type !== 'checkbox' && $(this).val() !== '') || this.checked)
+                vals = true;
+        });
+
+        if(vals)
+        {
+            $('#'+modal.data('input')).prev('ul.token-input-list').hide().prev('span.input-group-addon').hide();
+            $('[data-target="#'+modal.attr('id')+'"] span.fa-plus').removeClass('fa-plus').addClass('fa-pencil');
+            $('[data-target="#'+modal.attr('id')+'"] span.entity-modal-status').text('Edit');
+            $('[data-target="#'+modal.attr('id')+'"]').removeClass('btn-success').addClass('btn-primary');
+        }
+        else
+        {
+            $('#'+modal.data('input')).prev('ul.token-input-list').show().prev('span.input-group-addon').show();
+            $('[data-target="#'+modal.attr('id')+'"] span.fa-pencil').removeClass('fa-pencil').addClass('fa-plus');
+            $('[data-target="#'+modal.attr('id')+'"] span.entity-modal-status').text('Add');
+            $('[data-target="#'+modal.attr('id')+'"]').removeClass('btn-primary').addClass('btn-success');
+        }
+    });
 });
 
 $(document).click(function(ev)
@@ -29,6 +56,14 @@ $(document).click(function(ev)
         $(target.data('showelement')).show();
         $(document).trigger('nsFormUpdate');
     }
+    
+    if(target.is('div.modal button.modal-clear'))
+    {
+        target.closest('div.modal').find(':input').val('');
+        
+        if(!target.data('dismiss'))
+            ev.preventDefault();
+    }
 });
 
 $(document).on('nsFormUpdate', function(ev)
@@ -37,9 +72,9 @@ $(document).on('nsFormUpdate', function(ev)
     {
         if($(el).is(':visible'))
         {
-            if($(el).nsFieldActive !== true)
+            if(el.nsFieldActive !== true)
             {
-                $(el).nsFieldActive = true;
+                el.nsFieldActive = true;
                 $(el).datepicker({autoclose:true}).next().on(ace.click_event, function(){
                     $(this).prev().focus();
                 });
@@ -51,9 +86,9 @@ $(document).on('nsFormUpdate', function(ev)
     {
         if($(el).is(':visible'))
         {
-            if($(el).nsFieldActive !== true)
+            if(el.nsFieldActive !== true)
             {
-                $(el).nsFieldActive = true;
+                el.nsFieldActive = true;
                 $(el).daterangepicker({autoclose:true}).next().on(ace.click_event, function(){
                     $(this).prev().focus();
                 });
@@ -63,9 +98,9 @@ $(document).on('nsFormUpdate', function(ev)
 
     $('input[type=file]:not([multiple])').each(function(i, el)
     {
-        if($(el).nsFieldActive !== true)
+        if(el.nsFieldActive !== true)
         {
-            $(el).nsFieldActive = true;
+            el.nsFieldActive = true;
             $(el).ace_file_input({
                 no_file:'No File ...',
                 btn_choose:'Choose',
@@ -83,9 +118,9 @@ $(document).on('nsFormUpdate', function(ev)
 
     $('div.nsFileUpload div.nsUploader').each(function(i, el)
     {
-        if($(el).nsFieldActive !== true)
+        if(el.nsFieldActive !== true)
         {
-            $(el).nsFieldActive = true;
+            el.nsFieldActive = true;
             $(el).after('\
                 <div class="ace-file-input">\
                     <label class="file-label" data-title="Browse">\
@@ -106,18 +141,18 @@ $(document).on('nsFormUpdate', function(ev)
 
     $('input.nsAutocompleter').each(function(i, el)
     {
-        if($(el).nsFieldActive !== true)
+        if(el.nsFieldActive !== true)
         {
-            $(el).nsFieldActive = true;
+            el.nsFieldActive = true;
             $(el).tokenInput($(el).data('autocompleteurl'), $(el).data('options'));
         }
     });
     
     $('input.nsTag').each(function(i, el)
     {
-        if($(el).nsFieldActive !== true)
+        if(el.nsFieldActive !== true)
         {
-            $(el).nsFieldActive = true;
+            el.nsFieldActive = true;
             var params = {caseInsensitive:$(el).data('case-insensitive'), allowDuplicates:$(el).data('case-allow-duplicates'), autocompleteOnComma:$(el).data('autocomplete-on-comma')};
 
             if($(el).data('source'))
@@ -130,18 +165,18 @@ $(document).on('nsFormUpdate', function(ev)
 
     $('input.nsSpinner').each(function(i, el)
     {
-        if($(el).nsFieldActive !== true)
+        if(el.nsFieldActive !== true)
         {
-            $(el).nsFieldActive = true;
+            el.nsFieldActive = true;
             $(el).ace_spinner($(el).data('options'));
         }
     });
 
     $('input.nsMasked').each(function(i, el)
     {
-        if($(el).nsFieldActive !== true)
+        if(el.nsFieldActive !== true)
         {
-            $(el).nsFieldActive = true;
+            el.nsFieldActive = true;
             $.extend($.mask.definitions, $(el).data('definitions'));
 
             $(el).mask($(el).data('mask'), {placeholder:$(el).data('placeholder')});
@@ -151,9 +186,9 @@ $(document).on('nsFormUpdate', function(ev)
 
     $('input.nsKnob').each(function(i, el)
     {
-        if($(el).nsFieldActive !== true)
+        if(el.nsFieldActive !== true)
         {
-            $(el).nsFieldActive = true;
+            el.nsFieldActive = true;
             $(el).knob();
         }
     });
@@ -162,9 +197,9 @@ $(document).on('nsFormUpdate', function(ev)
     {
         if($(el).is(':visible'))
         {
-            if($(el).nsFieldActive !== true)
+            if(el.nsFieldActive !== true)
             {
-                $(el).nsFieldActive = true;
+                el.nsFieldActive = true;
                 $(el).timepicker({
                         minuteStep: 1,
                         showSeconds: ($(this).data('showSeconds') === 'true'),
@@ -180,9 +215,9 @@ $(document).on('nsFormUpdate', function(ev)
     
     $('a.filter_legend').each(function(i, el)
     {
-        if($(el).nsFieldActive !== true)
+        if(el.nsFieldActive !== true)
         {
-            $(el).nsFieldActive = true;
+            el.nsFieldActive = true;
             $(el).click(function(event)
             {
                 var icon = $(this).find('i');
@@ -195,18 +230,18 @@ $(document).on('nsFormUpdate', function(ev)
         
     $('div.filter_container .sonata-filter-option').each(function(i, el)
     {
-        if($(el).nsFieldActive !== true)
+        if(el.nsFieldActive !== true)
         {
-            $(el).nsFieldActive = true;
+            el.nsFieldActive = true;
             $(el).toggle();
         }
     });
 
     $('input[data-context-child], select[data-context-child], textarea[data-context-child], div[data-context-child] input').each(function(i, el)
     {
-        if($(el).nsFieldActive !== true)
+        if(el.nsFieldActive !== true)
         {
-            $(el).nsFieldActive = true;
+            el.nsFieldActive = true;
             //Add event handlers
             el.contextState = 'active';
             $(el).change(function(event)
@@ -281,7 +316,7 @@ $(document).on('nsFormUpdate', function(ev)
     
     $('[data-rel=tooltip]').each(function(i, el)
     {
-        if($(el).nsFieldActive !== true)
+        if(el.nsFieldActive !== true)
         {
             $(el).tooltip({container:'body'});
         }
@@ -289,7 +324,7 @@ $(document).on('nsFormUpdate', function(ev)
     
     $('[data-rel=popover]').each(function(i, el)
     {
-        if($(el).nsFieldActive !== true)
+        if(el.nsFieldActive !== true)
         {
             $(el).popover({container:'body'});
         }
