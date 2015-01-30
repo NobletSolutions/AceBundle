@@ -12,7 +12,9 @@ use \NS\AceBundle\Form\Transformer\EntityToJson;
  */
 class TransformerTest extends \PHPUnit_Framework_TestCase
 {
-
+    /**
+     *
+     */
     public function testCollectionToJsonReverseTransform()
     {
         $classes[] = new Entity(1);
@@ -51,6 +53,9 @@ class TransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($classes[2], $obj[2]);
     }
 
+    /**
+     *
+     */
     public function testCollectionToJsonTransform()
     {
         $classes[] = new Entity(1);
@@ -72,6 +77,9 @@ class TransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($jsonStr, $obj);
     }
 
+    /**
+     *
+     */
     public function testEntityToJsonReverseTransform()
     {
         $class     = new Entity(1);
@@ -90,6 +98,9 @@ class TransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($class, $obj);
     }
 
+    /**
+     *
+     */
     public function testEntityToJsonTransform()
     {
         $jsonStr = '{"id":1,"name":"Does Not Matter"}';
@@ -102,6 +113,9 @@ class TransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($jsonStr, $obj);
     }
 
+    /**
+     *
+     */
     private function getEntityManager()
     {
         return $this->getMockBuilder('Doctrine\ORM\EntityManager')

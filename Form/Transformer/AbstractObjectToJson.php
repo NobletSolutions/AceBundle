@@ -76,6 +76,7 @@ abstract class AbstractObjectToJson implements DataTransformerInterface
      *
      * @param array $item
      * @param mixed $key
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function walk(&$item, $key)
     {

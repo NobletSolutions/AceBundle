@@ -36,7 +36,7 @@ class DateTypeTest extends BaseFormTestType
     /**
      * @dataProvider getDateTimePickerData
      */
-    public function testDateTimePickerType($formData, $converter, $format, $date)
+    public function testDateTimePickerType($formData, $converter, $date)
     {
         $this->assertArrayHasKey('datepicker', $formData);
         $this->assertArrayHasKey('date', $formData['datepicker']);
@@ -56,6 +56,10 @@ class DateTypeTest extends BaseFormTestType
         $this->commonTest($form, $formData);
     }
 
+    /**
+     *
+     * @return array
+     */
     public function getDatePickerData()
     {
         $converter = new DateFormatConverter();
@@ -88,46 +92,45 @@ class DateTypeTest extends BaseFormTestType
         );
     }
 
+    /**
+     *
+     * @return array
+     */
     public function getDateTimePickerData()
     {
         $converter   = new DateFormatConverter();
-        $longFormat  = $converter->getFormat(true);
-//        $shortFormat = $converter->getFormat();
 
         return array(
             array(
                 'formData'  => array('datepicker' => array('date' => '07/07/2014',
                         'time' => '12:10')),
                 'converter' => $converter,
-                'format'    => $longFormat,
                 'date'      => new \DateTime('2014-07-07 12:10'),
             ),
             array(
                 'formData'  => array('datepicker' => array('date' => '01/01/2014',
                         'time' => '12:10')),
                 'converter' => $converter,
-                'format'    => $longFormat,
                 'date'      => new \DateTime('2014-01-01 12:10'),
             ),
             array(
                 'formData'  => array('datepicker' => array('date' => '12/07/2014',
                         'time' => '12:10')),
                 'converter' => $converter,
-                'format'    => $longFormat,
                 'date'      => new \DateTime('2014-12-07 12:10'),
             ),
 //            array(
 //                'formData'  => array('date' => '12/07/14'),
 //                'converter' => $converter,
-//                'format'    => $shortFormat),
+//                ),
 //            array(
 //                'formData'  => array('date' => '01/01/14'),
 //                'converter' => $converter,
-//                'format'    => $shortFormat),
+//                ),
 //            array(
 //                'formData'  => array('date' => '07/07/14'),
 //                'converter' => $converter,
-//                'format'    => $shortFormat),
+//                ),
         );
     }
 }
