@@ -16,21 +16,24 @@ class CollectionToJson extends AbstractObjectToJson
     /**
      * Transforms an object (issue) to a json {id: integer, string: string }
      *
-     * @param  Entity|null $entity
+     * @param  Entity|null $entities
      * @return string
+     * @throws UnexpectedTypeException
+     *
+     * @todo allow configuration of the entity toString method
      */
     public function transform($entities)
     {
         if (null === $entities || empty($entities))
             return "";
 
-        if (!$entities instanceof Collection)
+        if (!$entities instanceof Collection && !is_array($entities))
             throw new UnexpectedTypeException($entities, 'PersistentCollection or ArrayCollection');
 
         $idsArray = array();
         // check for interface...
         foreach ($entities as $entity)
-            $idsArray[$entity->getId()] = $entity->__toString();
+            $idsArray[] = array('id' => $entity->getId(), 'name' => $entity->__toString());
 
         if (empty($idsArray))
             return null;
@@ -43,6 +46,7 @@ class CollectionToJson extends AbstractObjectToJson
      *
      * @param  string|null $jsonStr
      * @return Entity
+     * @throws UnexpectedTypeException
      */
     public function reverseTransform($jsonStr)
     {
@@ -57,6 +61,8 @@ class CollectionToJson extends AbstractObjectToJson
         if (empty($idsArray))
             return new ArrayCollection();
 
-        return $this->getEntityManager()->getRepository($this->getClass())->getByIds(array_keys($idsArray));
+        array_walk($idsArray, array($this, 'walk'));
+
+        return $idsArray;
     }
 }

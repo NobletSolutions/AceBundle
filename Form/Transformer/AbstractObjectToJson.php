@@ -71,4 +71,25 @@ abstract class AbstractObjectToJson implements DataTransformerInterface
         $this->class = $class;
         return $this;
     }
+
+    /**
+     *
+     * @param array $item
+     * @param mixed $key
+     */
+    public function walk(&$item, $key)
+    {
+        $item = $this->getReference($item['id']);
+    }
+
+    /**
+     *
+     * @param integer $id
+     * @param mixed $key
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function getReference(&$id)
+    {
+        return $this->entityMgr->getReference($this->class, $id);
+    }
 }
