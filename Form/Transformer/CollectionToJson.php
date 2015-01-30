@@ -19,8 +19,6 @@ class CollectionToJson extends AbstractObjectToJson
      * @param  Entity|null $entities
      * @return string
      * @throws UnexpectedTypeException
-     *
-     * @todo allow configuration of the entity toString method
      */
     public function transform($entities)
     {
@@ -33,7 +31,7 @@ class CollectionToJson extends AbstractObjectToJson
         $idsArray = array();
         // check for interface...
         foreach ($entities as $entity)
-            $idsArray[] = array('id' => $entity->getId(), 'name' => $entity->__toString());
+            $idsArray[] = array('id' => $entity->getId(), 'name' => $this->getProperty($entity));
 
         if (empty($idsArray))
             return null;

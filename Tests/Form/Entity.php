@@ -47,4 +47,13 @@ class Entity
     {
         return 'Does Not Matter';
     }
+
+    /**
+     *
+     * @return string
+     */
+    public function getSomeProperty()
+    {
+        return 'It Matters';
+    }
 }

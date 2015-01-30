@@ -113,6 +113,39 @@ class TransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($jsonStr, $obj);
     }
 
+    public function testCollectionToJsonTransformCustomMethod()
+    {
+        $classes[] = new Entity(1);
+        $classes[] = new Entity(2);
+        $classes[] = new Entity(3);
+        $className = get_class($classes[0]);
+
+        $entityMgrMock = $this->getEntityManager();
+
+        $jsonStr = json_encode(array(
+            array('id' => $classes[0]->getId(), 'name' => 'It Matters'),
+            array('id' => $classes[1]->getId(), 'name' => 'It Matters'),
+            array('id' => $classes[2]->getId(), 'name' => 'It Matters'),
+        ));
+
+        $transformer = new CollectionToJson($entityMgrMock, $className, 'someProperty');
+        $obj         = $transformer->transform($classes);
+
+        $this->assertEquals($jsonStr, $obj);
+    }
+
+    public function testEntityToJsonTransformCustomMethod()
+    {
+        $jsonStr = '{"id":1,"name":"It Matters"}';
+        $class   = new Entity(1);
+
+        $entityMgrMock = $this->getEntityManager();
+        $transformer   = new EntityToJson($entityMgrMock, 'NS\AceBundle\Tests\Form\Entity', 'someProperty');
+        $obj           = $transformer->transform($class);
+
+        $this->assertEquals($jsonStr, $obj);
+    }
+
     /**
      *
      */

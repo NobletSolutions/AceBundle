@@ -12,8 +12,6 @@ class EntityToJson extends AbstractObjectToJson
     /**
      * Transforms an object (issue) to a json {"id": integer, "name": "string" }
      *
-     * @todo allow configuration of the entity toString method
-     *
      * @param  Entity|null $entity
      * @return string
      */
@@ -25,7 +23,7 @@ class EntityToJson extends AbstractObjectToJson
         if (!$entity instanceof $this->class)
             throw new \InvalidArgumentException(sprintf("Expecting entity of type '%s' but received '%s'", $this->class, get_class($entity)));
 
-        return json_encode(array('id' => $entity->getId(), 'name' => $entity->__toString()));
+        return json_encode(array('id' => $entity->getId(), 'name' => $this->getProperty($entity)));
     }
 
     /**
