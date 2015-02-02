@@ -16,9 +16,10 @@ class Entity
     /**
      * @param integer $id
      */
-    public function __construct($id)
+    public function __construct($id = null)
     {
-        $this->id = $id;
+        if ($id !== NULL)
+            $this->id = $id;
     }
 
     /**

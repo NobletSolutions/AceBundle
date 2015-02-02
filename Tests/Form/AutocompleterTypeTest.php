@@ -134,6 +134,25 @@ class AutocompleterTypeTest extends BaseFormTestType
         $this->assertEquals('[{"id":1,"name":"Does Not Matter"}]', $view['auto']->vars['value']);
     }
 
+    public function testFormWithNullData()
+    {
+        $entity    = new Entity(1);
+        $className = get_class($entity);
+        $entityMgr = $this->getEntityManager();
+
+        $entityMgr->expects($this->never())
+            ->method('getReference');
+
+        $form = $this->factory
+            ->createBuilder()
+            ->add('auto', new AutocompleterType($entityMgr), array('class' => $className,))
+            ->getForm();
+
+        $form->submit(array());
+        $data = $form['auto']->getData();
+        $this->assertNull($data);
+    }
+
     private function getRouter()
     {
         return $this->getMockBuilder('\Symfony\Component\Routing\RouterInterface')
