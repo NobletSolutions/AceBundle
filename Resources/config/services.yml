@@ -2,6 +2,10 @@ parameters:
 #    ns_ace.example.class: NS\AceBundle\Example
 
 services:
+    ns_ace.form.entity_create:
+        class: NS\AceBundle\Form\EntityOrCreateType
+        tags:
+            - { name: form.type, alias: entity_create }
     ns_ace.form.iconbutton_extension:
       class: NS\AceBundle\Form\Extensions\ButtonTypeExtension
       tags:
