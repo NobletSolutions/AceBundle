@@ -233,20 +233,20 @@
     <span class="input-group-btn">
         <button id="modal_trigger_{{form.finder.vars.id}}" type="button" class="btn btn-sm btn-success" data-input="{{form.finder.vars.id}}" data-toggle="modal" data-target="#modal_{{form.finder.vars.id}}">
             <span class="ace-icon fa fa-plus icon-on-right bigger-110"></span>
-            <span class="entity-modal-status">Add</span>
+            <span class="entity-modal-status"> Add</span>
         </button>
     </span>
     {% endif %}
 </div>
 {% if include_form %}
 <div id="modal_{{form.finder.vars.id}}" class="modal fade entity-modal" data-input="{{form.finder.vars.id}}">
-    <div class="modal-dialog">
+    <div class="modal-dialog{%if modal_size is defined %} {{modal_size}}{% endif %}">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Create New {{ form.vars.name|humanize }}</h4>
             </div>
             <div class="modal-body">
-                {{form_row(form.createForm)}}
+                {{form_widget(form.createForm)}}
             </div>
             <div class="modal-footer">
                 <span>This {{ form.vars.name|humanize }} will be saved when you submit the original form. </span>

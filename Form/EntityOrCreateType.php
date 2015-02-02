@@ -46,6 +46,9 @@ class EntityOrCreateType extends AbstractType
     {
         $view->vars['include_button'] = $options['include_button'];
         $view->vars['include_form']   = $options['include_form'];
+
+        if (isset($options['modal_size']))
+            $view->vars['modal_size'] = sprintf("modal-%d", $options['modal_size']);
     }
 
     /**
@@ -55,11 +58,13 @@ class EntityOrCreateType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setRequired(array('class', 'type'));
-        $resolver->setOptional(array('entity_options', 'create_options'));
+        $resolver->setOptional(array('entity_options', 'create_options', 'modal_size'));
         $resolver->setDefaults(array(
             'include_button' => true,
             'include_form'   => true
         ));
+        $resolver->setAllowedValues(array('modal_size' => array(1, 2, 3, 4, 5, 6,
+                7, 8, 9, 10, 11, 12)));
     }
 
     /**
