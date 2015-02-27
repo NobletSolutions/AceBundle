@@ -188,11 +188,12 @@ label {
     margin: 0.5em 0;
 }
 
-ul.token-input-list {
+.entity-create ul.token-input-list {
     font-size: 14px;
+    display: table-cell;
 }
 
-ul.token-input-list li input {
+.entity-create ul.token-input-list li input {
     padding: 5px 4px 6px;
 }
 
