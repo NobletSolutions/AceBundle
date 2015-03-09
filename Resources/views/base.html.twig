@@ -203,7 +203,11 @@
 
                     <div class="row">
                         <div class="col-xs-12">
-                            {% block flash %}{% endblock %}
+                            {% block flash %}
+                                {% if bundleExists('NSFlashBundle') %}
+                                    {{ flash_messages() }}
+                                {% endif %}
+                            {% endblock %}
                             {% block body %}{% endblock %}
                         </div><!--/.col-->
                     </div><!--/.row-->

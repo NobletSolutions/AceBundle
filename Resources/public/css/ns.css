@@ -197,6 +197,10 @@ label {
     padding: 5px 4px 6px;
 }
 
+.form-group .help-block.inline {
+    margin-left: 10px;
+}
+
 .modal-dialog.modal-12 {
     width: 100%;
 }
