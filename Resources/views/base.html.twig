@@ -145,7 +145,7 @@
           </div><!-- /.container -->
         </div>
     {% endblock %}
-    <div class="main-container" id="main-container">
+    <div class="main-container {%block container_class %}{% endblock %}" id="main-container">
         <script type="text/javascript">
             try{ace.settings.check('main-container' , 'fixed');}catch(e){}
         </script>
