@@ -100,3 +100,9 @@ services:
       arguments: [ @service_container ]
       tags:
         - { name: twig.extension }
+          
+    ns.twig.ace_extension:
+        class: NS\AceBundle\Twig\AceExtension
+        arguments: [@service_container]
+        tags:
+        - { name: twig.extension }

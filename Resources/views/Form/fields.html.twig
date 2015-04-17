@@ -20,6 +20,18 @@
 {% endspaceless %}
 {% endblock form_row %}
 
+{% block form_horizontal %}
+{% spaceless %}
+<div class="form-group{% if not form.vars.valid %} has-error{% endif %}">
+    {{form_label(form, null, {'label_attr':{'class':'col-sm-3 control-label'}}) }}
+    <div class="col-sm-9">
+        {{form_widget(form)}}
+        {{form_errors(form)}}
+    </div>
+</div>
+{% endspaceless %}
+{% endblock form_horizontal %}
+
 {%block switch_row %}
 <div class="form_group">
     {% if label is not sameas(false) %}
