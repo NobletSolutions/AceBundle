@@ -35,7 +35,7 @@
     <i class="{{ item.getExtra('icon')}}"></i>
     {%endif %}
     
-    <span class="menu-text" {%- if item.uri is empty or item.current or not options.currentAsLink %}{{ _self.attributes(item.labelAttributes) }}{%endif%}>{{block('label')}}</span>
+    <span class="menu-text" {%- if item.uri is empty or item.current or not options.currentAsLink %}{{ _self.attributes(item.labelAttributes) }}{%endif%}> {{block('label')}}</span>
 
     {% if item.hasChildren %}
     <b class="arrow fa fa-angle-down"></b>
