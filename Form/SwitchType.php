@@ -19,7 +19,7 @@ class SwitchType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array('switchtype' => 1));
+        $resolver->setDefaults(array('switchtype' => 1, 'hidelabel'=>false));
         $resolver->setAllowedValues(array('switchtype' => range(1,7)));
     }
 
@@ -33,6 +33,8 @@ class SwitchType extends AbstractType
             $view->vars['attr']['class'] .= 'ace ace-switch ace-switch-'.$options['switchtype'];
         else
             $view->vars['attr']['class'] = 'ace ace-switch ace-switch-'.$options['switchtype'];
+
+        $view->vars['hidelabel'] = $options['hidelabel'];
     }
 
     /**

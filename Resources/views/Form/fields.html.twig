@@ -2,11 +2,8 @@
 {% spaceless %}
     {% if errors|length > 0 %}
         {% for error in errors %}
-        <div class="alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>
-            <strong>Error</strong>
-            {{ error.message }}
-            <br>
+        <div class="help-block col-xs-12 col-sm-reset inline">
+             {{ error.message }}
         </div>
         {% endfor %}
     {% endif %}
@@ -15,7 +12,7 @@
 
 {% block form_row %}
 {% spaceless %}
-<div class="form-group">
+<div class="form-group{% if not form.vars.valid %} has-error{% endif %}">
     {{form_label(form)}}
     {{form_widget(form)}}
     {{form_errors(form)}}
@@ -23,8 +20,25 @@
 {% endspaceless %}
 {% endblock form_row %}
 
+{% block form_horizontal %}
+{% spaceless %}
+<div class="form-group{% if not form.vars.valid %} has-error{% endif %}">
+    {{form_label(form, null, {'label_attr':{'class':'col-sm-3 control-label'}}) }}
+    <div class="col-sm-9">
+        {{form_widget(form)}}
+        {{form_errors(form)}}
+    </div>
+</div>
+{% endspaceless %}
+{% endblock form_horizontal %}
+
 {%block switch_row %}
 <div class="form_group">
+    {{ form_widget(form) }}
+</div>
+{%endblock %}
+
+{%block switch_widget %}
     {% if label is not sameas(false) %}
         {% if not compound %}
             {% set label_attr = label_attr|merge({'for': id}) %}
@@ -32,15 +46,14 @@
         {% if required %}
             {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
         {% endif %}
-        {% if label is empty %}
+        {% if label is empty and not hidelabel %}
             {% set label = name|humanize %}
         {% endif %}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}
-            {{form_widget(form)}}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ hidelabel ? '' : label|trans({}, translation_domain) }}
+            <input {{ block('widget_attributes') }} type="checkbox" {% if checked %}checked{%endif%}{% if value is defined %} value="{{ value }}"{% endif %} />
             <span class="lbl"></span>
         </label>
     {% endif %}    
-</div>
 {%endblock %}
 
 {%block slider_row %}
@@ -224,7 +237,7 @@
 {% endblock submit_widget %}
 
 {%block entity_create_widget %}
-<div class="input-group">
+<div class="input-group entity-create">
     <span class="input-group-addon">
         <i class="ace-icon fa fa-search"></i>
     </span>
@@ -233,20 +246,20 @@
     <span class="input-group-btn">
         <button id="modal_trigger_{{form.finder.vars.id}}" type="button" class="btn btn-sm btn-success" data-input="{{form.finder.vars.id}}" data-toggle="modal" data-target="#modal_{{form.finder.vars.id}}">
             <span class="ace-icon fa fa-plus icon-on-right bigger-110"></span>
-            <span class="entity-modal-status">Add</span>
+            <span class="entity-modal-status"> Add</span>
         </button>
     </span>
     {% endif %}
 </div>
 {% if include_form %}
 <div id="modal_{{form.finder.vars.id}}" class="modal fade entity-modal" data-input="{{form.finder.vars.id}}">
-    <div class="modal-dialog">
+    <div class="modal-dialog{%if modal_size is defined %} {{modal_size}}{% endif %}">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Create New {{ form.vars.name|humanize }}</h4>
             </div>
             <div class="modal-body">
-                {{form_row(form.createForm)}}
+                {{form_widget(form.createForm)}}
             </div>
             <div class="modal-footer">
                 <span>This {{ form.vars.name|humanize }} will be saved when you submit the original form. </span>
@@ -257,4 +270,25 @@
     </div>
 </div>
 {% endif %}
+{% endblock %}
+
+{% block checkbox_widget %}
+    <div class="checkbox">
+        <label>
+            {% set attr = attr|merge({'class':'ace'}) %}
+            <input {{ block('widget_attributes') }} type="checkbox" {% if checked %}checked{%endif%}{% if value is defined %} value="{{ value }}"{% endif %} />
+            <span class="lbl">
+                {% if label is not sameas(false) -%}
+                    {% if label is empty -%}
+                        {%- if label_format is not empty -%}
+                            {% set label = label_format|replace({'%name%': name,'%id%': id,}) %}
+                        {%- else -%}
+                            {% set label = name|humanize %}
+                        {%- endif -%}
+                    {%- endif -%}
+                    {{ label|trans({}, translation_domain) }}
+                {%- endif -%}
+            </span>
+        </label>
+    </div>
 {% endblock %}
