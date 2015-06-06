@@ -4,6 +4,9 @@ namespace NS\AceBundle\Twig;
 
 class AceExtension extends \Twig_Extension
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getFunctions()
     {
         return array(
@@ -11,6 +14,9 @@ class AceExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'ace_extension';
