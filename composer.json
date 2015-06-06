@@ -19,6 +19,10 @@
 	"symfony/symfony":              ">=2.1",
         "jms/translation-bundle":       "~1.1"
     },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "liip/rmt": "^1.1"
+    },
     "suggest": {
         "punkave/symfony2-file-uploader-bundle": "Allows for drag & drop or multiple file upload"
     },
@@ -27,4 +31,3 @@
     },
     "target-dir": "NS/AceBundle"
 }
-
