@@ -11,6 +11,7 @@ use \Symfony\Component\Form\DataTransformerInterface;
  */
 class EntityOrCreate implements DataTransformerInterface
 {
+
     /**
      * This takes the submitted values and determines which to submit
      * 
@@ -19,10 +20,12 @@ class EntityOrCreate implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if (!empty($value['finder']) && is_object($value['finder']))
+        if (!empty($value['finder']) && is_object($value['finder'])) {
             return $value['finder'];
-        else if (!empty($value['createForm']))
+        }
+        elseif (!empty($value['createForm'])) {
             return $value['createForm'];
+        }
 
         return null;
     }
@@ -34,8 +37,8 @@ class EntityOrCreate implements DataTransformerInterface
      */
     public function transform($value)
     {
-        if ($value === null)
+        if ($value === null) {
             return $value;
-
+        }
     }
 }

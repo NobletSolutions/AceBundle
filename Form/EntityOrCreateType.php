@@ -29,8 +29,9 @@ class EntityOrCreateType extends AbstractType
 
         $builder->add('finder', 'autocompleter', $entityOptions);
 
-        if ($options['include_form'])
+        if ($options['include_form']) {
             $builder->add('createForm', $options['type'], isset($options['create_options']) ? $options['create_options'] : array());
+        }
 
         $builder->addModelTransformer(new EntityOrCreate());
     }
@@ -47,8 +48,9 @@ class EntityOrCreateType extends AbstractType
         $view->vars['include_button'] = $options['include_button'];
         $view->vars['include_form']   = $options['include_form'];
 
-        if (isset($options['modal_size']))
+        if (isset($options['modal_size'])) {
             $view->vars['modal_size'] = sprintf("modal-%d", $options['modal_size']);
+        }
     }
 
     /**
