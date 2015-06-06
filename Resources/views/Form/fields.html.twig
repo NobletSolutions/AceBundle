@@ -160,6 +160,11 @@
 <div class="form-group">
     {{form_label(form)}}
     <div class="input-group">
+    {% if icon is defined %}
+        <span class="input-group-addon">
+            <i class="ace-icon {{icon}}"></i>
+        </span>
+    {% endif %}
         <input type="text" {{ block('widget_attributes') }} {% if value is defined %} value="{{ value }}"{% endif %}/>
     </div>
 </div>
