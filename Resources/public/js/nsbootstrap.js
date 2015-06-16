@@ -334,4 +334,37 @@ $(document).on('nsFormUpdate', function(ev)
             $(el).popover({container:'body'});
         }
     });
+    
+    $('.ns-confirm').each(function(i, el)
+    {
+        if($(el).is(':visible'))
+        {
+            if(el.nsFieldActive !== true)
+            {
+                var msg = 'Are you sure you wish to continue?';
+                
+                if($(el).data('confirmMessage'))
+                {
+                    msg = $(el).data('confirm-message');
+                }
+                
+                el.nsFieldActive = true;
+                
+                if($(el).is('form'))
+                {
+                    $(el).submit(function()
+                    {
+                       return confirm(msg);
+                    });
+                }
+                else
+                {
+                    $(el).click(function()
+                    {
+                       return confirm(msg); 
+                    });
+                }
+            }
+        }
+    });
 });
