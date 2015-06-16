@@ -46,8 +46,7 @@ class AutocompleterType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if (isset($options['class']))
-        {
+        if (isset($options['class'])) {
             $property    = (isset($options['property'])) ? $options['property'] : null;
             $transformer = ($options['multiple'] == true) ? new CollectionToJson($this->entityMgr, $options['class'], $property) : new EntityToJson($this->entityMgr, $options['class'], $property);
 
@@ -60,7 +59,7 @@ class AutocompleterType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setOptional(array('route', 'autocompleteUrl', 'class', 'property'));
+        $resolver->setOptional(array('route', 'autocompleteUrl', 'class', 'property','icon'));
 
         $resolver->setDefaults(array(
             'method'        => 'POST',
@@ -77,19 +76,25 @@ class AutocompleterType extends AbstractType
 
     /**
      * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $ar   = array('method', 'queryParam', 'minChars', 'prePopulate', 'hintText',
-            'noResultsText', 'searchingText');
+        $ar   = array('method', 'queryParam', 'minChars', 'prePopulate', 'hintText','noResultsText', 'searchingText');
         $opts = array_intersect_key($options, array_flip($ar));
 
         $opts['tokenLimit'] = $options['multiple'] ? null : 1;
 
-        if (!isset($options['autocompleteUrl']) && $this->router && isset($options['route']))
+        if (!isset($options['autocompleteUrl']) && $this->router && isset($options['route'])) {
             $view->vars['attr']['data-autocompleteUrl'] = $this->router->generate($options['route']);
-        else if (isset($options['autocompleteUrl']))
+        }
+        elseif (isset($options['autocompleteUrl'])) {
             $view->vars['attr']['data-autocompleteUrl'] = $options['autocompleteUrl'];
+        }
+
+        if (isset($options['icon'])) {
+            $view->vars['icon'] = $options['icon'];
+        }
 
         $view->vars['attr']['data-options'] = json_encode($opts);
     }

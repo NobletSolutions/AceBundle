@@ -12,7 +12,7 @@
             <!-- basic styles -->
             <link href="{{asset('bundles/nsace/css/bootstrap.min.css')}}" rel="stylesheet" />
 
-            <link rel="stylesheet" href="{{asset('bundles/nsace/css/font-awesome.min.css')}}" />
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
             <!--[if IE 7]>
               <link rel="stylesheet" href="{{asset('bundles/nsace/css/font-awesome-ie7.min.css')}}" />
             <![endif]-->
@@ -145,7 +145,7 @@
           </div><!-- /.container -->
         </div>
     {% endblock %}
-    <div class="main-container" id="main-container">
+    <div class="main-container {%block container_class %}{% endblock %}" id="main-container">
         <script type="text/javascript">
             try{ace.settings.check('main-container' , 'fixed');}catch(e){}
         </script>
@@ -203,7 +203,11 @@
 
                     <div class="row">
                         <div class="col-xs-12">
-                            {% block flash %}{% endblock %}
+                            {% block flash %}
+                                {% if bundleExists('NSFlashBundle') %}
+                                    {{ flash_messages() }}
+                                {% endif %}
+                            {% endblock %}
                             {% block body %}{% endblock %}
                         </div><!--/.col-->
                     </div><!--/.row-->
