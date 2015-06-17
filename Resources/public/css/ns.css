@@ -3,6 +3,16 @@ label.required:after {
     color: #d15b47;
 }
 
+.radio > label.required:after {
+    content: "";
+    color: #d15b47;
+}
+
+.checkbox > label.required:after {
+    content: "";
+    color: #d15b47;
+}
+
 /* File Upload */
 .nsFileUpload {
     position: relative;
