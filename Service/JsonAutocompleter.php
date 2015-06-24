@@ -47,6 +47,13 @@ class JsonAutocompleter
         return $this;
     }
 
+    /**
+     * @param Request $request
+     * @param EntityRepository $repository
+     * @param string $method
+     * @param integer $limit
+     * @return Response
+     */
     public function getResults(Request $request, $repository, $method, $limit = 20)
     {
         $fields = new \NS\AceBundle\Ajax\Fields($request->request->get('q'), $request->request->get('secondary-field'));
