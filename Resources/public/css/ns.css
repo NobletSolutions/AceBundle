@@ -13,6 +13,24 @@ label.required:after {
     color: #d15b47;
 }
 
+/* Errors */
+div.has-error {
+    background: #f2dede;
+    color: #a94442;
+    border: 1px solid #a94442;
+    padding: 0 5px;
+}
+
+div.has-error label:before {
+    font-family: FontAwesome;
+    content: "";
+    color: #d15b47;
+    padding-right: 5px;
+    font-size: 120%;
+    width: 3px;
+    text-align: center;
+}
+
 /* File Upload */
 .nsFileUpload {
     position: relative;
