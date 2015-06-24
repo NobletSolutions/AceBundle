@@ -14,6 +14,31 @@ label.required:after {
 }
 
 /* Errors */
+div.help-block.form-error {
+    background: #f2dede;
+    color: #a94442;
+    border: 1px solid #a94442;
+    padding: 5px;
+    margin: 10px;
+}
+
+div.help-block.form-error:before {
+    font-family: FontAwesome;
+    content: "";
+    color: #d15b47;
+    padding-right: 5px;
+    font-size: 120%;
+}
+
+div.has-error div.help-block.form-error {
+    margin: 0;
+    border: none;
+}
+
+div.has-error div.help-block.form-error:before {
+    display: none;
+}
+
 div.has-error {
     background: #f2dede;
     color: #a94442;
@@ -27,8 +52,6 @@ div.has-error label:before {
     color: #d15b47;
     padding-right: 5px;
     font-size: 120%;
-    width: 3px;
-    text-align: center;
 }
 
 /* File Upload */

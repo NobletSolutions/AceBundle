@@ -2,7 +2,7 @@
 {% spaceless %}
     {% if errors|length > 0 %}
         {% for error in errors %}
-        <div class="help-block col-xs-12 col-sm-reset inline">
+        <div class="help-block col-xs-12 col-sm-reset inline form-error">
              {{ error.message }}
         </div>
         {% endfor %}
