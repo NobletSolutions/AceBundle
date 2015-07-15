@@ -63,7 +63,8 @@ class EntityOrCreateType extends AbstractType
         $resolver->setOptional(array('entity_options', 'create_options', 'modal_size'));
         $resolver->setDefaults(array(
             'include_button' => true,
-            'include_form'   => true
+            'include_form'   => true,
+            'error_bubbling' => false,
         ));
         $resolver->setAllowedValues(array('modal_size' => array(1, 2, 3, 4, 5, 6,
                 7, 8, 9, 10, 11, 12)));
