@@ -248,7 +248,7 @@ $(document).on('nsFormUpdate', function(ev)
         {
             el.nsFieldActive = true;
             //Add event handlers
-            el.contextState = 'active';
+//            el.contextState = 'active';
             $(el).change(function(event)
             {
                 toggleContextFields(el);
@@ -302,17 +302,29 @@ $(document).on('nsFormUpdate', function(ev)
                 }
             }
         
-            if(result/* && input.parent.contextState === 'active'*/)
+            console.log(input, input.parent, input.parent.contextState);
+            if(result)
             {
-                $(element).show();
-                label.show();
-//                input.contextState = 'active';
+                if(input.parent.contextState === undefined || input.parent.contextState === 'active')
+                {
+                    $(element).show();
+                    label.show();
+                    input.contextState = 'active';
+                }
+                else
+                {
+                    $(element).hide();
+                    label.hide();
+                    input.contextState = 'inactive';
+//                    console.log(input.id+' inactive');
+                }
             }
             else
             {
                 $(element).hide();
                 label.hide();
-//                input.contextState = 'inactive';
+                input.contextState = 'inactive';
+//                    console.log(input.id+' also inactive');
             }
 
             toggleContextFields(input);
