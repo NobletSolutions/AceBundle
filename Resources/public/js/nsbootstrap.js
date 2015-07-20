@@ -223,7 +223,7 @@ $(document).on('nsFormUpdate', function(ev)
         if(el.nsFieldActive !== true)
         {
             el.nsFieldActive = true;
-            $(el).chosen({allow_single_deselect:true});
+            $(el).chosen({allow_single_deselect:true, search_contains:($(el).data('search-contains') ? true : false)});
         }
     });
     
