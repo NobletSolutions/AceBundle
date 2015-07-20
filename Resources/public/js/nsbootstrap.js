@@ -62,7 +62,7 @@ $(document).ready(function() {
     
     $('.chosen-select').each(function(i, el)
     {
-        $(el).chosen({allow_single_deselect:true});
+        $(el).chosen({allow_single_deselect:true, search_contains:($(el).data('search-contains') ? true : false)});
     });
 
     $('input.nsMasked').each(function(i, el)
