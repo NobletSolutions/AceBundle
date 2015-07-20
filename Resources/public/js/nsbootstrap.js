@@ -59,6 +59,11 @@ $(document).ready(function() {
     {
         $(el).ace_spinner($(el).data('options'));
     });
+    
+    $('.chosen-select').each(function(i, el)
+    {
+        $(el).chosen({allow_single_deselect:true});
+    });
 
     $('input.nsMasked').each(function(i, el)
     {
