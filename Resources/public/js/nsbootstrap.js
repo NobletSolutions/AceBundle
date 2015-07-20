@@ -218,6 +218,15 @@ $(document).on('nsFormUpdate', function(ev)
         }
     });
     
+    $('.chosen-select').each(function(i, el)
+    {
+        if(el.nsFieldActive !== true)
+        {
+            el.nsFieldActive = true;
+            $(el).chosen({allow_single_deselect:true});
+        }
+    });
+    
     $('a.filter_legend').each(function(i, el)
     {
         if(el.nsFieldActive !== true)
