@@ -157,6 +157,10 @@ div.datepicker-dropdown {
     z-index: 1050 !important;
 }
 
+.datepicker table {
+    width: 100%;
+}
+
 .form-group:after {
     content: " ";
     clear: both;
