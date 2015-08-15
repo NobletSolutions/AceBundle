@@ -1,0 +1,33 @@
+{% macro step_class(flow,step) %}
+    {%- if step == flow.getCurrentStepNumber() -%}
+        {{- ' class="active"' -}}
+    {%- elseif flow.isStepSkipped(step) -%}
+        {{- ' class="craue_formflow_skipped_step"' -}}
+    {%- elseif flow.isStepDone(step) -%}
+        {{- ' class="complete"' -}}
+    {%- endif -%}
+{% endmacro %}
+
+{% import _self as step %}
+
+<div>
+    {%- if flow.getStepLabels() is not empty -%}
+        <ul class="steps">
+            {% for stepLabel in flow.getStepLabels() %}
+                <li{{ step.step_class(flow,loop.index) }} data-step="{{ loop.index }}">
+                    <span class="step">{{ loop.index }}</span>
+                    {%- if craue_isStepLinkable(flow, loop.index) -%}
+                        <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all
+                        | merge(app.request.attributes.get('_route_params'))
+                        | craue_addDynamicStepNavigationParameter(flow, loop.index)) }}">
+                            <span class="title">{{ stepLabel }}</span>
+                        </a>
+                    {%- else -%}
+                        <span class="title">{{ stepLabel }}</span>
+                    {%- endif -%}
+                </li>
+            {% endfor %}
+        </ul>
+    {%- endif -%}
+</div>
+<hr>
