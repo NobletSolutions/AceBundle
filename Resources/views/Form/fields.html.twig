@@ -69,27 +69,6 @@
 </div>
 {%endblock %}
 
-{% block acedate_label %}
-    <label for="form-field-mask-1">
-        Date
-        <small class="text-success">99/99/9999</small>
-    </label>
-{% endblock %}
-
-{%block acedate_row %}
-<div class="form-group">
-    {{form_label(form)}}
-    <div class="input-group">
-        <input class="form-control input-mask-date" type="text" id="form-field-mask-1" />
-        <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">
-                <i class="fa fa-calendar bigger-110"></i>Go!
-            </button>
-        </span>
-    </div>
-</div>
-{%endblock %}
-
 {%block acedatepicker_widget %}
 <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}/>
 {%endblock %}
