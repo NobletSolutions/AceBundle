@@ -3,6 +3,7 @@
     "type": "symfony-bundle",
     "description": "This bundle provides bootstrap template",
     "minimum-stability": "stable",
+    "license": "MIT",
     "authors": [
         {
             "name": "Nathanael David Noblet",
@@ -28,7 +29,6 @@
         "craue/formflow-bundle": "~3.0@dev"
     },
     "autoload": {
-        "psr-0": { "NS\\AceBundle": "" }
-    },
-    "target-dir": "NS/AceBundle"
+        "psr-4": { "NS\\AceBundle\\": "" }
+    }
 }
