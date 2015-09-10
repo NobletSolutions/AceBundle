@@ -24,7 +24,8 @@
         "liip/rmt": "~1.1"
     },
     "suggest": {
-        "punkave/symfony2-file-uploader-bundle": "Allows for drag & drop or multiple file upload"
+        "punkave/symfony2-file-uploader-bundle": "Allows for drag & drop or multiple file upload",
+        "craue/formflow-bundle": "~3.0@dev"
     },
     "autoload": {
         "psr-0": { "NS\\AceBundle": "" }

@@ -198,6 +198,10 @@ div.datepicker-dropdown {
     z-index: 1050 !important;
 }
 
+.datepicker table {
+    width: 100%;
+}
+
 .form-group:after {
     content: " ";
     clear: both;
@@ -251,6 +255,7 @@ label {
 
 .entity-create ul.token-input-list li input {
     padding: 5px 4px 6px;
+    width: 25px;
 }
 
 .form-group .help-block.inline {

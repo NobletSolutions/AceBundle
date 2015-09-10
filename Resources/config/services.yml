@@ -38,11 +38,6 @@ services:
       tags:
         - { name: form.type, alias: slider }
 
-    ns_ace.form.type.acedate:
-      class: NS\AceBundle\Form\DateType
-      tags:
-        - { name: form.type, alias: acedate }
-
     ns_ace.form.type.acedatepicker:
       class: NS\AceBundle\Form\DatePickerType
       arguments: [ @ns_ace.date_format_converter ]

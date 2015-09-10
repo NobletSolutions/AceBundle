@@ -69,59 +69,20 @@
 </div>
 {%endblock %}
 
-{% block acedate_label %}
-    <label for="form-field-mask-1">
-        Date
-        <small class="text-success">99/99/9999</small>
-    </label>
-{% endblock %}
-
-{%block acedate_row %}
-<div class="form-group">
-    {{form_label(form)}}
-    <div class="input-group">
-        <input class="form-control input-mask-date" type="text" id="form-field-mask-1" />
-        <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">
-                <i class="fa fa-calendar bigger-110"></i>Go!
-            </button>
-        </span>
-    </div>
-</div>
-{%endblock %}
-
 {%block acedatepicker_widget %}
-<input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}/>
-{%endblock %}
-
-{%block acedatepicker_row %}
-<div class="form-group">
-    {{form_label(form)}}
-    <div class="input-group input-large">
-        {{form_widget(form)}}
-        <span class="input-group-addon">
-            <i class="fa fa-calendar bigger-110"></i>
-        </span>
-    </div>
-    {{form_errors(form)}}
+<div class="input-group input-large">
+    <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}/>
+    <span class="input-group-addon">
+        <i class="fa fa-calendar bigger-110"></i>
+    </span>
 </div>
 {%endblock %}
 
 {%block acedaterange_widget %}
-<input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}/><span class="input-group-addon">
-            <i class="fa fa-calendar bigger-110"></i>
-        </span>
-{%endblock %}
-
-{%block acedaterange_row %}
-<div class="form-group">
-    {{form_label(form)}}
-    <div class="input-group input-large">
-        {{form_widget(form)}}
-        
-    </div>
-    {{form_errors(form)}}
-</div>
+    <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}/>
+    <span class="input-group-addon">
+        <i class="fa fa-calendar bigger-110"></i>
+    </span>
 {%endblock %}
 
 {%block acedatetime_row %}

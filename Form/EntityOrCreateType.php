@@ -24,8 +24,7 @@ class EntityOrCreateType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $entityOptions = isset($options['entity_options']) ?
-            array_merge($options['entity_options'], array('class' => $options['class'])) : array('class' => $options['class']);
+        $entityOptions = array_merge($options['entity_options'], array('class' => $options['class']));
 
         $builder->add('finder', 'autocompleter', $entityOptions);
 
@@ -60,11 +59,12 @@ class EntityOrCreateType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setRequired(array('class', 'type'));
-        $resolver->setOptional(array('entity_options', 'create_options', 'modal_size'));
+        $resolver->setOptional(array('create_options', 'modal_size'));
         $resolver->setDefaults(array(
             'include_button' => true,
             'include_form'   => true,
             'error_bubbling' => false,
+            'entity_options' => array(),
         ));
         $resolver->setAllowedValues(array('modal_size' => array(1, 2, 3, 4, 5, 6,
                 7, 8, 9, 10, 11, 12)));
