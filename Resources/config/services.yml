@@ -103,11 +103,11 @@ services:
         - { name: twig.extension }
         
     ns_ace.form.ns_filter_date:
-        class: NS\AceBundle\Form\Filter\Type\DateFilterType
+        class: NS\AceBundle\Filter\Type\DateFilterType
         tags:
             - { name: form.type, alias: ns_filter_date }
 
     ns_ace.form.ns_filter_date_range:
-        class: NS\AceBundle\Form\Filter\Type\DateRangeFilterType
+        class: NS\AceBundle\Filter\Type\DateRangeFilterType
         tags:
             - { name: form.type, alias: ns_filter_date_range }

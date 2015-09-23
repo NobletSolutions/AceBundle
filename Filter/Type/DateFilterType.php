@@ -1,6 +1,6 @@
 <?php
 
-namespace NS\AceBundle\Form\Filter\Type;
+namespace NS\AceBundle\Filter\Type;
 
 use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
