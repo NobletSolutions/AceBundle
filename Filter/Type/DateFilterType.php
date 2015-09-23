@@ -4,6 +4,9 @@ namespace NS\AceBundle\Filter\Type;
 
 use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
+use \Symfony\Component\Form\FormView;
+use \Symfony\Component\Form\FormInterface;
+use \NS\AceBundle\Service\DateFormatConverter;
 
 /**
  * Description of DateFilterType
@@ -12,6 +15,17 @@ use \Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DateFilterType extends AbstractType
 {
+    protected $converter;
+
+    /**
+     *
+     * @param DateFormatConverter $converter
+     */
+    public function __construct(DateFormatConverter $converter)
+    {
+        $this->converter = $converter;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -21,6 +35,9 @@ class DateFilterType extends AbstractType
             ->setDefaults(array(
                 'required'               => false,
                 'data_extraction_method' => 'default',
+                'widget'   => 'single_text',
+                'compound' => false,
+                'format'   => $this->converter->getFormat(true),
             ))
             ->setAllowedValues(array(
                 'data_extraction_method' => array('default'),
@@ -28,12 +45,23 @@ class DateFilterType extends AbstractType
         ;
     }
 
+
     /**
      * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function getParent()
+    public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        return 'acedatepicker';
+        if (isset($view->vars['attr']['class'])) {
+            $view->vars['attr']['class'] .= 'form-control date-picker';
+        } else {
+            $view->vars['attr']['class'] = 'form-control date-picker';
+        }
+
+        $view->vars['type'] = 'text';
+
+        $view->vars['attr']['data-date-format'] = strtolower($options['format']);
+        $view->vars['attr']['placeholder']      = $options['format'];
     }
 
     /**
@@ -41,6 +69,6 @@ class DateFilterType extends AbstractType
      */
     public function getName()
     {
-        return 'ns_filter_date';
+        return 'filter_date';
     }
 }

@@ -104,10 +104,11 @@ services:
         
     ns_ace.form.ns_filter_date:
         class: NS\AceBundle\Filter\Type\DateFilterType
+        arguments: [ @ns_ace.date_format_converter ]
         tags:
-            - { name: form.type, alias: ns_filter_date }
+            - { name: form.type, alias: filter_date }
 
     ns_ace.form.ns_filter_date_range:
         class: NS\AceBundle\Filter\Type\DateRangeFilterType
         tags:
-            - { name: form.type, alias: ns_filter_date_range }
+            - { name: form.type, alias: filter_date_range }

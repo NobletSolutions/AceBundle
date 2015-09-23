@@ -4,6 +4,7 @@ namespace NS\AceBundle\Filter\Type;
 
 use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormBuilderInterface;
+use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Description of DateRangeFilterType
@@ -17,8 +18,8 @@ class DateRangeFilterType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('left_date', 'ns_filter_date', $options['left_date_options']);
-        $builder->add('right_date', 'ns_filter_date', $options['right_date_options']);
+        $builder->add('left_date', 'filter_date', $options['left_date_options']);
+        $builder->add('right_date', 'filter_date', $options['right_date_options']);
 
         $builder->setAttribute('filter_value_keys', array(
             'left_date'  => $options['left_date_options'],
@@ -29,15 +30,27 @@ class DateRangeFilterType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return 'ns_filter_date_range';
+        parent::setDefaultOptions($resolver);
+
+        $resolver
+            ->setDefaults(array(
+                'required'               => false,
+                'left_date_options'      => array(),
+                'right_date_options'     => array(),
+                'data_extraction_method' => 'value_keys',
+            ))
+            ->setAllowedValues(array(
+                'data_extraction_method' => array('value_keys'),
+            ))
+        ;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getName()
     {
         return 'filter_date_range';
     }

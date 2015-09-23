@@ -26,7 +26,8 @@
     },
     "suggest": {
         "punkave/symfony2-file-uploader-bundle": "Allows for drag & drop or multiple file upload",
-        "craue/formflow-bundle": "~3.0@dev"
+        "craue/formflow-bundle": "~3.0@dev",
+        "lexik/form-filter-bundle": ""
     },
     "autoload": {
         "psr-4": { "NS\\AceBundle\\": "" }
