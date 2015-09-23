@@ -101,3 +101,13 @@ services:
         arguments: [@service_container]
         tags:
         - { name: twig.extension }
+        
+    ns_ace.form.ns_filter_date:
+        class: NS\AceBundle\Form\Filter\Type\DateFilterType
+        tags:
+            - { name: form.type, alias: ns_filter_date }
+
+    ns_ace.form.ns_filter_date_range:
+        class: NS\AceBundle\Form\Filter\Type\DateRangeFilterType
+        tags:
+            - { name: form.type, alias: ns_filter_date_range }
