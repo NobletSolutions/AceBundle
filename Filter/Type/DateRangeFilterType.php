@@ -32,8 +32,6 @@ class DateRangeFilterType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
         $resolver
             ->setDefaults(array(
                 'required'               => false,
