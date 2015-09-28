@@ -1,4 +1,4 @@
-{%block form_row %}
+{% block form_row %}
     <div class="form-group">
         <div class="col-md-3">
             {{ form_label(form) }}
@@ -7,9 +7,4 @@
             {{ form_widget(form) }}
         </div>
     </div>
-{%endblock %}
-
-{% block filter_date_range_widget %}
-    {{form_widget(form.left_date)}}
-    {{form_widget(form.right_date)}}
 {% endblock %}

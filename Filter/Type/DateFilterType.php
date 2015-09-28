@@ -1,19 +1,20 @@
 <?php
 
-namespace NS\AceBundle\Form;
+namespace NS\AceBundle\Filter\Type;
 
-use \NS\AceBundle\Service\DateFormatConverter;
 use \Symfony\Component\Form\AbstractType;
-use \Symfony\Component\Form\FormInterface;
+use \Symfony\Component\OptionsResolver\OptionsResolver;
 use \Symfony\Component\Form\FormView;
-use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use \Symfony\Component\Form\FormInterface;
+use \NS\AceBundle\Service\DateFormatConverter;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Description of DatePickerType
+ * Description of DateFilterType
  *
  * @author gnat
  */
-class DatePickerType extends AbstractType
+class DateFilterType extends AbstractType
 {
     protected $converter;
 
@@ -31,12 +32,20 @@ class DatePickerType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'widget'   => 'single_text',
-            'compound' => false,
-            'format'   => $this->converter->getFormat(true),
-        ));
+        $resolver
+            ->setDefaults(array(
+                'required'               => false,
+                'data_extraction_method' => 'default',
+                'widget'   => 'single_text',
+                'compound' => false,
+                'format'   => $this->converter->getFormat(true),
+            ))
+            ->setAllowedValues(array(
+                'data_extraction_method' => array('default'),
+            ))
+        ;
     }
+
 
     /**
      * {@inheritdoc}
@@ -61,14 +70,6 @@ class DatePickerType extends AbstractType
      */
     public function getName()
     {
-        return 'acedatepicker';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
-    {
-        return 'date';
+        return 'filter_date';
     }
 }

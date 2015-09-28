@@ -38,11 +38,6 @@ services:
       tags:
         - { name: form.type, alias: slider }
 
-    ns_ace.form.type.acedate:
-      class: NS\AceBundle\Form\DateType
-      tags:
-        - { name: form.type, alias: acedate }
-
     ns_ace.form.type.acedatepicker:
       class: NS\AceBundle\Form\DatePickerType
       arguments: [ @ns_ace.date_format_converter ]
@@ -106,3 +101,14 @@ services:
         arguments: [@service_container]
         tags:
         - { name: twig.extension }
+        
+#    ns_ace.form.ns_filter_date:
+#        class: NS\AceBundle\Filter\Type\DateFilterType
+#        arguments: [ @ns_ace.date_format_converter ]
+#        tags:
+#            - { name: form.type, alias: filter_date }
+
+#    ns_ace.form.ns_filter_date_range:
+#        class: NS\AceBundle\Filter\Type\DateRangeFilterType
+#        tags:
+#            - { name: form.type, alias: filter_date_range }
