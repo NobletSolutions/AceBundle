@@ -335,7 +335,9 @@ $(document).on('nsFormUpdate', function(ev)
                 input.contextState = 'inactive';
 //                    console.log(input.id+' also inactive');
             }
-
+            
+        
+            $(document).trigger('nsFormUpdate');
             toggleContextFields(input);
         });
     }
