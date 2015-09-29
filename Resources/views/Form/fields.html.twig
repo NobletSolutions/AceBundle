@@ -198,7 +198,7 @@
     {% if label is empty %}
         {% set label = name|humanize %}
     {% endif %}
-    <button {{ block('button_attributes') }}>{%if icon is defined %}<i class="{{icon}}"></i>{%endif%}{{ label|trans({}, translation_domain) }}</button>
+    <button {{ block('button_attributes') }}>{%if icon is defined %}<i class="{{icon}}"></i> {%endif%}{{ label|trans({}, translation_domain) }}</button>
 {% endspaceless %}
 {% endblock submit_widget %}
 
