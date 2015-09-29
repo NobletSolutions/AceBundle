@@ -66,7 +66,7 @@ $(document).click(function(ev)
     }
 });
 
-$(document).on('nsFormUpdate', function(ev)
+$(document).on('nsFormUpdate, shown.bs.tab', function(ev)
 {
     $('.date-picker').each(function(i, el)
     {
