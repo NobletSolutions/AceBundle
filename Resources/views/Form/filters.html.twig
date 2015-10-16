@@ -1,3 +1,7 @@
+{% if bundleExists('LexikFormFilterBundle') %}
+{% extends 'LexikFormFilterBundle:Form:form_div_layout.html.twig' %}
+{% endif %}
+
 {% block form_row %}
     <div class="form-group">
         <div class="col-md-3">
