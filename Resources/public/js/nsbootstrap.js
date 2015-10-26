@@ -66,7 +66,7 @@ $(document).click(function(ev)
     }
 });
 
-$(document).on('nsFormUpdate', function(ev)
+$(document).on('nsFormUpdate shown.bs.tab', function(ev)
 {
     $('.date-picker').each(function(i, el)
     {
@@ -335,7 +335,9 @@ $(document).on('nsFormUpdate', function(ev)
                 input.contextState = 'inactive';
 //                    console.log(input.id+' also inactive');
             }
-
+            
+        
+            $(document).trigger('nsFormUpdate');
             toggleContextFields(input);
         });
     }

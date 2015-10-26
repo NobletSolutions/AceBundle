@@ -3,6 +3,15 @@ VERSION 2  ADDED AUTOCOMPLETE ICONS AND OPTIONS
 ===============================================
 
    Version 2.0 - Added autocomplete icons and options
+      26/10/2015 16:13  1.3.23  Added trigger button for mobile nav menu
+      26/10/2015 15:25  1.3.22  New assets
+      26/10/2015 14:54  1.3.21  Added gritter imagess
+      19/10/2015 09:51  1.3.20  Fixed bug in nsFormUpdate handler
+      16/10/2015 11:34  1.3.19  Extend lexik form theme if bundle is loaded
+      09/10/2015 13:46  1.3.18  Added less files
+      29/09/2015 09:42  1.3.17  Fixed datepicker initialization on hidden fields
+      28/09/2015 16:06  1.3.16  Various fixes
+      10/09/2015 13:33  1.3.15  Moving fonts
       31/08/2015 11:34  1.3.14  Minor cleanup of date picking fields
       15/08/2015 04:55  1.3.13  Suggest craue form flow bundle
       10/08/2015 12:34  1.3.12  Fixed datepicker display issue
