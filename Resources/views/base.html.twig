@@ -123,6 +123,12 @@
          </script>
 
           <div class="navbar-container" id="navbar-container">
+              <button id="menu-toggler" class="navbar-toggle menu-toggler pull-left" data-target="#sidebar" type="button">
+                <span class="sr-only">Toggle sidebar</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
               {% block sitebrand %}
                 <div class="navbar-header pull-left">
                   <a href="{{path('homepage')}}" class="navbar-brand">
