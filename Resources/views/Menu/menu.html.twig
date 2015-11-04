@@ -14,8 +14,22 @@
 {% if item.displayed %}
 {# building the class of the item #}
     {%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
-    {# removed class handling of current, ancestor classes #}
+    {%- if item.current %}
+        {%- set classes = classes|merge(['active',options.currentClass]) %}
+    {%- elseif item.currentAncestor %}
+        {%- set classes = classes|merge([options.ancestorClass]) %}
+    {%- endif %}
+    {%- if item.actsLikeFirst %}
+        {%- set classes = classes|merge([options.firstClass]) %}
+    {%- endif %}
+    {%- if item.actsLikeLast %}
+        {%- set classes = classes|merge([options.lastClass]) %}
+    {%- endif %}
+
     {%- set attributes = item.attributes %}
+    {%- if classes is not empty %}
+        {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
+    {%- endif %}
 
     {# displaying the item #}
     <li{{ _self.attributes(attributes) }}>
