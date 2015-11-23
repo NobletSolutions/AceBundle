@@ -86,11 +86,16 @@
 {%endblock %}
 
 {%block acedatetime_row %}
-{% set dattr = attr|merge({ class: 'form-control date-picker' }) %}
-{% set tattr = attr|merge({ class: 'form-control time-picker' }) %}
-<div class="form-group">
-    {{form_label(form)}}
-    {{form_errors(form)}}
+    <div class="form-group">
+        {{form_label(form)}}
+        {{form_errors(form)}}
+        {{ form_widget(form) }}
+    </div>
+{%endblock %}
+
+{%block acedatetime_widget %}
+    {% set dattr = attr|merge({ class: 'form-control date-picker' }) %}
+    {% set tattr = attr|merge({ class: 'form-control time-picker' }) %}
     <div class="input-group input-datetime-group">
         {{form_widget(form.date,{'attr': dattr})}}
         {{form_errors(form.date)}}
@@ -105,8 +110,7 @@
             <i class="fa fa-time bigger-110"></i>
         </span>
     </div>
-</div>
-{%endblock %}
+{% endblock %}
 
 {% block fileupload_row %}
 <div class="form-group">
