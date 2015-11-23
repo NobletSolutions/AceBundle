@@ -66,7 +66,7 @@ $(document).click(function(ev)
     }
 });
 
-$(document).on('nsFormUpdate shown.bs.tab', function(ev)
+$(document).on('nsFormUpdate shown.bs.tab sonata.add_element', function(ev)
 {
     $('.date-picker').each(function(i, el)
     {
