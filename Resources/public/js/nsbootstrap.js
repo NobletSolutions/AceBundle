@@ -360,15 +360,15 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
     
     $('.ns-confirm').each(function(i, el)
     {
-        if($(el).is(':visible'))
-        {
+        //if($(el).is(':visible')) // Why are we doing this? I can't imagine why we would want to restrict this to visible elements.
+        //{
             if(el.nsFieldActive !== true)
             {
                 var msg = 'Are you sure you wish to continue?';
                 
                 if($(el).data('confirmMessage'))
                 {
-                    msg = $(el).data('confirm-message');
+                    msg = $(el).data('confirmMessage');
                 }
                 
                 el.nsFieldActive = true;
@@ -388,6 +388,6 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
                     });
                 }
             }
-        }
+        //}
     });
 });
