@@ -366,9 +366,9 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
             {
                 var msg = 'Are you sure you wish to continue?';
                 
-                if($(el).data('confirmMessage'))
+                if($(el).data('confirm-message'))
                 {
-                    msg = $(el).data('confirmMessage');
+                    msg = $(el).data('confirm-message');
                 }
                 
                 el.nsFieldActive = true;
