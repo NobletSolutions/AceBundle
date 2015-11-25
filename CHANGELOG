@@ -3,6 +3,7 @@ VERSION 2  ADDED AUTOCOMPLETE ICONS AND OPTIONS
 ===============================================
 
    Version 2.0 - Added autocomplete icons and options
+      25/11/2015 14:07  1.3.29  Updated fontawesome
       25/11/2015 12:53  1.3.28  Don't apply ns-confirm functionality only to visible elements
       23/11/2015 13:59  1.3.27  Tweaks to datepicker and events
       17/11/2015 16:28  1.3.26  Fix date picker when collapsed
