@@ -5,7 +5,7 @@ namespace NS\AceBundle\Form;
 use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
-use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use \Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Description of KnobType
@@ -21,7 +21,7 @@ class KnobType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $this->defaults = array(
             'min'             => false,
@@ -37,8 +37,7 @@ class KnobType extends AbstractType
             'linecap'         => 'butt', //"round"
         );
 
-        $resolver->setDefaults(array_merge($this->defaults, array('attr' => array(
-                'class' => 'input-small nsKnob'))));
+        $resolver->setDefaults(array_merge($this->defaults, array('attr' => array('class' => 'input-small nsKnob'))));
     }
 
     /**
@@ -48,8 +47,9 @@ class KnobType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        foreach($this->defaults as $opt => $val)
-            $view->vars['attr']['data-'.$opt] = $options[$opt];
+        foreach($this->defaults as $opt => $val) {
+            $view->vars['attr']['data-' . $opt] = $options[$opt];
+        }
     }
 
     /**

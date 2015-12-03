@@ -7,7 +7,6 @@ use \Symfony\Component\OptionsResolver\OptionsResolver;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
 use \NS\AceBundle\Service\DateFormatConverter;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Description of DateFilterType
@@ -30,7 +29,7 @@ class DateFilterType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults(array(

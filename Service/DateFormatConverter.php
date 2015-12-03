@@ -31,14 +31,17 @@ class DateFormatConverter
 
         $pattern = $formatter->getPattern();
 
-        if ($longyear && strpos($pattern, 'yyyy') === false)
+        if ($longyear && strpos($pattern, 'yyyy') === false) {
             $pattern = str_replace('yy', 'yyyy', $pattern);
+        }
 
-        if(strpos($pattern, 'MM') === false)
+        if(strpos($pattern, 'MM') === false) {
             $pattern = str_replace('M', 'MM', $pattern);
+        }
 
-        if(strpos($pattern, 'dd') === false)
+        if(strpos($pattern, 'dd') === false) {
             $pattern = str_replace('d', 'dd', $pattern);
+        }
 
         return trim(str_replace(' ', '', $pattern), './-');
     }
@@ -50,21 +53,25 @@ class DateFormatConverter
      */
     public function fromFormat($pattern)
     {
-        if(strpos($pattern, 'yyyy') !== false)
+        if(strpos($pattern, 'yyyy') !== false) {
             $pattern = str_replace('yyyy', 'Y', $pattern);
+        }
         
-        if(strpos($pattern, 'yy') !== false)
+        if(strpos($pattern, 'yy') !== false) {
             $pattern = str_replace('yy', 'y', $pattern);
+        }
         
-        if(strpos($pattern, 'MM') !== false)
+        if(strpos($pattern, 'MM') !== false) {
             $pattern = str_replace('MM', 'm', $pattern);
-        else
+        } else {
             $pattern = str_replace('M', 'n', $pattern);
+        }
         
-        if(strpos($pattern, 'dd') !== false)
+        if(strpos($pattern, 'dd') !== false) {
             $pattern = str_replace('dd', 'd', $pattern);
-        else
+        } else {
             $pattern = str_replace('d', 'j', $pattern);
+        }
         
         return $pattern;
     }

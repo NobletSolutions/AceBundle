@@ -5,7 +5,7 @@ namespace NS\AceBundle\Form;
 use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
-use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use \Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Description of SwitchType
@@ -17,7 +17,7 @@ class FileUploadType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $defaults = array(
             'uploadUrl' => false,
@@ -33,11 +33,13 @@ class FileUploadType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if($options['uploadUrl'])
+        if($options['uploadUrl']) {
             $view->vars['attr']['data-uploadurl'] = $options['uploadUrl'];
+        }
 
-        if($options['viewUrl'])
+        if($options['viewUrl']) {
             $view->vars['attr']['data-viewurl'] = $options['viewUrl'];
+        }
     }
 
     /**

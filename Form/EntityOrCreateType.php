@@ -4,7 +4,7 @@ namespace NS\AceBundle\Form;
 
 use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormBuilderInterface;
-use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use \Symfony\Component\OptionsResolver\OptionsResolver;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
 use \NS\AceBundle\Form\Transformer\EntityOrCreate;
@@ -54,20 +54,20 @@ class EntityOrCreateType extends AbstractType
 
     /**
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(array('class', 'type'));
-        $resolver->setOptional(array('create_options', 'modal_size'));
+        $resolver->setDefined(array('create_options', 'modal_size'));
         $resolver->setDefaults(array(
             'include_button' => true,
             'include_form'   => true,
             'error_bubbling' => false,
             'entity_options' => array(),
         ));
-        $resolver->setAllowedValues(array('modal_size' => array(1, 2, 3, 4, 5, 6,
-                7, 8, 9, 10, 11, 12)));
+
+        $resolver->setAllowedValues(array('modal_size' => array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)));
     }
 
     /**

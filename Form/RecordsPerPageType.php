@@ -4,7 +4,7 @@ namespace NS\AceBundle\Form;
 
 use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\HttpFoundation\Session\SessionInterface;
-use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use \Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Description of RecordsPerPageType
@@ -27,7 +27,7 @@ class RecordsPerPageType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'choices' => array('5'=> 5,'10'=>10,'20'=>20,'30'=>30,'50'=>50,'75'=>75,'100'=>100),// I Can't seem to use range here as validation fails??

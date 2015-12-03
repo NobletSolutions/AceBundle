@@ -6,7 +6,7 @@ use \NS\AceBundle\Service\DateFormatConverter;
 use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\Form\FormView;
-use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use \Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Description of DateTimePickerType
@@ -29,7 +29,7 @@ class DateTimePickerType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'date_widget' => 'single_text',

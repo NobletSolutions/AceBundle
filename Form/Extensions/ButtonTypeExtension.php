@@ -5,7 +5,7 @@ namespace NS\AceBundle\Form\Extensions;
 use \Symfony\Component\Form\AbstractTypeExtension;
 use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\Form\FormView;
-use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use \Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Description of ButtonTypeExtension
@@ -23,13 +23,11 @@ class ButtonTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setOptional(array('icon','type'));
+        $resolver->setDefined(array('icon','type'));
         $resolver->setAllowedTypes(array('icon'=>'string'));
     }
 
@@ -41,7 +39,8 @@ class ButtonTypeExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if(isset($options['icon']))
+        if(isset($options['icon'])) {
             $view->vars['icon'] = $options['icon'];
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace NS\AceBundle\Form;
 use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
-use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Description of SwitchType
@@ -19,7 +19,7 @@ class SpinnerType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults( array(
             'min'           => 0,
@@ -40,14 +40,17 @@ class SpinnerType extends AbstractType
     {
         $opts = array();
 
-        foreach(array('min', 'max', 'step', 'on_sides') as $opt)
+        foreach(array('min', 'max', 'step', 'on_sides') as $opt) {
             $opts[$opt] = $options[$opt];
+        }
 
-        if($options['pos_neg'])
-            $opts += array('icon_up' => 'icon-plus smaller-75', 'icon_down' => 'icon-minus smaller-75', 'btn_up_class' => 'btn-success' , 'btn_down_class' => 'btn-danger');
+        if($options['pos_neg']) {
+            $opts += array('icon_up' => 'icon-plus smaller-75', 'icon_down' => 'icon-minus smaller-75', 'btn_up_class' => 'btn-success', 'btn_down_class' => 'btn-danger');
+        }
 
-        if($options['touchscreen'])
+        if($options['touchscreen']) {
             $opts['touch_spinner'] = true;
+        }
 
         $view->vars['attr']['data-options'] = json_encode($opts);
     }

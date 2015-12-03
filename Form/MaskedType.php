@@ -50,8 +50,9 @@ class MaskedType extends AbstractType
     {
         $options['definitions'] = json_encode($options['definitions']);
 
-        foreach($this->defaults as $opt => $val)
-            $view->vars['attr']['data-'.$opt] = $options[$opt];
+        foreach($this->defaults as $opt => $val) {
+            $view->vars['attr']['data-' . $opt] = $options[$opt];
+        }
     }
 
     /**

@@ -5,7 +5,7 @@ namespace NS\AceBundle\Form;
 use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
-use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use \Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Description of SliderType
@@ -17,7 +17,7 @@ class SliderType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $colors      = array('green', 'red', 'purple', 'orange', 'dark');
         $switchtypes = array(1, 2, 3, 4, 5, 6, 7);
@@ -33,10 +33,11 @@ class SliderType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if(isset($view->vars['attr']['class']))
-            $view->vars['attr']['class'] .= 'ace ace-switch ace-switch-'.$options['switchtype'];
-        else
-            $view->vars['attr']['class'] = 'ace ace-switch ace-switch-'.$options['switchtype'];
+        if(isset($view->vars['attr']['class'])) {
+            $view->vars['attr']['class'] .= 'ace ace-switch ace-switch-' . $options['switchtype'];
+        } else {
+            $view->vars['attr']['class'] = 'ace ace-switch ace-switch-' . $options['switchtype'];
+        }
     }
 
     /**

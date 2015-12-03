@@ -6,7 +6,7 @@ use \NS\AceBundle\Service\DateFormatConverter;
 use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\Form\FormView;
-use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use \Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Description of DateRangeType
@@ -29,7 +29,7 @@ class DateRangeType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'widget'   => 'single_text',
@@ -44,10 +44,11 @@ class DateRangeType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if (isset($view->vars['attr']['class']))
+        if (isset($view->vars['attr']['class'])) {
             $view->vars['attr']['class'] .= 'form-control date-range';
-        else
+        } else {
             $view->vars['attr']['class'] = 'form-control date-range';
+        }
 
         $view->vars['attr']['data-date-format'] = strtolower($options['format']);
         $view->vars['attr']['placeholder']      = $options['format'];

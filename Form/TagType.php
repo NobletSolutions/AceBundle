@@ -5,7 +5,7 @@ namespace NS\AceBundle\Form;
 use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
-use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use \Symfony\Component\OptionsResolver\OptionsResolver;
 use \Symfony\Component\Form\FormBuilderInterface;
 use \NS\AceBundle\Form\Transformer\TextToArrayTransformer;
 
@@ -21,7 +21,7 @@ class TagType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults( array(
             'caseInsensitive'     => true,
@@ -37,10 +37,9 @@ class TagType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if(isset($options['source']))
-        {
+        if (isset($options['source'])) {
             sort($options['source']);
-            $view->vars['attr']['data-source']                = json_encode($options['source']);
+            $view->vars['attr']['data-source'] = json_encode($options['source']);
         }
         
         $view->vars['attr']['class']                      = 'nsTag';
@@ -54,8 +53,9 @@ class TagType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if($options['arrayOutput'])
+        if($options['arrayOutput']) {
             $builder->addViewTransformer(new TextToArrayTransformer());
+        }
     }
 
     /**
