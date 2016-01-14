@@ -16,7 +16,7 @@
             <![endif]-->
 
             <!-- fonts -->
- <!--<link rel="stylesheet" href="{ { {site.protocol } } }//fonts.googleapis.com/css?family=Open+Sans:400,300" />-->
+            <!--<link rel="stylesheet" href="{{app.request.scheme}}://fonts.googleapis.com/css?family=Open+Sans:400,300" />-->
             <link href="{{asset('bundles/nsace/css/ace-fonts.css')}}" rel="stylesheet" />
  
             <!-- ace styles -->
@@ -50,6 +50,11 @@
         </div>
     </div><!--/.main-container-->
 
+    {% block flash %}
+        {% if bundleExists('NSFlashBundle') %}
+            {{ modal_flash_messages() }}
+        {% endif %}
+    {% endblock %}
 
     {%block footer %}
 
@@ -74,9 +79,13 @@
         </script>
         <![endif]-->
 
+        <script src="{{ asset('bundles/nsace/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/nsace/js/nsbootstrap.js') }}"></script>
+
         <script type="text/javascript">
             if("ontouchend" in document) document.write("<script src='{{asset('bundles/nsace/js/jquery.mobile.custom.min.js')}}'>"+"<"+"/script>");
-        </script>    
+        </script>
     {% endblock %}
 </body>
 </html>
+

@@ -27,6 +27,8 @@ $(document).ready(function() {
             $('[data-target="#'+modal.attr('id')+'"]').removeClass('btn-primary').addClass('btn-success');
         }
     });
+
+    $('.modal.openOnLoad').modal();
 });
 
 $(document).click(function(ev)
