@@ -39,7 +39,7 @@
 {%endblock %}
 
 {%block switch_widget %}
-    {% if label is not same as false %}
+    {% if label is not same as(false) %}
         {% if not compound %}
             {% set label_attr = label_attr|merge({'for': id}) %}
         {% endif %}
@@ -248,7 +248,7 @@
             {% set attr = attr|merge({'class':'ace'}) %}
             <input {{ block('widget_attributes') }} type="checkbox" {% if checked %}checked{%endif%}{% if value is defined %} value="{{ value }}"{% endif %} />
             <span class="lbl">
-                {% if label is not same as false -%}
+                {% if label is not same as(false) -%}
                     {% if label is empty -%}
                         {%- if label_format is not empty -%}
                             {% set label = label_format|replace({'%name%': name,'%id%': id,}) %}
