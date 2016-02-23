@@ -2,6 +2,9 @@
 VERSION 2  ADDED AUTOCOMPLETE ICONS AND OPTIONS
 ===============================================
 
+   Version 1.4 - Require 2.0 knp menu bundles
+      23/02/2016 13:26  1.4.0  initial release
+
    Version 2.0 - Added autocomplete icons and options
       23/02/2016 13:13  1.3.35  Fix errored twig function
       18/02/2016 16:10  1.3.34  removed deprecated function
