@@ -247,13 +247,13 @@
                 </div>
             </div><!--/#ace-settings-container-->
             {% endblock %}
-
-        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-            <i class="fa fa-double-angle-up fa-only bigger-110"></i>
-        </a>
     </div><!--/.main-container-->
 
     {% block footer %}{% endblock footer %}
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse display">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
 
     {% if bundleExists('PunkAveFileUploaderBundle') %}
         {% include "PunkAveFileUploaderBundle:Default:templates.html.twig" %}
