@@ -3,6 +3,7 @@ VERSION 2  ADDED AUTOCOMPLETE ICONS AND OPTIONS
 ===============================================
 
    Version 1.4 - Require 2.0 knp menu bundles
+      24/03/2016 16:01  1.4.3  Removed dumb form
       23/03/2016 17:35  1.4.2  HTTPS all external assets
       29/02/2016 16:05  1.4.1  Update the bottom up icon markup
       23/02/2016 13:26  1.4.0  initial release
