@@ -7,35 +7,26 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         {% block stylesheets %}
-            <!-- basic styles -->
-            <link href="{{asset('bundles/nsace/css/bootstrap.min.css')}}" rel="stylesheet" />
+            <!-- bootstrap & fontawesome -->
+            <link rel="stylesheet" href="{{app.request.scheme}}://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+            <link rel="stylesheet" href="{{app.request.scheme}}://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
-            <link href="{{asset('bundles/nsace/css/font-awesome.min.css')}}" rel="stylesheet" />
-            <!--[if IE 7]>
-              <link rel="stylesheet" href="{{asset('bundles/nsace/css/font-awesome-ie7.min.css')}}" />
-            <![endif]-->
+            <!-- text fonts -->
+            <link rel="stylesheet" href="{{app.request.scheme}}://fonts.googleapis.com/css?family=Open+Sans:400,300" />
 
-            <!-- fonts -->
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" />
-            <link href="{{asset('bundles/nsace/css/ace-fonts.css')}}" rel="stylesheet" />
- 
             <!-- ace styles -->
-            <link href="{{asset('bundles/nsace/css/ace.min.css')}}" rel="stylesheet" />
-            <link href="{{asset('bundles/nsace/css/ace-rtl.min.css')}}" rel="stylesheet" />
-            <!--[if lte IE 8]>
-              <link href="{{asset('bundles/nsace/css/ace-ie.min.css')}}" rel="stylesheet" />
-            <![endif]-->
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/dist/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
 
             <!-- inline styles related to this page -->
             {% block inlinestyles %}
             {% endblock inlinestyles %}
         {% endblock %}
 
-	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	<script src="{{asset('bundles/nsace/js/html5shiv.js')}}"></script>
-	<script src="{{asset('bundles/nsace/js/respond.min.js')}}"></script>
-	<![endif]-->
+        <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+        <!--[if lte IE 8]>
+        <script src="{{ asset('bundles/nsace/components/html5shiv/dist/html5shiv.min.js') }}"></script>
+        <script src="{{ asset('bundles/nsace/components/respond/dest/respond.min.js') }}"></script>
+        <![endif]-->
 
 </head>
 <body class="login-layout">
@@ -62,29 +53,22 @@
         
     {% block javascripts %}
         <!--[if !IE]> -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src="{{app.request.scheme}}://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <!-- <![endif]-->
+
         <!--[if IE]>
-        <script src="{{app.request.scheme}}://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="{{app.request.scheme}}://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <![endif]-->
 
-        <!--[if !IE]> -->
+        {% set jqm = asset('bundles/nsace/components/_mod/jquery.mobile.custom/jquery.mobile.custom.min.js') %}
         <script type="text/javascript">
-         window.jQuery || document.write("<script src='{{asset('bundles/nsace/js/jquery-2.0.3.min.js')}}'>"+"<"+"/script>");
+            if('ontouchstart' in document.documentElement) document.write("<script src='{{ jqm }}'>"+"<"+"/script>");
         </script>
-        <!-- <![endif]-->
-        <!--[if IE]>
-        <script type="text/javascript">
-         window.jQuery || document.write("<script src='{{asset('bundles/nsace/js/jquery-1.10.2.min.js')}}'>"+"<"+"/script>");
-        </script>
-        <![endif]-->
 
-        <script src="{{ asset('bundles/nsace/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('bundles/nsace/js/nsbootstrap.js') }}"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-        <script type="text/javascript">
-            if("ontouchend" in document) document.write("<script src='{{asset('bundles/nsace/js/jquery.mobile.custom.min.js')}}'>"+"<"+"/script>");
-        </script>
+        <script src="{{asset('bundles/nsace/js/nsFileUploader.js')}}"></script>
+        <script src="{{asset('bundles/nsace/js/nsbootstrap.js')}}"></script>
     {% endblock %}
 </body>
 </html>
