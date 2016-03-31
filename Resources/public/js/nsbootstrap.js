@@ -143,15 +143,32 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
 
     $('input.nsAutocompleter').each(function(i, el)
     {
+        $el = $(el);
         if(el.nsFieldActive !== true)
         {
             el.nsFieldActive = true;
-            var options = $(el).data('options');
+            var options = $el.data('options');
             
-            if($(el).val())
-                options.prePopulate = JSON.parse($(el).val());
-            
-            $(el).tokenInput($(el).data('autocompleteurl'), $(el).data('options'));
+            if($el.val())
+                options.prePopulate = $el.val();
+
+            if($el.data('autocomplete-secondary-field'))
+            {
+                var sec = $el.data('autocomplete-secondary-field');
+                var $tgt = $('#'+$el.attr('id').replace(sec.s, sec.r));
+
+                if($tgt)
+                {
+                    var delim = ($el.data('autocompleteurl').indexOf('?') >= 0 ? '&' : '?');
+
+                    $tgt.change(function()
+                    {
+                        $el.tokenInput('setOptions', {'url':$el.data('autocompleteurl')+delim+'secondary-field='+$tgt.val()});
+                    });
+                }
+            }
+
+            $el.tokenInput($el.data('autocompleteurl'), $el.data('options'));
         }
     });
     
