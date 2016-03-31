@@ -2,6 +2,9 @@
 VERSION 2  ADDED AUTOCOMPLETE ICONS AND OPTIONS
 ===============================================
 
+   Version 1.5 - Updated ace theme to 1.4
+      31/03/2016 09:42  1.5.0  initial release
+
    Version 1.4 - Require 2.0 knp menu bundles
       24/03/2016 16:01  1.4.3  Removed dumb form
       23/03/2016 17:35  1.4.2  HTTPS all external assets
