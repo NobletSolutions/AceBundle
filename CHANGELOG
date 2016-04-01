@@ -3,6 +3,7 @@ VERSION 2  ADDED AUTOCOMPLETE ICONS AND OPTIONS
 ===============================================
 
    Version 1.5 - Updated ace theme to 1.4
+      31/03/2016 21:21  1.5.2  Fix autocompleter
       31/03/2016 16:08  1.5.1  Removed extra assets and added autocompleter support
       31/03/2016 09:42  1.5.0  initial release
 
