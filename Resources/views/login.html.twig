@@ -8,14 +8,14 @@
 
         {% block stylesheets %}
             <!-- bootstrap & fontawesome -->
-            <link rel="stylesheet" href="{{app.request.scheme}}://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-            <link rel="stylesheet" href="{{app.request.scheme}}://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
             <!-- text fonts -->
-            <link rel="stylesheet" href="{{app.request.scheme}}://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" />
 
             <!-- ace styles -->
-            <link rel="stylesheet" href="{{ asset('bundles/nsace/dist/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
+            <link rel="stylesheet" href="{{ asset('/bundles/nsace/dist/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
 
             <!-- inline styles related to this page -->
             {% block inlinestyles %}
@@ -24,8 +24,8 @@
 
         <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
         <!--[if lte IE 8]>
-        <script src="{{ asset('bundles/nsace/components/html5shiv/dist/html5shiv.min.js') }}"></script>
-        <script src="{{ asset('bundles/nsace/components/respond/dest/respond.min.js') }}"></script>
+        <script src="{{ asset('/bundles/nsace/components/html5shiv/dist/html5shiv.min.js') }}"></script>
+        <script src="{{ asset('/bundles/nsace/components/respond/dest/respond.min.js') }}"></script>
         <![endif]-->
 
 </head>
@@ -53,22 +53,22 @@
         
     {% block javascripts %}
         <!--[if !IE]> -->
-        <script src="{{app.request.scheme}}://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <!-- <![endif]-->
 
         <!--[if IE]>
-        <script src="{{app.request.scheme}}://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <![endif]-->
 
-        {% set jqm = asset('bundles/nsace/components/_mod/jquery.mobile.custom/jquery.mobile.custom.min.js') %}
+        {% set jqm = asset('/bundles/nsace/components/_mod/jquery.mobile.custom/jquery.mobile.custom.min.js') %}
         <script type="text/javascript">
             if('ontouchstart' in document.documentElement) document.write("<script src='{{ jqm }}'>"+"<"+"/script>");
         </script>
 
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-        <script src="{{asset('bundles/nsace/js/nsFileUploader.js')}}"></script>
-        <script src="{{asset('bundles/nsace/js/nsbootstrap.js')}}"></script>
+        <script src="{{asset('/bundles/nsace/js/nsFileUploader.js')}}"></script>
+        <script src="{{asset('/bundles/nsace/js/nsbootstrap.js')}}"></script>
     {% endblock %}
 </body>
 </html>
