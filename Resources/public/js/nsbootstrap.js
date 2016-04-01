@@ -335,7 +335,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
                 }
             }
         
-            console.log(input, input.parent, input.parent.contextState);
+            //console.log(input, input.parent, input.parent.contextState);
             if(result)
             {
                 if(input.parent.contextState === undefined || input.parent.contextState === 'active')
