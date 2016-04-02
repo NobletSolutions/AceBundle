@@ -228,9 +228,14 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
                         minuteStep: 1,
                         showSeconds: ($(this).data('showSeconds') === 'true'),
                         showMeridian: ($(this).data('showMeridian') === 'true'),
-                        defaultTime: false
-                }).next().on(ace.click_event, function()
-                {
+                        defaultTime: false,
+                        icons: {
+                            up: 'fa fa-chevron-up',
+                            down: 'fa fa-chevron-down'
+                        }
+                }).on('focus', function() {
+                    $(el).timepicker('showWidget');
+                }).next().on(ace.click_event, function() {
                     $(this).prev().focus();
                 });
             }

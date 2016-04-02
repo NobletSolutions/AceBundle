@@ -36,6 +36,7 @@ class DateTimePickerType extends AbstractType
             'date_format' => $this->converter->getFormat(true),
             'time_widget' => 'single_text',
             'input'       => 'datetime',
+            'html5'       => false, // set to false so that the time widget ends up being text
         ));
     }
 
