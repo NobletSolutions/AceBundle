@@ -150,7 +150,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
             var options = $el.data('options');
             
             if($el.val())
-                options.prePopulate = $el.val();
+                options.prePopulate = JSON.parse($el.val());
 
             if($el.data('autocomplete-secondary-field'))
             {
@@ -168,7 +168,12 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
                 }
             }
 
-            $el.tokenInput($el.data('autocompleteurl'), $el.data('options'));
+            options.onReady = function()
+            {
+                $el.tokenInput('setOptions', {'url':$el.data('autocompleteurl')+delim+'secondary-field='+$tgt.val()});
+            };
+
+            $el.tokenInput($el.data('autocompleteurl'), options);
         }
     });
     
@@ -335,7 +340,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
                 }
             }
         
-            console.log(input, input.parent, input.parent.contextState);
+            //console.log(input, input.parent, input.parent.contextState);
             if(result)
             {
                 if(input.parent.contextState === undefined || input.parent.contextState === 'active')
