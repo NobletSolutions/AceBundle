@@ -268,3 +268,16 @@ label {
 .modal-dialog.modal-1 {
     width: 8.337%;
 }
+
+@media (max-width: 991px) {
+    .navbar-toggle {
+        display: inherit;
+    }
+}
+
+@media (min-width: 992px) {
+    .navbar-toggle {
+        display: none;
+    }
+}
+
