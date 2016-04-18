@@ -3,6 +3,7 @@ VERSION 2  ADDED AUTOCOMPLETE ICONS AND OPTIONS
 ===============================================
 
    Version 1.5 - Updated ace theme to 1.4
+      18/04/2016 15:29  1.5.6  Fix menu for md sized windows
       01/04/2016 18:57  1.5.5  Fix the time picker to not use html5 native ones
       01/04/2016 10:28  1.5.4  Relative asset links
       31/03/2016 22:29  1.5.3  commenting out javascript verbosity
