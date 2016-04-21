@@ -171,6 +171,10 @@
 </div>
 {% endblock %}
 
+{%- block button_row -%}
+    {{- form_widget(form) -}}
+{%- endblock button_row -%}
+
 {% block iconbutton_widget %}
     {{block('submit_widget')}}
 {% endblock iconbutton_widget %}
