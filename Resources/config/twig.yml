@@ -9,3 +9,8 @@ services:
     class: NS\AceBundle\Twig\AceExtension
     tags:
       - { name: twig.extension }
+
+  ns_ace.twig.widget_extension:
+    class: NS\AceBundle\Twig\WidgetExtension
+    tags:
+      - { name: twig.extension }
