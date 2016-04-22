@@ -1,0 +1,11 @@
+services:
+  ns_ace.twig.bundle_existence:
+    class: NS\AceBundle\Twig\BundleExistence
+    arguments: [ "@service_container" ]
+    tags:
+      - { name: twig.extension }
+
+  ns_ace.twig.ace_extension:
+    class: NS\AceBundle\Twig\AceExtension
+    tags:
+      - { name: twig.extension }
