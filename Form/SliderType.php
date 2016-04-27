@@ -6,6 +6,7 @@ use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Description of SliderType
@@ -25,6 +26,14 @@ class SliderType extends AbstractType
         $resolver->setRequired(array('switchtype'));
         $resolver->setAllowedValues(array('color' => $colors, 'switchtype' => $switchtypes));
         
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 
     /**

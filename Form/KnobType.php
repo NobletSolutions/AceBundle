@@ -6,6 +6,7 @@ use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Description of KnobType
@@ -16,29 +17,36 @@ use \Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class KnobType extends AbstractType
 {
-    private $defaults;
+    private $defaults = array(
+        'min'             => false,
+        'max'             => false,
+        'width'           => 80,
+        'height'          => 80,
+        'thickness'       => 0.2,
+        'fgColor'         => false,
+        'displayPrevious' => false,
+        'angleArc'        => false,
+        'angleOffset'     => false,
+        'displayInput'    => true,
+        'linecap'         => 'butt', //"round"
+    );
 
     /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $this->defaults = array(
-            'min'             => false,
-            'max'             => false,
-            'width'           => 80,
-            'height'          => 80,
-            'thickness'       => 0.2,
-            'fgColor'         => false,
-            'displayPrevious' => false,
-            'angleArc'        => false,
-            'angleOffset'     => false,
-            'displayInput'    => true,
-            'linecap'         => 'butt', //"round"
-        );
-
         $resolver->setDefaults(array_merge($this->defaults, array('attr' => array('class' => 'input-small nsKnob'))));
     }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
+    }
+
 
     /**
      * {@inheritdoc}

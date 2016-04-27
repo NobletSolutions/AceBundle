@@ -8,6 +8,7 @@ use \Symfony\Component\OptionsResolver\OptionsResolver;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
 use \NS\AceBundle\Form\Transformer\EntityOrCreate;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Description of EntityOrCreateType
@@ -58,8 +59,14 @@ class EntityOrCreateType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        if ($resolver instanceof OptionsResolverInterface) {
+            $resolver->setOptional(array('create_options', 'modal_size'));
+        } else {
+            $resolver->setDefined(array('create_options', 'modal_size'));
+        }
+
         $resolver->setRequired(array('class', 'type'));
-        $resolver->setDefined(array('create_options', 'modal_size'));
+
         $resolver->setDefaults(array(
             'include_button' => true,
             'include_form'   => true,
@@ -68,6 +75,14 @@ class EntityOrCreateType extends AbstractType
         ));
 
         $resolver->setAllowedValues(array('modal_size' => array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)));
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 
     /**

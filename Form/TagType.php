@@ -8,6 +8,7 @@ use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
 use \Symfony\Component\Form\FormBuilderInterface;
 use \NS\AceBundle\Form\Transformer\TextToArrayTransformer;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Description of SwitchType
@@ -29,6 +30,14 @@ class TagType extends AbstractType
             'autocompleteOnComma' => false,
             'arrayOutput'         => false,
         ));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 
     /**

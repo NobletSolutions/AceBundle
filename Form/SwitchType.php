@@ -6,6 +6,7 @@ use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Description of SwitchType
@@ -21,6 +22,14 @@ class SwitchType extends AbstractType
     {
         $resolver->setDefaults(array('switchtype' => 1, 'hidelabel'=>false));
         $resolver->setAllowedValues(array('switchtype' => range(1,7)));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 
     /**

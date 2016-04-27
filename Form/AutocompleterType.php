@@ -8,6 +8,7 @@ use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\Form\FormBuilderInterface;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use \Symfony\Component\Routing\RouterInterface;
 use \NS\AceBundle\Form\Transformer\EntityToJson;
 use \NS\AceBundle\Form\Transformer\CollectionToJson;
@@ -59,7 +60,12 @@ class AutocompleterType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(array('route', 'autocompleteUrl', 'class', 'property','icon', 'secondary-field'));
+        if ($resolver instanceof OptionsResolverInterface) {
+            $resolver->setOptional(array('route', 'autocompleteUrl', 'class', 'property', 'icon', 'secondary-field'));
+        } else {
+            $resolver->setDefined(array('route', 'autocompleteUrl', 'class', 'property', 'icon', 'secondary-field'));
+        }
+
 
         $resolver->setDefaults(array(
             'method'        => 'POST',
@@ -72,6 +78,11 @@ class AutocompleterType extends AbstractType
             'multiple'      => false,
             'attr'          => array('class' => 'nsAutocompleter'),
         ));
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 
     /**

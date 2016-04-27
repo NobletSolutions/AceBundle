@@ -6,6 +6,7 @@ use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Description of SwitchType
@@ -30,6 +31,14 @@ class SpinnerType extends AbstractType
             'pos_neg'     => false,
             'attr'        => array('class' => 'nsSpinner')
         ));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 
     /**

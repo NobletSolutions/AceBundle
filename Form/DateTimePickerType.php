@@ -7,6 +7,7 @@ use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Description of DateTimePickerType
@@ -15,6 +16,9 @@ use \Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DateTimePickerType extends AbstractType
 {
+    /**
+     * @var DateFormatConverter
+     */
     protected $converter;
 
     /**
@@ -38,6 +42,14 @@ class DateTimePickerType extends AbstractType
             'input'       => 'datetime',
             'html5'       => false, // set to false so that the time widget ends up being text
         ));
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 
     /**
