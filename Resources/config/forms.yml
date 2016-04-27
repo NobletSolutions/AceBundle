@@ -26,19 +26,19 @@ services:
 
   ns_ace.form.type.acedatepicker:
     class: NS\AceBundle\Form\DatePickerType
-    arguments: [ @ns_ace.date_format_converter ]
+    arguments: [ "@ns_ace.date_format_converter" ]
     tags:
       - { name: form.type, alias: acedatepicker }
 
   ns_ace.form.type.acedaterange:
     class: NS\AceBundle\Form\DateRangeType
-    arguments: [ @ns_ace.date_format_converter ]
+    arguments: [ "@ns_ace.date_format_converter" ]
     tags:
       - { name: form.type, alias: acedaterange }
 
   ns_ace.form.type.acedatetimepicker:
     class: NS\AceBundle\Form\DateTimePickerType
-    arguments: [ @ns_ace.date_format_converter ]
+    arguments: [ "@ns_ace.date_format_converter" ]
     tags:
       - { name: form.type, alias: acedatetime }
 
@@ -49,7 +49,7 @@ services:
 
   ns_ace.form.type.autocompleter:
     class: NS\AceBundle\Form\AutocompleterType
-    arguments: [ @doctrine.orm.entity_manager, @router ]
+    arguments: [ "@doctrine.orm.entity_manager", "@router" ]
     tags:
       - { name: form.type, alias: autocompleter }
 
@@ -75,7 +75,7 @@ services:
 
 #    ns_ace.form.ns_filter_date:
 #        class: NS\AceBundle\Filter\Type\DateFilterType
-#        arguments: [ @ns_ace.date_format_converter ]
+#        arguments: [ "@ns_ace.date_format_converter" ]
 #        tags:
 #            - { name: form.type, alias: filter_date }
 
@@ -83,3 +83,4 @@ services:
 #        class: NS\AceBundle\Filter\Type\DateRangeFilterType
 #        tags:
 #            - { name: form.type, alias: filter_date_range }
+

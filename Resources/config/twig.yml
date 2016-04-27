@@ -14,3 +14,4 @@ services:
     class: NS\AceBundle\Twig\WidgetExtension
     tags:
       - { name: twig.extension }
+
