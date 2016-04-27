@@ -21,7 +21,7 @@ class SwitchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array('switch_type' => 1, 'hide_label' => false));
-        $resolver->setAllowedValues('switch_type',range(1, 7));
+        $resolver->setAllowedValues('switch_type', range(1, 7));
     }
 
     /**

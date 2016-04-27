@@ -50,7 +50,7 @@ class KnobType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        foreach($this->defaults as $opt => $val) {
+        foreach ($this->defaults as $opt => $val) {
             $view->vars['attr']['data-' . $opt] = $options[$opt];
         }
     }

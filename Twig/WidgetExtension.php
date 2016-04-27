@@ -8,7 +8,6 @@
 
 namespace NS\AceBundle\Twig;
 
-
 class WidgetExtension extends \Twig_Extension
 {
     /**
@@ -17,7 +16,7 @@ class WidgetExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('widget_filter_toolbox',array($this,'renderFilterToolbox'),array('is_safe'=>array('html')))
+            new \Twig_SimpleFunction('widget_filter_toolbox', array($this, 'renderFilterToolbox'), array('is_safe'=>array('html')))
         );
     }
 

@@ -33,11 +33,11 @@ class FileUploadType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if($options['uploadUrl']) {
+        if ($options['uploadUrl']) {
             $view->vars['attr']['data-uploadurl'] = $options['uploadUrl'];
         }
 
-        if($options['viewUrl']) {
+        if ($options['viewUrl']) {
             $view->vars['attr']['data-viewurl'] = $options['viewUrl'];
         }
     }
