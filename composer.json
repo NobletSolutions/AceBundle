@@ -17,7 +17,7 @@
 
     "require": {
         "php":                       ">=5.3.2",
-	"symfony/symfony":           ">=2.1",
+	"symfony/symfony":           "^2.8|^3.0",
         "jms/translation-bundle":    "~1.1",
         "knplabs/knp-menu-bundle":   "~2.0"
     },
@@ -32,5 +32,10 @@
     },
     "autoload": {
         "psr-4": { "NS\\AceBundle\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
     }
 }
