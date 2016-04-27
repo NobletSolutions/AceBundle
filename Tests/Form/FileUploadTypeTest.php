@@ -22,7 +22,7 @@ class FileUploadTypeTest extends BaseFormTestType
         );
 
         $formBuilder = $this->factory->createBuilder();
-        $formBuilder->add('file', new FileUploadType());
+        $formBuilder->add('file', FileUploadType::class);
         $form        = $formBuilder->getForm();
         $form->submit($formData);
         $object      = $form->getData();

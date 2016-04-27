@@ -4,6 +4,7 @@ namespace NS\AceBundle\Tests\Form\Fixtures;
 
 use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Description of EntityType
@@ -21,12 +22,14 @@ class EntityType extends AbstractType
         ;
     }
 
-    public function setDefaultOptions(\Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('data_class' => 'NS\AceBundle\Tests\Form\Fixtures\Entity'));
+        $resolver->setDefaults(array(
+            'data_class' => 'NS\AceBundle\Tests\Form\Fixtures\Entity'
+        ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'EntityType';
     }

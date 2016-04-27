@@ -3,6 +3,7 @@
 namespace NS\AceBundle\Form;
 
 use \Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,28 +17,30 @@ use \Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class KnobType extends AbstractType
 {
-    private $defaults;
+    /**
+     * @var array
+     */
+    private $defaults = array(
+        'min'             => false,
+        'max'             => false,
+        'width'           => 80,
+        'height'          => 80,
+        'thickness'       => 0.2,
+        'fgColor'         => false,
+        'displayPrevious' => false,
+        'angleArc'        => false,
+        'angleOffset'     => false,
+        'displayInput'    => true,
+        'linecap'         => 'butt',
+        'attr'            => array('class'=>'input-small nsKnob'),
+    );
 
     /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $this->defaults = array(
-            'min'             => false,
-            'max'             => false,
-            'width'           => 80,
-            'height'          => 80,
-            'thickness'       => 0.2,
-            'fgColor'         => false,
-            'displayPrevious' => false,
-            'angleArc'        => false,
-            'angleOffset'     => false,
-            'displayInput'    => true,
-            'linecap'         => 'butt', //"round"
-        );
-
-        $resolver->setDefaults(array_merge($this->defaults, array('attr' => array('class' => 'input-small nsKnob'))));
+        $resolver->setDefaults($this->defaults);
     }
 
     /**
@@ -57,14 +60,6 @@ class KnobType extends AbstractType
      */
     public function getParent()
     {
-        return 'text';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'knob';
+        return TextType::class;
     }
 }

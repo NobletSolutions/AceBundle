@@ -7,7 +7,7 @@ use \Symfony\Component\OptionsResolver\OptionsResolver;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
 use \NS\AceBundle\Service\DateFormatConverter;
-
+use \Lexik\Bundle\FormFilterBundle\Filter\Form\Type\DateFilterType as ParentDateFilterType;
 /**
  * Description of DateFilterType
  *
@@ -15,6 +15,9 @@ use \NS\AceBundle\Service\DateFormatConverter;
  */
 class DateFilterType extends AbstractType
 {
+    /**
+     * @var DateFormatConverter
+     */
     protected $converter;
 
     /**
@@ -65,10 +68,10 @@ class DateFilterType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public function getName()
+    public function getParent()
     {
-        return 'filter_date';
+        return ParentDateFilterType::class;
     }
 }

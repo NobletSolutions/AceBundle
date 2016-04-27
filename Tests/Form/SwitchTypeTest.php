@@ -22,7 +22,7 @@ class SwitchTypeTest extends BaseFormTestType
         );
 
         $formBuilder = $this->factory->createBuilder();
-        $formBuilder->add('switcher', new SwitchType());
+        $formBuilder->add('switcher', SwitchType::class);
         $form        = $formBuilder->getForm();
         $form->submit($formData);
         $object = $form->getData();

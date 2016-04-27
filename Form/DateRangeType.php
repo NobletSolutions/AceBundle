@@ -4,6 +4,7 @@ namespace NS\AceBundle\Form;
 
 use \NS\AceBundle\Service\DateFormatConverter;
 use \Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,6 +16,9 @@ use \Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DateRangeType extends AbstractType
 {
+    /**
+     * @var DateFormatConverter
+     */
     protected $converter;
 
     /**
@@ -57,16 +61,8 @@ class DateRangeType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
-    {
-        return 'acedaterange';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
-        return 'date';
+        return DateType::class;
     }
 }

@@ -19,7 +19,7 @@ class TextToArrayTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        return explode(",", str_replace(", ",",",$value));
+        return explode(",", str_replace(", ", ",", $value));
     }
 
     /**
@@ -30,8 +30,9 @@ class TextToArrayTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        if(is_array($value) && !empty($value))
+        if (is_array($value) && !empty($value)) {
             return implode(",", $value);
+        }
 
         return null;
     }

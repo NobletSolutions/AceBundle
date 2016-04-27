@@ -16,7 +16,6 @@ use \NS\AceBundle\Form\Transformer\EntityOrCreate;
  */
 class EntityOrCreateType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -26,7 +25,7 @@ class EntityOrCreateType extends AbstractType
     {
         $entityOptions = array_merge($options['entity_options'], array('class' => $options['class']));
 
-        $builder->add('finder', 'autocompleter', $entityOptions);
+        $builder->add('finder', 'NS\AceBundle\Form\AutocompleterType', $entityOptions);
 
         if ($options['include_form']) {
             $builder->add('createForm', $options['type'], isset($options['create_options']) ? $options['create_options'] : array());
@@ -67,13 +66,13 @@ class EntityOrCreateType extends AbstractType
             'entity_options' => array(),
         ));
 
-        $resolver->setAllowedValues(array('modal_size' => array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)));
+        $resolver->setAllowedValues('modal_size' , array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'entity_create';
     }

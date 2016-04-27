@@ -3,6 +3,7 @@
 namespace NS\AceBundle\Form;
 
 use \Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,12 +20,11 @@ class FileUploadType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $defaults = array(
+        $resolver->setDefaults(array(
             'uploadUrl' => false,
             'viewUrl'   => false,
             'attr'      => array('class' => 'nsFileUpload'),
-        );
-        $resolver->setDefaults($defaults);
+        ));
     }
 
     /**
@@ -47,14 +47,6 @@ class FileUploadType extends AbstractType
      */
     public function getParent()
     {
-        return 'file';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'fileupload';
+        return FileType::class;
     }
 }

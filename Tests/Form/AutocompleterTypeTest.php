@@ -5,6 +5,8 @@ namespace NS\AceBundle\Tests\Form;
 use \NS\AceBundle\Form\AutocompleterType;
 use \NS\AceBundle\Tests\BaseFormTestType;
 use \NS\AceBundle\Tests\Form\Fixtures\Entity;
+use Symfony\Component\Form\Forms;
+use Symfony\Component\Form\PreloadedExtension;
 
 /**
  * Description of AutocompleterTypeTest
@@ -13,6 +15,13 @@ use \NS\AceBundle\Tests\Form\Fixtures\Entity;
  */
 class AutocompleterTypeTest extends BaseFormTestType
 {
+    public function resetFactory($entityMgr,$router = null)
+    {
+        $type = new AutocompleterType($entityMgr,$router);
+        $this->factory = Forms::createFormFactoryBuilder()
+            ->addExtensions(array(new PreloadedExtension(array($type),array())))
+            ->getFormFactory();
+    }
 
     public function testFormTypeEntityToJson()
     {
@@ -32,9 +41,11 @@ class AutocompleterTypeTest extends BaseFormTestType
             ->with($className, 1)
             ->willReturn($entity);
 
+        $this->resetFactory($entityMgr,$router);
+
         $form = $this->factory
             ->createBuilder()
-            ->add('auto', new AutocompleterType($entityMgr, $router), array(
+            ->add('auto', AutocompleterType::class, array(
                 'route'  => $routeName,
                 'class'  => $className,
                 'method' => 'GET'))
@@ -72,9 +83,11 @@ class AutocompleterTypeTest extends BaseFormTestType
             ->with($className, 2)
             ->willReturn($entities[1]);
 
+        $this->resetFactory($entityMgr,$router);
+
         $form = $this->factory
             ->createBuilder()
-            ->add('auto', new AutocompleterType($entityMgr, $router), array(
+            ->add('auto', AutocompleterType::class, array(
                 'autocompleteUrl' => $routeName,
                 'class'           => $className,
                 'multiple'        => true))
@@ -102,9 +115,11 @@ class AutocompleterTypeTest extends BaseFormTestType
 
         $router    = $this->getRouter();
         $entityMgr = $this->getEntityManager();
+        $this->resetFactory($entityMgr,$router);
+
         $form      = $this->factory
             ->createBuilder()
-            ->add('auto', new AutocompleterType($entityMgr, $router), $properties)
+            ->add('auto', AutocompleterType::class, $properties)
             ->getForm();
 
         $viewData = $form->getViewData();
@@ -121,10 +136,11 @@ class AutocompleterTypeTest extends BaseFormTestType
 
         $router    = $this->getRouter();
         $entityMgr = $this->getEntityManager();
+        $this->resetFactory($entityMgr,$router);
 
         $form = $this->factory
             ->createBuilder()
-            ->add('auto', new AutocompleterType($entityMgr, $router), array('class' => $className,))
+            ->add('auto', AutocompleterType::class, array('class' => $className,))
             ->getForm();
 
         $viewData = $form->getViewData();
@@ -143,9 +159,11 @@ class AutocompleterTypeTest extends BaseFormTestType
         $entityMgr->expects($this->never())
             ->method('getReference');
 
+        $this->resetFactory($entityMgr);
+
         $form = $this->factory
             ->createBuilder()
-            ->add('auto', new AutocompleterType($entityMgr), array('class' => $className,))
+            ->add('auto', AutocompleterType::class, array('class' => $className,))
             ->getForm();
 
         $form->submit(array());
@@ -157,8 +175,7 @@ class AutocompleterTypeTest extends BaseFormTestType
     {
         return $this->getMockBuilder('\Symfony\Component\Routing\RouterInterface')
                 ->disableOriginalConstructor()
-                ->setMethods(array('generate', 'match', 'getRouteCollection', 'setContext',
-                    'getContext'))
+                ->setMethods(array('generate', 'match', 'getRouteCollection', 'setContext', 'getContext'))
                 ->getMock()
         ;
     }

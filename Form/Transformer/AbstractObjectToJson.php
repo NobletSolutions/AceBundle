@@ -13,28 +13,32 @@ use \Symfony\Component\PropertyAccess\PropertyAccess;
  */
 abstract class AbstractObjectToJson implements DataTransformerInterface
 {
-    /* @var $entityMgr ObjectManager */
+    /**
+     * @var $entityMgr ObjectManager
+     */
     protected $entityMgr;
 
-    /* @var $class string */
+    /**
+     * @var $class string
+     */
     protected $class;
 
-    /* @var $propertyMethod string */
+    /**
+     * @var $propertyMethod string
+     */
     protected $propertyMethod;
 
     /**
-     *
+     * AbstractObjectToJson constructor.
      * @param ObjectManager $entityMgr
-     * @param string $class
-     * @return \NS\AceBundle\Form\Transformer\EntityToJson
+     * @param $class
+     * @param null $propertyMethod
      */
     public function __construct(ObjectManager $entityMgr, $class, $propertyMethod = null)
     {
-        $this->entityMgr      = $entityMgr;
-        $this->class          = $class;
+        $this->entityMgr = $entityMgr;
+        $this->class = $class;
         $this->propertyMethod = $propertyMethod;
-
-        return $this;
     }
 
     /**
@@ -72,15 +76,15 @@ abstract class AbstractObjectToJson implements DataTransformerInterface
      */
     public function getProperty($entity)
     {
-        if ($this->getPropertyMethod())
-        {
+        if ($this->getPropertyMethod()) {
             $accessor = PropertyAccess::createPropertyAccessor();
 
             return $accessor->getValue($entity, $this->getPropertyMethod());
         }
 
-        if (!method_exists($entity, '__toString'))
+        if (!method_exists($entity, '__toString')) {
             throw new \RuntimeException(sprintf("Object of class %s has no __toString", get_class($entity)));
+        }
 
         return $entity->__toString();
     }
@@ -130,10 +134,7 @@ abstract class AbstractObjectToJson implements DataTransformerInterface
     }
 
     /**
-     *
      * @param integer $id
-     * @param mixed $key
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function getReference($id)
     {

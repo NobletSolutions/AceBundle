@@ -27,8 +27,8 @@ class ButtonTypeExtension extends AbstractTypeExtension
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(array('icon','type'));
-        $resolver->setAllowedTypes(array('icon'=>'string'));
+        $resolver->setDefined(array('icon', 'type'));
+        $resolver->setAllowedTypes(array('icon' => 'string'));
     }
 
     /**
@@ -39,7 +39,7 @@ class ButtonTypeExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if(isset($options['icon'])) {
+        if (isset($options['icon'])) {
             $view->vars['icon'] = $options['icon'];
         }
     }

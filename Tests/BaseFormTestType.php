@@ -2,7 +2,8 @@
 
 namespace NS\AceBundle\Tests;
 
-use \Symfony\Component\Form\Test\TypeTestCase;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Test\TypeTestCase;
 
 /**
  * Description of BaseFormTest
@@ -13,17 +14,16 @@ class BaseFormTestType extends TypeTestCase
 {
     /**
      *
-     * @param Form $form
+     * @param FormInterface $form
      * @param array $formData
      */
-    public function commonTest($form, $formData)
+    public function commonTest(FormInterface $form, $formData)
     {
         $this->assertTrue($form->isSynchronized());
-        $view     = $form->createView();
+        $view = $form->createView();
         $children = $view->children;
 
-        foreach (array_keys($formData) as $key)
-        {
+        foreach (array_keys($formData) as $key) {
             $this->assertArrayHasKey($key, $children);
         }
     }

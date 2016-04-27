@@ -4,6 +4,7 @@ namespace NS\AceBundle\Form;
 
 use \Doctrine\Common\Persistence\ObjectManager;
 use \Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\Form\FormBuilderInterface;
 use \Symfony\Component\Form\FormView;
@@ -108,14 +109,6 @@ class AutocompleterType extends AbstractType
      */
     public function getParent()
     {
-        return 'text';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'autocompleter';
+        return TextType::class;
     }
 }

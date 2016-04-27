@@ -22,7 +22,7 @@ class SpinnerTypeTest extends BaseFormTestType
         );
 
         $formBuilder = $this->factory->createBuilder();
-        $formBuilder->add('spinner', new SpinnerType());
+        $formBuilder->add('spinner', SpinnerType::class);
         $form        = $formBuilder->getForm();
         $form->submit($formData);
         $object      = $form->getData();

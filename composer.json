@@ -1,7 +1,7 @@
 {
     "name": "ns/ace-bundle",
     "type": "symfony-bundle",
-    "description": "This bundle provides bootstrap template",
+    "description": "This bundle provides the ace admin bootstrap template",
     "minimum-stability": "stable",
     "license": "MIT",
     "authors": [
@@ -14,12 +14,12 @@
             "email": "mark.woynarski@nobletdesign.com"
         }
     ],
-
     "require": {
-        "php":                       ">=5.3.2",
-	"symfony/symfony":           "^2.8|^3.0",
+        "php":                       ">=5.5.9",
+        "symfony/symfony":           "^2.8|^3.0",
         "jms/translation-bundle":    "~1.1",
-        "knplabs/knp-menu-bundle":   "~2.0"
+        "knplabs/knp-menu-bundle":   "~2.0",
+        "doctrine/common":           "^2.5|^2.6"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
@@ -28,7 +28,7 @@
     "suggest": {
         "punkave/symfony2-file-uploader-bundle": "Allows for drag & drop or multiple file upload",
         "craue/formflow-bundle": "~3.0@dev",
-        "lexik/form-filter-bundle": ""
+        "lexik/form-filter-bundle": "~5.0"
     },
     "autoload": {
         "psr-4": { "NS\\AceBundle\\": "" }

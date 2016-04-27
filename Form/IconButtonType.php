@@ -3,6 +3,7 @@
 namespace NS\AceBundle\Form;
 
 use \Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
 use \Symfony\Component\Form\ButtonTypeInterface;
 use \Symfony\Component\Form\FormView;
@@ -20,9 +21,9 @@ class IconButtonType extends AbstractType implements ButtonTypeInterface
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(array('icon','type'));
-        $resolver->setAllowedTypes(array('icon'=>'string'));
-        $resolver->setAllowedValues(array('type'=>array('button','submit','reset')));
+        $resolver->setDefined(array('icon', 'type'));
+        $resolver->setAllowedTypes(array('icon' => 'string'));
+        $resolver->setAllowedValues(array('type' => array('button', 'submit', 'reset')));
     }
 
     /**
@@ -31,11 +32,11 @@ class IconButtonType extends AbstractType implements ButtonTypeInterface
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if(isset($options['icon'])) {
+        if (isset($options['icon'])) {
             $view->vars['icon'] = $options['icon'];
         }
 
-        if(isset($options['type'])) {
+        if (isset($options['type'])) {
             $view->vars['type'] = $options['type'];
         }
     }
@@ -45,14 +46,6 @@ class IconButtonType extends AbstractType implements ButtonTypeInterface
      */
     public function getParent()
     {
-        return 'button';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'iconbutton';
+        return ButtonType::class;
     }
 }

@@ -3,6 +3,7 @@
 namespace NS\AceBundle\Form;
 
 use \Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,8 +20,8 @@ class SwitchType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('switchtype' => 1, 'hidelabel'=>false));
-        $resolver->setAllowedValues(array('switchtype' => range(1,7)));
+        $resolver->setDefaults(array('switch_type' => 1, 'hide_label' => false));
+        $resolver->setAllowedValues('switch_type',range(1, 7));
     }
 
     /**
@@ -29,7 +30,7 @@ class SwitchType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if(isset($view->vars['attr']['class'])) {
+        if (isset($view->vars['attr']['class'])) {
             $view->vars['attr']['class'] .= 'ace ace-switch ace-switch-' . $options['switchtype'];
         } else {
             $view->vars['attr']['class'] = 'ace ace-switch ace-switch-' . $options['switchtype'];
@@ -41,16 +42,8 @@ class SwitchType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
-    {
-        return 'switch';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
-        return 'checkbox';
+        return CheckboxType::class;
     }
 }

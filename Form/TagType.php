@@ -3,6 +3,7 @@
 namespace NS\AceBundle\Form;
 
 use \Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,11 +24,11 @@ class TagType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults( array(
-            'caseInsensitive'     => true,
-            'allowDuplicates'     => false,
+        $resolver->setDefaults(array(
+            'caseInsensitive' => true,
+            'allowDuplicates' => false,
             'autocompleteOnComma' => false,
-            'arrayOutput'         => false,
+            'arrayOutput' => false,
         ));
     }
 
@@ -41,10 +42,10 @@ class TagType extends AbstractType
             sort($options['source']);
             $view->vars['attr']['data-source'] = json_encode($options['source']);
         }
-        
-        $view->vars['attr']['class']                      = 'nsTag';
-        $view->vars['attr']['data-case-insensitive']      = $options['caseInsensitive'];
-        $view->vars['attr']['data-allow-duplicates']      = $options['allowDuplicates'];
+
+        $view->vars['attr']['class'] = 'nsTag';
+        $view->vars['attr']['data-case-insensitive'] = $options['caseInsensitive'];
+        $view->vars['attr']['data-allow-duplicates'] = $options['allowDuplicates'];
         $view->vars['attr']['data-autocomplete-on-comma'] = $options['autocompleteOnComma'];
     }
 
@@ -53,7 +54,7 @@ class TagType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if($options['arrayOutput']) {
+        if ($options['arrayOutput']) {
             $builder->addViewTransformer(new TextToArrayTransformer());
         }
     }
@@ -63,14 +64,6 @@ class TagType extends AbstractType
      */
     public function getParent()
     {
-        return 'text';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'tag';
+        return TextType::class;
     }
 }

@@ -3,6 +3,7 @@
 namespace NS\AceBundle\Form;
 
 use \Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,14 +22,14 @@ class SpinnerType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults( array(
-            'min'           => 0,
-            'max'           => 100,
-            'step'          => 1,
-            'touchscreen'   => false, //built for touchscreen
-            'on_sides'      => false,
-            'pos_neg'     => false,
-            'attr'        => array('class' => 'nsSpinner')
+        $resolver->setDefaults(array(
+            'min' => 0,
+            'max' => 100,
+            'step' => 1,
+            'touchscreen' => false, //built for touchscreen
+            'on_sides' => false,
+            'pos_neg' => false,
+            'attr' => array('class' => 'nsSpinner')
         ));
     }
 
@@ -40,15 +41,15 @@ class SpinnerType extends AbstractType
     {
         $opts = array();
 
-        foreach(array('min', 'max', 'step', 'on_sides') as $opt) {
+        foreach (array('min', 'max', 'step', 'on_sides') as $opt) {
             $opts[$opt] = $options[$opt];
         }
 
-        if($options['pos_neg']) {
+        if ($options['pos_neg']) {
             $opts += array('icon_up' => 'icon-plus smaller-75', 'icon_down' => 'icon-minus smaller-75', 'btn_up_class' => 'btn-success', 'btn_down_class' => 'btn-danger');
         }
 
-        if($options['touchscreen']) {
+        if ($options['touchscreen']) {
             $opts['touch_spinner'] = true;
         }
 
@@ -60,14 +61,6 @@ class SpinnerType extends AbstractType
      */
     public function getParent()
     {
-        return 'text';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'spinner';
+        return TextType::class;
     }
 }

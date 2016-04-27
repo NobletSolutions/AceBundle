@@ -15,8 +15,14 @@ use \Symfony\Component\HttpFoundation\Response;
  */
 class JsonAutocompleter
 {
+    /**
+     * @var SerializerInterface
+     */
     private $serializer;
 
+    /**
+     * @var
+     */
     private $context;
 
     /**

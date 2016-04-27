@@ -21,6 +21,9 @@ class WidgetExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * @return string
+     */
     public function renderFilterToolbox()
     {
         return '<div class="widget-toolbar">

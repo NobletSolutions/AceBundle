@@ -22,7 +22,7 @@ class KnobTypeTest extends BaseFormTestType
         );
 
         $formBuilder = $this->factory->createBuilder();
-        $formBuilder->add('knob', new KnobType());
+        $formBuilder->add('knob', KnobType::class);
         $form        = $formBuilder->getForm();
         $form->submit($formData);
         $object      = $form->getData();

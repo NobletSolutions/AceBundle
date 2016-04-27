@@ -22,7 +22,7 @@ class MaskedTypeTest extends BaseFormTestType
         );
 
         $formBuilder = $this->factory->createBuilder();
-        $formBuilder->add('masked', new MaskedType());
+        $formBuilder->add('masked', MaskedType::class);
         $form        = $formBuilder->getForm();
         $form->submit($formData);
         $object      = $form->getData();

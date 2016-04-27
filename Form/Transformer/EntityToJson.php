@@ -17,11 +17,13 @@ class EntityToJson extends AbstractObjectToJson
      */
     public function transform($entity)
     {
-        if ($entity === null)
+        if ($entity === null) {
             return null;
+        }
 
-        if (!$entity instanceof $this->class)
+        if (!$entity instanceof $this->class) {
             throw new \InvalidArgumentException(sprintf("Expecting entity of type '%s' but received '%s'", $this->class, get_class($entity)));
+        }
 
         return json_encode(array(array('id' => $entity->getId(), 'name' => $this->getProperty($entity))));
     }
@@ -34,8 +36,9 @@ class EntityToJson extends AbstractObjectToJson
      */
     public function reverseTransform($id)
     {
-        if ($id === null)
+        if ($id === null) {
             return null;
+        }
 
         return $this->getReference($id);
     }

@@ -11,6 +11,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class BundleExistence extends \Twig_Extension
 {
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
     /**

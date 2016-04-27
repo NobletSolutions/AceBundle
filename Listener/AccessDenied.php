@@ -14,6 +14,9 @@ use \Symfony\Component\HttpFoundation\Response;
  */
 class AccessDenied implements AccessDeniedHandlerInterface
 {
+    /**
+     * @var \Twig_Environment
+     */
     private $twig;
 
     /**

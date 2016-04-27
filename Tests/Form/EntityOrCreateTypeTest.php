@@ -24,19 +24,17 @@ class EntityOrCreateTypeTest extends TypeTestCase
             ->willReturn($entity);
 
         $className = 'NS\AceBundle\Tests\Form\Fixtures\Entity';
-        $type      = new EntityOrCreateType();
-
         $formData = array(
             'entity' => array('finder' => 1),
         );
 
         $formOptions = array(
-            'type'  => new Fixtures\EntityType(),
+            'type'  => Fixtures\EntityType::class,
             'class' => $className,
         );
 
         $form = $this->factory->createBuilder()
-            ->add('entity', $type, $formOptions)
+            ->add('entity', EntityOrCreateType::class, $formOptions)
             ->getForm();
 
         $this->assertArrayHasKey('finder', $form['entity']);
@@ -59,13 +57,12 @@ class EntityOrCreateTypeTest extends TypeTestCase
         );
 
         $formProperties = array(
-            'type'  => new Fixtures\EntityType(),
+            'type'  => Fixtures\EntityType::class,
             'class' => $className,
         );
-
-        $type = new EntityOrCreateType();
+        
         $form = $this->factory->createBuilder()
-            ->add('entity', $type, $formProperties)
+            ->add('entity', EntityOrCreateType::class, $formProperties)
             ->getForm();
 
         $this->assertCount(2, $form['entity']);
@@ -92,8 +89,6 @@ class EntityOrCreateTypeTest extends TypeTestCase
         $type = new AutocompleterType($this->entityMgr);
 
         return array(
-            new PreloadedExtension(array(
-                $type->getName() => $type,
-                ), array()));
+            new PreloadedExtension(array($type), array()));
     }
 }

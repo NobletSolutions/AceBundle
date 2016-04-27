@@ -22,19 +22,23 @@ class CollectionToJson extends AbstractObjectToJson
      */
     public function transform($entities)
     {
-        if (null === $entities || empty($entities))
+        if (null === $entities || empty($entities)) {
             return "";
+        }
 
-        if (!$entities instanceof Collection && !is_array($entities))
+        if (!$entities instanceof Collection && !is_array($entities)) {
             throw new UnexpectedTypeException($entities, 'PersistentCollection or ArrayCollection');
+        }
 
         $idsArray = array();
         // check for interface...
-        foreach ($entities as $entity)
+        foreach ($entities as $entity) {
             $idsArray[] = array('id' => $entity->getId(), 'name' => $this->getProperty($entity));
+        }
 
-        if (empty($idsArray))
+        if (empty($idsArray)) {
             return null;
+        }
 
         return json_encode($idsArray);
     }
@@ -48,16 +52,19 @@ class CollectionToJson extends AbstractObjectToJson
      */
     public function reverseTransform($ids)
     {
-        if ('' === $ids || null === $ids || empty($ids))
+        if ('' === $ids || null === $ids || empty($ids)) {
             return new ArrayCollection();
+        }
 
-        if (!is_string($ids))
+        if (!is_string($ids)) {
             throw new UnexpectedTypeException($ids, 'string');
+        }
 
         $idsArray = explode(',', $ids);
 
-        if (empty($idsArray))
+        if (empty($idsArray)) {
             return new ArrayCollection();
+        }
 
         array_walk($idsArray, array($this, 'walk'));
 

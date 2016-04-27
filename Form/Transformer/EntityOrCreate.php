@@ -14,16 +14,15 @@ class EntityOrCreate implements DataTransformerInterface
 
     /**
      * This takes the submitted values and determines which to submit
-     * 
-     * @param type $value
+     *
+     * @param array $value
      * {@inheritdoc}
      */
     public function reverseTransform($value)
     {
         if (!empty($value['finder']) && is_object($value['finder'])) {
             return $value['finder'];
-        }
-        elseif (!empty($value['createForm'])) {
+        } elseif (!empty($value['createForm'])) {
             return $value['createForm'];
         }
 
@@ -31,8 +30,8 @@ class EntityOrCreate implements DataTransformerInterface
     }
 
     /**
-     * 
-     * @param type $value
+     *
+     * @param mixed $value
      * {@inheritdoc}
      */
     public function transform($value)

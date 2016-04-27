@@ -22,7 +22,7 @@ class TagTypeTest extends BaseFormTestType
         );
 
         $formBuilder = $this->factory->createBuilder();
-        $formBuilder->add('tag', new TagType());
+        $formBuilder->add('tag', TagType::class);
         $form        = $formBuilder->getForm();
         $form->submit($formData);
         $object      = $form->getData();

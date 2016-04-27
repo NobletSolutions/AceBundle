@@ -4,6 +4,7 @@ namespace NS\AceBundle\Form;
 
 use \NS\AceBundle\Service\DateFormatConverter;
 use \Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,6 +16,9 @@ use \Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DateTimePickerType extends AbstractType
 {
+    /**
+     * @var DateFormatConverter
+     */
     protected $converter;
 
     /**
@@ -53,16 +57,8 @@ class DateTimePickerType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
-    {
-        return 'acedatetime';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
-        return 'datetime';
+        return DateTimeType::class;
     }
 }
