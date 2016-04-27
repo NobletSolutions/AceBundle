@@ -20,10 +20,10 @@ class SliderType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('color' => 'green', 'switchtype' => 1));
-        $resolver->setRequired(array('switchtype'));
+        $resolver->setDefaults(array('color' => 'green', 'switch_type' => 1));
+        $resolver->setRequired(array('switch_type'));
         $resolver->setAllowedValues('color', array('green', 'red', 'purple', 'orange', 'dark'));
-        $resolver->setAllowedValues('switchtype', array(1, 2, 3, 4, 5, 6, 7));
+        $resolver->setAllowedValues('switch_type', array(1, 2, 3, 4, 5, 6, 7));
     }
 
     /**
@@ -33,9 +33,9 @@ class SliderType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if (isset($view->vars['attr']['class'])) {
-            $view->vars['attr']['class'] .= 'ace ace-switch ace-switch-' . $options['switchtype'];
+            $view->vars['attr']['class'] .= 'ace ace-switch ace-switch-' . $options['switch_type'];
         } else {
-            $view->vars['attr']['class'] = 'ace ace-switch ace-switch-' . $options['switchtype'];
+            $view->vars['attr']['class'] = 'ace ace-switch ace-switch-' . $options['switch_type'];
         }
     }
 
