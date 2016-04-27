@@ -5,6 +5,7 @@ namespace NS\AceBundle\Form;
 use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
@@ -14,12 +15,12 @@ use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class MaskedType extends AbstractType
 {
+    /**
+     * @var array
+     */
     private $defaults;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $this->defaults = array(
             'mask'            => false,//ex: "99/99/9999", "(999) 999-9999", "99-999-9999-99"; ? = optional, ex: "(999) 999-9999? x999" for optional phone extension
