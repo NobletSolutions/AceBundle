@@ -13,7 +13,7 @@ php:
 
 env:
     global:
-        - TEST_COMMAND="phpunit"
+        - TEST_COMMAND="phpunit -c ."
     matrix:
         - SYMFONY_VERSION=2.8.*
 
