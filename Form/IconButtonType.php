@@ -7,6 +7,7 @@ use \Symfony\Component\OptionsResolver\OptionsResolver;
 use \Symfony\Component\Form\ButtonTypeInterface;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Description of IconButtonType
@@ -20,9 +21,22 @@ class IconButtonType extends AbstractType implements ButtonTypeInterface
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(array('icon','type'));
-        $resolver->setAllowedTypes(array('icon'=>'string'));
-        $resolver->setAllowedValues(array('type'=>array('button','submit','reset')));
+        if ($resolver instanceof OptionsResolverInterface) {
+            $resolver->setOptional(array('icon', 'type'));
+        } else {
+            $resolver->setDefined(array('icon', 'type'));
+        }
+
+        $resolver->setAllowedTypes(array('icon' => 'string'));
+        $resolver->setAllowedValues(array('type' => array('button', 'submit', 'reset')));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 
     /**
@@ -31,11 +45,11 @@ class IconButtonType extends AbstractType implements ButtonTypeInterface
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if(isset($options['icon'])) {
+        if (isset($options['icon'])) {
             $view->vars['icon'] = $options['icon'];
         }
 
-        if(isset($options['type'])) {
+        if (isset($options['type'])) {
             $view->vars['type'] = $options['type'];
         }
     }

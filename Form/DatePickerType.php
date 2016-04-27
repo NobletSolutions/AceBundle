@@ -16,6 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class DatePickerType extends AbstractType
 {
+    /**
+     * @var DateFormatConverter
+     */
     protected $converter;
 
     /**
@@ -39,6 +42,9 @@ class DatePickerType extends AbstractType
         ));
     }
 
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $this->configureOptions($resolver);

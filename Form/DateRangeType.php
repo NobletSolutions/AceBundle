@@ -7,6 +7,7 @@ use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Description of DateRangeType
@@ -36,6 +37,14 @@ class DateRangeType extends AbstractType
             'compound' => false,
             'format'   => $this->converter->getFormat(true),
         ));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 
     /**

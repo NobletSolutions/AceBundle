@@ -80,6 +80,9 @@ class AutocompleterType extends AbstractType
         ));
     }
 
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $this->configureOptions($resolver);
