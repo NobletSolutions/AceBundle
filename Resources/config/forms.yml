@@ -7,7 +7,7 @@ services:
   ns_ace.form.iconbutton_extension:
     class: NS\AceBundle\Form\Extensions\ButtonTypeExtension
     tags:
-      - { name: form.type_extension, alias: submit, extended_type: Symfony/Component/Form/Extension/Core/Type/SubmitType }
+      - { name: form.type_extension, alias: button, extended_type: Symfony\Component\Form\Extension\Core\Type\ButtonType }
 
   ns_ace.form.iconbutton:
     class: NS\AceBundle\Form\IconButtonType

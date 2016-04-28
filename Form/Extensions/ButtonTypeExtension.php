@@ -19,7 +19,7 @@ class ButtonTypeExtension extends AbstractTypeExtension
      */
     public function getExtendedType()
     {
-        return 'submit';
+        return 'button';
     }
 
     /**
