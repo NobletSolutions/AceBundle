@@ -3,6 +3,7 @@
 namespace NS\AceBundle\Form\Extensions;
 
 use \Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use \Symfony\Component\Form\FormInterface;
 use \Symfony\Component\Form\FormView;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,7 +20,7 @@ class ButtonTypeExtension extends AbstractTypeExtension
      */
     public function getExtendedType()
     {
-        return 'submit';
+        return ButtonType::class;
     }
 
     /**
@@ -28,7 +29,7 @@ class ButtonTypeExtension extends AbstractTypeExtension
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefined(array('icon', 'type'));
-        $resolver->setAllowedTypes(array('icon' => 'string'));
+        $resolver->setAllowedTypes('icon','string');
     }
 
     /**
