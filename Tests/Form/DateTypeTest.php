@@ -115,7 +115,7 @@ class DateTypeTest extends BaseFormTestType
         }
 
         $picker = new DateTimePickerType($this->converter);
-        $type = new DatePickerType($this->converter);
+        $type = new DatePickerType();
 
         return array(new PreloadedExtension(array($type,$picker), array()));
     }
