@@ -25,7 +25,7 @@ class DateFilterType extends AbstractType
      *
      * @param DateFormatConverter $converter
      */
-    public function __construct(DateFormatConverter $converter)
+    public function __construct(DateFormatConverter $converter = null)
     {
         $this->converter = ($converter) ?:new DateFormatConverter();
     }
