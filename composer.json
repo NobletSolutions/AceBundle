@@ -22,7 +22,7 @@
         "doctrine/common":           "^2.5|^2.6"
     },
     "require-dev": {
-        "liip/rmt": "~1.1"
+        "lexik/form-filter-bundle": "~5.0"
     },
     "suggest": {
         "punkave/symfony2-file-uploader-bundle": "Allows for drag & drop or multiple file upload",

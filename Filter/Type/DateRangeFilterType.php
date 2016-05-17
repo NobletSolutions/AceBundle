@@ -39,9 +39,6 @@ class DateRangeFilterType extends AbstractType
                 'right_date_options'     => array(),
                 'data_extraction_method' => 'value_keys',
             ))
-            ->setAllowedValues(array(
-                'data_extraction_method' => array('value_keys'),
-            ))
-        ;
+            ->setAllowedValues('data_extraction_method', array('value_keys'));
     }
 }

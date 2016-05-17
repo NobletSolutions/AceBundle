@@ -43,9 +43,7 @@ class DateFilterType extends AbstractType
                 'compound' => false,
                 'format'   => $this->converter->getFormat(true),
             ))
-            ->setAllowedValues(array(
-                'data_extraction_method' => array('default'),
-            ))
+            ->setAllowedValues('data_extraction_method',array('default'))
         ;
     }
 
