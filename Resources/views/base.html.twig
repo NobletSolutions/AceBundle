@@ -203,10 +203,9 @@
                             {% block body %}{% endblock %}
                         </div><!--/.col-->
                     </div><!--/.row-->
-
                 </div><!--/.page-content-->
-
             </div><!--/.main-content -->
+            {% block footer %}{% endblock footer %}
 
             {% block ace_settings %}
             <div class="ace-settings-container" id="ace-settings-container">
@@ -234,8 +233,6 @@
             </div><!--/#ace-settings-container-->
             {% endblock %}
     </div><!--/.main-container-->
-
-    {% block footer %}{% endblock footer %}
 
     <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse display">
         <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
