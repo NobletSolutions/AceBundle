@@ -1,6 +1,5 @@
 {% set renderBackButton = flow.getCurrentStepNumber() in (flow.getFirstStepNumber() + 1) .. flow.getLastStepNumber() %}
-<div class="hr hr-18 hr-double dotted"></div>
-<div class="wizard-actions ">
+<div class="wizard-actions{% if container_classes is defined %} {{ container_classes }}{% endif %}">
     <div class="craue_formflow_buttons craue_formflow_button_count_{% if renderBackButton %}3{% else %}2{% endif %}">
         {#
             Default button (the one trigged by pressing the enter/return key) must be defined first.
