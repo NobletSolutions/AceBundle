@@ -3,6 +3,7 @@ VERSION 2  SYMFONY 3.0 SUPPORT
 ==============================
 
    Version 2.0 - symfony 3.0 support
+      22/06/2016 16:54  2.0.11  Updated button styling part 2
       22/06/2016 16:47  2.0.10  Updated multi-form buttons alignment and styling
       10/06/2016 16:56  2.0.9  Updated checkbox widget/label template
       24/05/2016 16:20  2.0.8  Fix footer layout issue
