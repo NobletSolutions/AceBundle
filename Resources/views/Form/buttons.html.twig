@@ -9,8 +9,7 @@
         #}
         <button type="submit" class="btn btn-next btn-success craue_formflow_button_last">
             {%- if flow.getCurrentStepNumber() < flow.getLastStepNumber() -%}
-                {{- 'button.next' | trans({}, 'CraueFormFlowBundle') -}}
-                <i class="ace-icon fa fa-arrow-right"></i>
+                {{- 'button.next' | trans({}, 'CraueFormFlowBundle') -}}&nbsp;<i class="ace-icon fa fa-arrow-right"></i>
             {%- else -%}
                 {{- 'button.finish' | trans({}, 'CraueFormFlowBundle') -}}
             {%- endif -%}
