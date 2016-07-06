@@ -40,7 +40,7 @@ $(document).click(function(ev)
         ev.preventDefault();
         var collection = $('[data-collection=' + target.data('collectionholder') + ']').first();
         var index      = collection.data('index');
-        var newForm    = collection.data('prototype').replace('/__name__/g', index);
+        var newForm    = collection.data('prototype').replace(/__name__/g, index);
         collection.append(newForm);
         $(document).trigger('nsFormUpdate');
     }
