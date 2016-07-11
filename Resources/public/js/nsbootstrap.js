@@ -173,6 +173,11 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
                 $el.tokenInput('setOptions', {'url':$el.data('autocompleteurl')+delim+'secondary-field='+$tgt.val()});
             };
 
+            if($el.data('resultsformatter'))
+            {
+              options.resultsFormatter=eval($el.data('resultsformatter'));
+            }
+
             $el.tokenInput($el.data('autocompleteurl'), options);
         }
     });

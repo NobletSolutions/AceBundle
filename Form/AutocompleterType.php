@@ -60,7 +60,7 @@ class AutocompleterType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(array('route', 'autocompleteUrl', 'class', 'property', 'icon', 'secondary-field'));
+        $resolver->setDefined(array('route', 'autocompleteUrl', 'class', 'property', 'icon', 'secondary-field', 'resultsFormatter'));
 
         $resolver->setDefaults(array(
             'method'        => 'POST',
@@ -98,6 +98,10 @@ class AutocompleterType extends AbstractType
 
         if (isset($options['secondary-field'])) {
             $view->vars['attr']['data-autocomplete-secondary-field'] = json_encode($options['secondary-field']);
+        }
+
+        if (isset($options['resultsFormatter'])) {
+            $view->vars['attr']['data-resultsFormatter'] = $options['resultsFormatter'];
         }
 
         $view->vars['attr']['data-options'] = json_encode($opts);
