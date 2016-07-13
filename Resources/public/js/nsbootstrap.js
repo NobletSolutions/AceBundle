@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $(this).trigger('nsFormUpdate');
-    
+
     $('.entity-modal').on('hidden.bs.modal', function(ev)
     {
         var modal = $(this);
@@ -34,7 +34,7 @@ $(document).ready(function() {
 $(document).click(function(ev)
 {
     var target = $(ev.target);
-    
+
     if(target.is('.nsAddForm'))
     {
         ev.preventDefault();
@@ -44,7 +44,7 @@ $(document).click(function(ev)
         collection.append(newForm);
         $(document).trigger('nsFormUpdate');
     }
-    
+
     if(target.is('[data-toggle=modal]'))
     {
         setTimeout(function()
@@ -52,17 +52,17 @@ $(document).click(function(ev)
             $(document).trigger('nsFormUpdate');
         }, 200);
     }
-    
+
     if(target.is('[data-showelement]'))
     {
         $(target.data('showelement')).show();
         $(document).trigger('nsFormUpdate');
     }
-    
+
     if(target.is('div.modal button.modal-clear'))
     {
         target.closest('div.modal').find(':input').val('');
-        
+
         if(!target.data('dismiss'))
             ev.preventDefault();
     }
@@ -83,7 +83,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
             }
         }
     });
-    
+
     $('.date-range').each(function(i, el)
     {
         if($(el).is(':visible'))
@@ -148,7 +148,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
         {
             el.nsFieldActive = true;
             var options = $el.data('options');
-            
+
             if($el.val())
                 options.prePopulate = JSON.parse($el.val());
 
@@ -200,7 +200,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
             $(el).tag(params);
         }
     });
-    
+
 
     $('input.nsSpinner').each(function(i, el)
     {
@@ -256,7 +256,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
             }
         }
     });
-    
+
     $('.chosen-select').each(function(i, el)
     {
         if(el.nsFieldActive !== true)
@@ -265,7 +265,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
             $(el).chosen({allow_single_deselect:true, search_contains:($(el).data('search-contains') ? true : false)});
         }
     });
-    
+
     $('a.filter_legend').each(function(i, el)
     {
         if(el.nsFieldActive !== true)
@@ -280,7 +280,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
             });
         }
     });
-        
+
     $('div.filter_container .sonata-filter-option').each(function(i, el)
     {
         if(el.nsFieldActive !== true)
@@ -316,7 +316,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
         //I... don't remember why I did this :S
         if(el.tagName.toLowerCase() === 'input' && (el.type.toLowerCase() === 'radio' || el.type.toLowerCase() === 'checkbox') && !el.checked)
             value = 0;
-        
+
         //If we're dealing with a multiselect/multiple checkboxes, store the currently selected values in an array
         if(!$(el).data('context-child'))
         {
@@ -327,19 +327,19 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
         }
         else
             el.values = [value];
-        
+
         //Find all the fields that are watching the parent/container for multiselects/checkboxes
         $('[data-context-parent='+($(el).data('context-child')?$(el).data('context-child'):$(el).parent('[data-context-child]').data('context-child'))+'][data-context-value]').each(function(i, input)
         {
-            
+
             input.parent = el;
             var f       = $(input).data('context-value');
             var fields  = typeof f === 'object' ? f.join().split(',') : [f.toString()]; //hacky way to get around variable typing in indexOf; find a better way to do this.
             var label   = $('label[for='+input.id+']');
             var element = $(input).parent().hasClass('input-group') ? $(input).parent() : input;
-            
+
             var result = false;
-            
+
             //Find out if any of the values we're watching for appear in our array of selected values
             for(var a = 0; a < fields.length; a++)
             {
@@ -349,7 +349,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
                     break;
                 }
             }
-        
+
             //console.log(input, input.parent, input.parent.contextState);
             if(result)
             {
@@ -374,13 +374,13 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
                 input.contextState = 'inactive';
 //                    console.log(input.id+' also inactive');
             }
-            
-        
+
+
             $(document).trigger('nsFormUpdate');
             toggleContextFields(input);
         });
     }
-    
+
     $('[data-rel=tooltip]').each(function(i, el)
     {
         if(el.nsFieldActive !== true)
@@ -388,7 +388,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
             $(el).tooltip({container:'body'});
         }
     });
-    
+
     $('[data-rel=popover]').each(function(i, el)
     {
         if(el.nsFieldActive !== true)
@@ -396,7 +396,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
             $(el).popover({container:'body'});
         }
     });
-    
+
     $('.ns-confirm').each(function(i, el)
     {
         //if($(el).is(':visible')) // Why are we doing this? I can't imagine why we would want to restrict this to visible elements.
@@ -404,14 +404,14 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
             if(el.nsFieldActive !== true)
             {
                 var msg = 'Are you sure you wish to continue?';
-                
+
                 if($(el).data('confirm-message'))
                 {
                     msg = $(el).data('confirm-message');
                 }
-                
+
                 el.nsFieldActive = true;
-                
+
                 if($(el).is('form'))
                 {
                     $(el).submit(function()
@@ -423,7 +423,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
                 {
                     $(el).click(function()
                     {
-                       return confirm(msg); 
+                       return confirm(msg);
                     });
                 }
             }
