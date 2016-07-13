@@ -178,10 +178,15 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
               options.resultsFormatter=eval($el.data('resultsformatter'));
             }
 
+            if($el.data('tokenformatter'))
+            {
+              options.tokenFormatter=eval($el.data('tokenformatter'));
+            }
+
             $el.tokenInput($el.data('autocompleteurl'), options);
         }
     });
-    
+
     $('input.nsTag').each(function(i, el)
     {
         if(el.nsFieldActive !== true)
