@@ -151,6 +151,8 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
 
             if($el.val())
                 options.prePopulate = JSON.parse($el.val());
+                
+            var queryUrl = $el.data('autocompleteurl');
 
             if($el.data('autocomplete-secondary-field'))
             {
@@ -160,6 +162,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
                 if($tgt)
                 {
                     var delim = ($el.data('autocompleteurl').indexOf('?') >= 0 ? '&' : '?');
+                    queryUrl = $el.data('autocompleteurl')+delim+'secondary-field='+$tgt.val();
 
                     $tgt.change(function()
                     {
@@ -170,7 +173,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
 
             options.onReady = function()
             {
-                $el.tokenInput('setOptions', {'url':$el.data('autocompleteurl')+delim+'secondary-field='+$tgt.val()});
+                $el.tokenInput('setOptions', {'url':queryUrl});
             };
 
             if($el.data('resultsformatter'))
