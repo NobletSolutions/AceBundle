@@ -29,6 +29,14 @@ $(document).ready(function() {
     });
 
     $('.modal.openOnLoad').modal();
+
+    $('body').append('<div class="modal fade" id="nsAjaxLoadingModal" tabindex="-1" role="dialog" aria-labelledby="nsAjaxLoadingModal"><i class="fa fa-spinner fa-pulse fa-3x fa-fw fa-inverse"></i></div>');
+
+    $(document).bind('ajaxSend', function () {
+        $('#nsAjaxLoadingModal').modal('show');
+    }).bind('ajaxComplete', function () {
+        $('#nsAjaxLoadingModal').modal('hide');
+    });
 });
 
 $(document).click(function(ev)
@@ -68,8 +76,10 @@ $(document).click(function(ev)
     }
 });
 
-$(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element', function(ev)
+$(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element ajaxComplete', function(ev)
 {
+    bindNsAjaxEvents();
+
     $('.date-picker').each(function(i, el)
     {
         if($(el).is(':visible'))
@@ -151,7 +161,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
 
             if($el.val())
                 options.prePopulate = JSON.parse($el.val());
-                
+
             var queryUrl = $el.data('autocompleteurl');
 
             if($el.data('autocomplete-secondary-field'))
@@ -178,12 +188,12 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
 
             if($el.data('resultsformatter'))
             {
-              options.resultsFormatter=eval($el.data('resultsformatter'));
+                options.resultsFormatter=eval($el.data('resultsformatter'));
             }
 
             if($el.data('tokenformatter'))
             {
-              options.tokenFormatter=eval($el.data('tokenformatter'));
+                options.tokenFormatter=eval($el.data('tokenformatter'));
             }
 
             $el.tokenInput($el.data('autocompleteurl'), options);
@@ -243,14 +253,14 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
             {
                 el.nsFieldActive = true;
                 $(el).timepicker({
-                        minuteStep: 1,
-                        showSeconds: ($(this).data('showSeconds') === 'true'),
-                        showMeridian: ($(this).data('showMeridian') === 'true'),
-                        defaultTime: false,
-                        icons: {
-                            up: 'fa fa-chevron-up',
-                            down: 'fa fa-chevron-down'
-                        }
+                    minuteStep: 1,
+                    showSeconds: ($(this).data('showSeconds') === 'true'),
+                    showMeridian: ($(this).data('showMeridian') === 'true'),
+                    defaultTime: false,
+                    icons: {
+                        up: 'fa fa-chevron-up',
+                        down: 'fa fa-chevron-down'
+                    }
                 }).on('focus', function() {
                     $(el).timepicker('showWidget');
                 }).next().on(ace.click_event, function() {
@@ -404,32 +414,64 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element',
     {
         //if($(el).is(':visible')) // Why are we doing this? I can't imagine why we would want to restrict this to visible elements.
         //{
-            if(el.nsFieldActive !== true)
+        if(el.nsFieldActive !== true)
+        {
+            var msg = 'Are you sure you wish to continue?';
+
+            if($(el).data('confirm-message'))
             {
-                var msg = 'Are you sure you wish to continue?';
-
-                if($(el).data('confirm-message'))
-                {
-                    msg = $(el).data('confirm-message');
-                }
-
-                el.nsFieldActive = true;
-
-                if($(el).is('form'))
-                {
-                    $(el).submit(function()
-                    {
-                       return confirm(msg);
-                    });
-                }
-                else
-                {
-                    $(el).click(function()
-                    {
-                       return confirm(msg);
-                    });
-                }
+                msg = $(el).data('confirm-message');
             }
+
+            el.nsFieldActive = true;
+
+            if($(el).is('form'))
+            {
+                $(el).submit(function()
+                {
+                    return confirm(msg);
+                });
+            }
+            else
+            {
+                $(el).click(function()
+                {
+                    return confirm(msg);
+                });
+            }
+        }
         //}
     });
 });
+
+var bindNsAjaxEvents = function () {
+    $('.ajaxUpdater').one('click', function (event) {
+        event.preventDefault();
+        var $updater = $(this);
+
+        $.ajax($updater.attr('href'), {
+            success: function (responsedata, status, jqxhr) {
+                $($updater.data('update')).html(responsedata);
+            }
+        });
+
+        return false;
+    });
+
+    $('.ajaxForm').one('submit', function (event) {
+        event.preventDefault();
+        var $form = $(this);
+        var formData = new FormData($form[0]);
+        $.ajax($form.attr('action'), {
+            method: $form.attr('method'),
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (responsedata, status, jqxhr) {
+                $($form.data('update')).html(responsedata);
+            }
+        });
+
+        return false;
+    });
+};
