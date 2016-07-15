@@ -32,9 +32,9 @@ $(document).ready(function() {
 
     $('body').append('<div class="modal fade" id="nsAjaxLoadingModal" tabindex="-1" role="dialog" aria-labelledby="nsAjaxLoadingModal"><i class="fa fa-spinner fa-pulse fa-3x fa-fw fa-inverse"></i></div>');
 
-    $(document).bind('ajaxSend', function () {
+    $(document).bind('ns:AjaxFormSend', function () {
         $('#nsAjaxLoadingModal').modal('show');
-    }).bind('ajaxComplete', function () {
+    }).bind('ns:AjaxFormComplete', function () {
         $('#nsAjaxLoadingModal').modal('hide');
     });
 });
@@ -448,10 +448,12 @@ var bindNsAjaxEvents = function () {
     $('.ajaxUpdater').one('click', function (event) {
         event.preventDefault();
         var $updater = $(this);
+        $(document).trigger('ns:AjaxFormSend');
 
         $.ajax($updater.attr('href'), {
             success: function (responsedata, status, jqxhr) {
                 $($updater.data('update')).html(responsedata);
+                $(document).trigger('ns:AjaxFormComplete');
             }
         });
 
@@ -462,6 +464,7 @@ var bindNsAjaxEvents = function () {
         event.preventDefault();
         var $form = $(this);
         var formData = new FormData($form[0]);
+        $(document).trigger('ns:AjaxFormSend');
         $.ajax($form.attr('action'), {
             method: $form.attr('method'),
             data: formData,
@@ -469,6 +472,7 @@ var bindNsAjaxEvents = function () {
             contentType: false,
             success: function (responsedata, status, jqxhr) {
                 $($form.data('update')).html(responsedata);
+                $(document).trigger('ns:AjaxFormComplete');
             }
         });
 
