@@ -363,7 +363,6 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
                 }
             }
 
-            //console.log(input, input.parent, input.parent.contextState);
             if(result)
             {
                 if(input.parent.contextState === undefined || input.parent.contextState === 'active')
@@ -377,7 +376,6 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
                     $(element).hide();
                     label.hide();
                     input.contextState = 'inactive';
-//                    console.log(input.id+' inactive');
                 }
             }
             else
@@ -385,7 +383,6 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
                 $(element).hide();
                 label.hide();
                 input.contextState = 'inactive';
-//                    console.log(input.id+' also inactive');
             }
 
 
@@ -445,37 +442,57 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
 });
 
 var bindNsAjaxEvents = function () {
-    $('.ajaxUpdater').one('click', function (event) {
-        event.preventDefault();
-        var $updater = $(this);
-        $(document).trigger('ns:AjaxFormSend');
+    $('.ajaxUpdater').each(function(i, el)
+    {
+        if(el.nsFieldActive !== true)
+        {
+            var $updater = $(el);
+            $updater.one('click', function (event)
+            {
+                event.preventDefault();
+                $(document).trigger('ns:AjaxFormSend');
 
-        $.ajax($updater.attr('href'), {
-            success: function (responsedata, status, jqxhr) {
-                $($updater.data('update')).html(responsedata);
-                $(document).trigger('ns:AjaxFormComplete');
-            }
-        });
+                $.ajax($updater.attr('href'), {
+                    success: function (responsedata, status, jqxhr)
+                    {
+                        $($updater.data('update')).html(responsedata);
+                        $(document).trigger('ns:AjaxFormComplete');
+                    }
+                });
 
-        return false;
+                return false;
+            });
+
+            el.nsFieldActive = true;
+        }
     });
 
-    $('.ajaxForm').one('submit', function (event) {
-        event.preventDefault();
-        var $form = $(this);
-        var formData = new FormData($form[0]);
-        $(document).trigger('ns:AjaxFormSend');
-        $.ajax($form.attr('action'), {
-            method: $form.attr('method'),
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (responsedata, status, jqxhr) {
-                $($form.data('update')).html(responsedata);
-                $(document).trigger('ns:AjaxFormComplete');
-            }
-        });
+    $('.ajaxForm').each(function(i, el)
+    {
+        if(el.nsFieldActive !== true)
+        {
+            var $form = $(el);
+            $form.one('submit', function (event)
+            {
+                event.preventDefault();
+                var formData = new FormData($form[0]);
+                $(document).trigger('ns:AjaxFormSend');
+                $.ajax($form.attr('action'), {
+                    method: $form.attr('method'),
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (responsedata, status, jqxhr)
+                    {
+                        $($form.data('update')).html(responsedata);
+                        $(document).trigger('ns:AjaxFormComplete');
+                    }
+                });
 
-        return false;
+                return false;
+            });
+
+            el.nsFieldActive = true;
+        }
     });
 };
