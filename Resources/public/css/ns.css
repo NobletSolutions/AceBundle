@@ -288,3 +288,8 @@ label {
 .craue_formflow_buttons button {
     float: right;
 }
+
+td > div.help-block {
+display: block !important;
+}
+
