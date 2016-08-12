@@ -226,6 +226,11 @@
 
 {% block checkbox_label %}{% endblock %}
 
+{% block radio_label %}
+    {% set label_attr = label_attr|merge({'for': id}) %}
+    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</label>
+{% endblock %}
+
 {% block checkbox_widget %}
     <div class="checkbox">
         <label>
