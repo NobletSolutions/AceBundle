@@ -67,4 +67,12 @@ class DatePickerType extends AbstractType
     {
         return DateType::class;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getBlockPrefix()
+    {
+        return 'acedatepicker';
+    }
 }

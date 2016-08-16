@@ -65,4 +65,12 @@ class DateRangeType extends AbstractType
     {
         return DateType::class;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getBlockPrefix()
+    {
+        return 'acedaterange';
+    }
 }
