@@ -496,7 +496,7 @@ var bindNsAjaxEvents = function () {
                     contentType: false,
                     success: function (responsedata, status, jqxhr)
                     {
-                        var $update = $($form.data('update'));
+                        $update = $($form.data('update'));
                         $update.html(responsedata);
                         $update.trigger('ns:AjaxFormComplete');
                     }
