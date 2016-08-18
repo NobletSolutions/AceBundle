@@ -457,7 +457,7 @@ var bindNsAjaxEvents = function () {
         if(el.nsFieldActive !== true)
         {
             var $updater = $(el);
-            $updater.one('click', function (event)
+            $updater.click(function (event)
             {
                 event.preventDefault();
                 $($updater).trigger('ns:AjaxFormSend');
@@ -483,7 +483,7 @@ var bindNsAjaxEvents = function () {
         if(el.nsFieldActive !== true)
         {
             var $form = $(el);
-            $form.one('submit', function (event)
+            $form.submit(function (event)
             {
                 event.preventDefault();
                 var formData = new FormData($form[0]);
