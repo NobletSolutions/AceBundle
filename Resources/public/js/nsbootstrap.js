@@ -485,7 +485,6 @@ var bindNsAjaxEvents = function () {
             var $form = $(el);
             $form.one('submit', function (event)
             {
-                console.log('there');
                 event.preventDefault();
                 var formData = new FormData($form[0]);
                 $($form).trigger('ns:AjaxFormSend');
