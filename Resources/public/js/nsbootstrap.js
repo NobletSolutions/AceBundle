@@ -37,7 +37,7 @@ $(document).ready(function() {
     }).bind('ns:AjaxFormComplete', function (event) {
         $('#nsAjaxLoadingModal').modal('hide');
         $tgt = $(event.target);
-        if($tgt.is('.modal-body'))
+        if($tgt.closest('.modal'))
         {
             $tgt.closest('.modal').modal('show');
         }
