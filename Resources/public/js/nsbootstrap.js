@@ -34,8 +34,13 @@ $(document).ready(function() {
 
     $(document).bind('ns:AjaxFormSend', function () {
         $('#nsAjaxLoadingModal').modal('show');
-    }).bind('ns:AjaxFormComplete', function () {
+    }).bind('ns:AjaxFormComplete', function (event) {
         $('#nsAjaxLoadingModal').modal('hide');
+        $tgt = $(event.target);
+        if($tgt.is('.modal-body'))
+        {
+            $tgt.closest('.modal').modal('show');
+        }
     });
 });
 
@@ -455,8 +460,9 @@ var bindNsAjaxEvents = function () {
                 $.ajax($updater.attr('href'), {
                     success: function (responsedata, status, jqxhr)
                     {
-                        $($updater.data('update')).html(responsedata);
-                        $(document).trigger('ns:AjaxFormComplete');
+                        $update = $($updater.data('update'));
+                        $update.html(responsedata);
+                        $update.trigger('ns:AjaxFormComplete');
                     }
                 });
 
@@ -484,8 +490,9 @@ var bindNsAjaxEvents = function () {
                     contentType: false,
                     success: function (responsedata, status, jqxhr)
                     {
-                        $($form.data('update')).html(responsedata);
-                        $(document).trigger('ns:AjaxFormComplete');
+                        $update = $form.data('update');
+                        $update.html(responsedata);
+                        $update.trigger('ns:AjaxFormComplete');
                     }
                 });
 
@@ -496,3 +503,4 @@ var bindNsAjaxEvents = function () {
         }
     });
 };
+
