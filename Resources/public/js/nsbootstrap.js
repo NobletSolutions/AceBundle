@@ -32,8 +32,13 @@ $(document).ready(function() {
 
     $('body').append('<div class="modal fade" id="nsAjaxLoadingModal" tabindex="-1" role="dialog" aria-labelledby="nsAjaxLoadingModal"><i class="fa fa-spinner fa-pulse fa-3x fa-fw fa-inverse"></i></div>');
 
-    $(document).bind('ns:AjaxFormSend', function () {
+    $(document).bind('ns:AjaxFormSend', function (event) {
         $('#nsAjaxLoadingModal').modal('show');
+        $tgt = $(event.target);
+        if($tgt.closest('.modal'))
+        {
+            $tgt.closest('.modal').modal('hide');
+        }
     }).bind('ns:AjaxFormComplete', function (event) {
         $('#nsAjaxLoadingModal').modal('hide');
         $tgt = $(event.target);
@@ -455,12 +460,12 @@ var bindNsAjaxEvents = function () {
             $updater.one('click', function (event)
             {
                 event.preventDefault();
-                $(document).trigger('ns:AjaxFormSend');
+                $($updater).trigger('ns:AjaxFormSend');
 
                 $.ajax($updater.attr('href'), {
                     success: function (responsedata, status, jqxhr)
                     {
-                        $update = $($updater.data('update'));
+                        var $update = $($updater.data('update'));
                         $update.html(responsedata);
                         $update.trigger('ns:AjaxFormComplete');
                     }
@@ -480,9 +485,10 @@ var bindNsAjaxEvents = function () {
             var $form = $(el);
             $form.one('submit', function (event)
             {
+                console.log('there');
                 event.preventDefault();
                 var formData = new FormData($form[0]);
-                $(document).trigger('ns:AjaxFormSend');
+                $($form).trigger('ns:AjaxFormSend');
                 $.ajax($form.attr('action'), {
                     method: $form.attr('method'),
                     data: formData,
@@ -490,7 +496,7 @@ var bindNsAjaxEvents = function () {
                     contentType: false,
                     success: function (responsedata, status, jqxhr)
                     {
-                        $update = $form.data('update');
+                        var $update = $($form.data('update'));
                         $update.html(responsedata);
                         $update.trigger('ns:AjaxFormComplete');
                     }
@@ -503,4 +509,5 @@ var bindNsAjaxEvents = function () {
         }
     });
 };
+
 
