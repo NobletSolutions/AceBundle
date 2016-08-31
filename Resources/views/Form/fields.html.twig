@@ -34,11 +34,12 @@
 
 {%block switch_row %}
 <div class="form_group">
+    {{ form_label(form) }}
     {{ form_widget(form) }}
 </div>
 {%endblock %}
 
-{%block switch_widget %}
+{% block switch_label %}
     {% if label is not same as(false) %}
         {% if not compound %}
             {% set label_attr = label_attr|merge({'for': id}) %}
@@ -50,10 +51,13 @@
             {% set label = name|humanize %}
         {% endif %}
         <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ hidelabel ? '' : label|trans({}, translation_domain) }}
-            <input {{ block('widget_attributes') }} type="checkbox" {% if checked %}checked{%endif%}{% if value is defined %} value="{{ value }}"{% endif %} />
-            <span class="lbl"></span>
         </label>
-    {% endif %}    
+    {% endif %}
+{% endblock %}
+
+{%block switch_widget %}
+    <input {{ block('widget_attributes') }} type="checkbox" {% if checked %}checked{%endif%}{% if value is defined %} value="{{ value }}"{% endif %} />
+    <span class="lbl"></span>
 {%endblock %}
 
 {%block slider_row %}
