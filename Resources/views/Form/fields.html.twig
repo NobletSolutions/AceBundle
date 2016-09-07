@@ -237,7 +237,10 @@
 
 {% block checkbox_widget %}
     <div class="checkbox">
-        <label>
+        <label id="{{ id }}_hiddenLabel" for={{ id }} {%- for attrname, attrvalue in label_attr -%}
+        {{- " " -}}
+        {{- attrname }}="{{ attrvalue }}"
+        {%- endfor -%}>
             {% set attr = attr|merge({'class':'ace'}) %}
             <input {{ block('widget_attributes') }} type="checkbox" {% if checked %}checked{%endif%}{% if value is defined %} value="{{ value }}"{% endif %} />
             <span class="lbl">

@@ -358,7 +358,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
             input.parent = el;
             var f       = $(input).data('context-value');
             var fields  = typeof f === 'object' ? f.join().split(',') : [f.toString()]; //hacky way to get around variable typing in indexOf; find a better way to do this.
-            var label   = $('label[for='+input.id+']');
+            var label   = $('label[for='+input.id+']'); //Need to be able to support non-id' elements like divs etc
             var element = $(input).parent().hasClass('input-group') ? $(input).parent() : input;
 
             var result = false;
