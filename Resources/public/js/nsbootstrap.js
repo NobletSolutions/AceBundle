@@ -358,7 +358,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
             input.parent = el;
             var f       = $(input).data('context-value');
             var fields  = typeof f === 'object' ? f.join().split(',') : [f.toString()]; //hacky way to get around variable typing in indexOf; find a better way to do this.
-            var label   = $('label[for='+input.id+']'); //Need to be able to support non-id' elements like divs etc
+            var label   = input.id ? $('label[for='+input.id+']') : false
             var element = $(input).parent().hasClass('input-group') ? $(input).parent() : input;
 
             var result = false;
@@ -378,20 +378,29 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
                 if(input.parent.contextState === undefined || input.parent.contextState === 'active')
                 {
                     $(element).show();
-                    label.show();
+                    if(label)
+                    {
+                        label.show();
+                    }
                     input.contextState = 'active';
                 }
                 else
                 {
                     $(element).hide();
-                    label.hide();
+                    if(label)
+                    {
+                        label.hide();
+                    }
                     input.contextState = 'inactive';
                 }
             }
             else
             {
                 $(element).hide();
-                label.hide();
+                if(label)
+                {
+                    label.hide();
+                }
                 input.contextState = 'inactive';
             }
 
@@ -508,5 +517,3 @@ var bindNsAjaxEvents = function () {
         }
     });
 };
-
-
