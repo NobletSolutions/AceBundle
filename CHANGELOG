@@ -3,6 +3,7 @@ VERSION 2  SYMFONY 3.0 SUPPORT
 ==============================
 
    Version 2.0 - symfony 3.0 support
+      08/09/2016 11:13  2.0.30  Fix the hidden-child element to not require a label with id
       07/09/2016 15:26  2.0.29  Allow checkboxes to be hidden
       31/08/2016 10:54  2.0.28  Tweaked SwitchType markup/layout
       23/08/2016 14:45  2.0.27  Added new hidden-parent/child form extension
