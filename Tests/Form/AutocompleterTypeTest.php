@@ -7,6 +7,10 @@ use \NS\AceBundle\Tests\BaseFormTestType;
 use \NS\AceBundle\Tests\Form\Fixtures\Entity;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\PreloadedExtension;
+use Symfony\Component\Form\CallbackTransformer;
+use \Doctrine\Common\Collections\Collection;
+use \Doctrine\Common\Collections\ArrayCollection;
+use \Symfony\Component\Form\Exception\UnexpectedTypeException;
 
 /**
  * Description of AutocompleterTypeTest
@@ -15,6 +19,7 @@ use Symfony\Component\Form\PreloadedExtension;
  */
 class AutocompleterTypeTest extends BaseFormTestType
 {
+    private $entityMgrTest;
     public function resetFactory($entityMgr,$router = null)
     {
         $type = new AutocompleterType($entityMgr,$router);
@@ -91,6 +96,50 @@ class AutocompleterTypeTest extends BaseFormTestType
                 'autocompleteUrl' => $routeName,
                 'class'           => $className,
                 'multiple'        => true))
+            ->getForm();
+
+        $view = $form->createView();
+        $form->submit($formData);
+        $data = $form['auto']->getData();
+
+        $this->assertEquals($data, $entities);
+        $this->assertArrayHasKey('auto', $view);
+        $this->assertArrayHasKey('attr', $view['auto']->vars);
+        $this->assertArrayHasKey('data-autocompleteUrl', $view['auto']->vars['attr']);
+        $this->assertEquals($view['auto']->vars['attr']['data-autocompleteUrl'], $routeName);
+    }
+
+    public function testFormTypeCustomTransformer()
+    {
+        $entities = array(new Entity(1), new Entity(2));
+
+        $className = get_class($entities[0]);
+        $formData  = array('auto' => '1,2');
+        $routeName = 'routename';
+        $router    = $this->getRouter();
+
+        $entityMgr = $this->getEntityManager();
+        $this->entityMgrTest = $entityMgr;
+        $entityMgr->expects($this->at(0))
+            ->method('getReference')
+            ->with($className, 1)
+            ->willReturn($entities[0]);
+        $entityMgr->expects($this->at(1))
+            ->method('getReference')
+            ->with($className, 2)
+            ->willReturn($entities[1]);
+
+        $this->resetFactory($entityMgr,$router);
+
+        $customTransformer = $this->getCustomTransformer();
+
+        $form = $this->factory
+            ->createBuilder()
+            ->add('auto', AutocompleterType::class, array(
+                'autocompleteUrl' => $routeName,
+                'class'           => $className,
+                'multiple'        => true,
+                'transformer'     => $customTransformer))
             ->getForm();
 
         $view = $form->createView();
@@ -188,5 +237,39 @@ class AutocompleterTypeTest extends BaseFormTestType
                     'detach', 'refresh', 'flush', 'getRepository', 'remove', 'getClassMetadata',
                     'getMetadataFactory', 'initializeObject', 'contains'))
                 ->getMock();
+    }
+
+    private function walk(&$item, $key)
+    {
+        $entity    = new Entity(1);
+        $className = get_class($entity);
+        $entityMgr = $this->entityMgrTest ;
+        $item = $entityMgr->getReference($className, $item);
+    }
+
+    private function getCustomTransformer(){
+      return new CallbackTransformer(
+          function ($values) {
+            if (!$values) { return null; }
+            if (null === $values || empty($values)) { return ""; }
+            if (!$values instanceof Collection && !is_array($values)) {
+              throw new UnexpectedTypeException($values, 'PersistentCollection or ArrayCollection');
+            }
+            $idsArray = array();
+            foreach ($values as $entity) {
+              $idsArray[] = array('id' => $entity->getId(), 'name' => 'Does not matter', 'activefirm' => 'Does not matter');
+            }
+            if (empty($idsArray)) { return null; }
+            return json_encode($idsArray);
+          },
+          function ($ids) {
+            if ('' === $ids || null === $ids || empty($ids)) { return new ArrayCollection(); }
+            if (!is_string($ids)) { throw new UnexpectedTypeException($ids, 'string'); }
+            $idsArray = explode(',', $ids);
+            if (empty($idsArray)) { return new ArrayCollection(); }
+            array_walk($idsArray, array($this, 'walk'));
+            return $idsArray;
+          }
+        );
     }
 }
