@@ -49,8 +49,13 @@ class AutocompleterType extends AbstractType
     {
         if (isset($options['class'])) {
             $property    = (isset($options['property'])) ? $options['property'] : null;
-            $transformer = ($options['multiple'] == true) ? new CollectionToJson($this->entityMgr, $options['class'], $property) : new EntityToJson($this->entityMgr, $options['class'], $property);
-
+            if(!isset($options['transformer']))
+            {
+              $transformer = ($options['multiple'] == true) ? new CollectionToJson($this->entityMgr, $options['class'], $property) : new EntityToJson($this->entityMgr, $options['class'], $property);
+            }
+            else {
+              $transformer = $options['transformer'];
+            }
             $builder->addModelTransformer($transformer);
         }
     }
@@ -60,7 +65,7 @@ class AutocompleterType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(array('route', 'autocompleteUrl', 'class', 'property', 'icon', 'secondary-field', 'resultsFormatter', 'tokenFormatter'));
+        $resolver->setDefined(array('route', 'autocompleteUrl', 'class', 'property', 'icon', 'secondary-field', 'resultsFormatter', 'tokenFormatter', 'transformer'));
 
         $resolver->setDefaults(array(
             'method'        => 'POST',
