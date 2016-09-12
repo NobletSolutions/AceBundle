@@ -111,6 +111,7 @@ class AutocompleterTypeTest extends BaseFormTestType
 
     public function testFormTypeCustomTransformer()
     {
+
         $entities = array(new Entity(1), new Entity(2));
 
         $className = get_class($entities[0]);
@@ -131,7 +132,19 @@ class AutocompleterTypeTest extends BaseFormTestType
 
         $this->resetFactory($entityMgr,$router);
 
-        $customTransformer = $this->getCustomTransformer();
+        //$customTransformer = $this->getCustomTransformer();
+        $jsonStr     = sprintf("%d,%d", $entities[0]->getId(), $entities[1]->getId());
+        $idsArray = explode(',', $jsonStr);
+        $idsArray = array_walk($idsArray, array($this, 'walk'));
+        $customTransformer = $this->getMockBuilder('Symfony\Component\Form\DataTransformerInterface')
+        ->disableOriginalConstructor()
+        ->getMock();
+        $customTransformer->expects($this->any())
+        ->method('transform')
+        ->willReturn($jsonStr);
+        $customTransformer->expects($this->any())
+        ->method('reverseTransform')
+        ->willReturn($idsArray);
 
         $form = $this->factory
             ->createBuilder()
