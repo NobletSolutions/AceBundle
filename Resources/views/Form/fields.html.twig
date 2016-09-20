@@ -230,9 +230,28 @@
 
 {% block checkbox_label %}{% endblock %}
 
-{% block radio_label %}
-    {% set label_attr = label_attr|merge({'for': id}) %}
-    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</label>
+{% block radio_label %}{% endblock %}
+
+{% block radio_widget %}
+    <div class="radio">
+        {% set label_attr = label_attr|merge({'for': id}) %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        {% set attr = attr|merge({'class':'ace'}) %}
+        <input {{ block('widget_attributes') }} type="radio" {% if checked %}checked{%endif%}{% if value is defined %} value="{{ value }}"{% endif %} />
+        <span class="lbl">
+                {% if label is not same as(false) -%}
+                    {% if label is empty -%}
+                        {%- if label_format is not empty -%}
+                            {% set label = label_format|replace({'%name%': name,'%id%': id,}) %}
+                        {%- else -%}
+                            {% set label = name|humanize %}
+                        {%- endif -%}
+                    {%- endif -%}
+                    {{ label|trans({}, translation_domain) }}
+                {%- endif -%}
+            </span>
+        </label>
+    </div>
 {% endblock %}
 
 {% block checkbox_widget %}
