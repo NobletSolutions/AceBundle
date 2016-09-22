@@ -468,6 +468,17 @@ var bindNsAjaxEvents = function () {
             var $updater = $(el);
             $updater.click(function (event)
             {
+                var isConfirmed = true;
+                if($updater.data('confirm'))
+                {
+                    isConfirmed = confirm($updater.data('confirm'));
+                }
+
+                if(!isConfirmed)
+                {
+                    return false;
+                }
+
                 event.preventDefault();
                 $($updater).trigger('ns:AjaxFormSend');
 
