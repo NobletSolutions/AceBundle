@@ -234,8 +234,7 @@
 
 {% block radio_widget %}
     <div class="radio">
-        {% set label_attr = label_attr|merge({'for': id}) %}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        <label id="{{ id }}_hiddenLabel" for={{ id }} {%- for attrname, attrvalue in label_attr -%}{{- " " -}}{{- attrname }}="{{ attrvalue }}"{%- endfor -%}>
         {% set attr = attr|merge({'class':'ace'}) %}
         <input {{ block('widget_attributes') }} type="radio" {% if checked %}checked{%endif%}{% if value is defined %} value="{{ value }}"{% endif %} />
         <span class="lbl">
