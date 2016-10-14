@@ -28,12 +28,12 @@ class HiddenParentChildExtension extends AbstractTypeExtension
             $view->vars[$attr]['data-context-parent'] = $options['hidden-parent'];
         }
 
-        if (isset($options['hidden-child'])) {
-            $view->vars[$attr]['data-context-child'] = $options['hidden-child'];
-        }
-
         if (isset($options['hidden-value'])) {
             $view->vars[$attr]['data-context-value'] = $options['hidden-value'];
+        }
+
+        if (isset($options['hidden-child'])) {
+            $view->vars['attr']['data-context-child'] = $options['hidden-child'];
         }
     }
 
@@ -52,5 +52,5 @@ class HiddenParentChildExtension extends AbstractTypeExtension
     {
         return FormType::class;
     }
-
 }
+
