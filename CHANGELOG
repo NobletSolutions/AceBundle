@@ -3,6 +3,7 @@ VERSION 2  SYMFONY 3.0 SUPPORT
 ==============================
 
    Version 2.0 - symfony 3.0 support
+      14/10/2016 14:36  2.0.35  Fixed checkbox hiding
       29/09/2016 12:13  2.0.34  Fixed radio button
       22/09/2016 13:46  2.0.33  Added support for confirmation message to ajax updater
       20/09/2016 10:22  2.0.32  Radio button markup
