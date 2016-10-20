@@ -221,6 +221,10 @@ label {
     margin-left: 10px;
 }
 
+.help-block.has-error {
+    color: #d16e6c;
+}
+
 .modal-dialog.modal-12 {
     width: 100%;
 }
