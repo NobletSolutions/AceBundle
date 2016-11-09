@@ -86,6 +86,7 @@ div.uploader div.controls span.uploader-file-name i.icon-file {
 ul.token-input-list {
     border: 1px solid #D5D5D5;
     max-width: 100%;
+    width: auto;
 }
 
 ul.token-input-list li {
@@ -109,6 +110,11 @@ li.token-input-token p {
 li.token-input-input-token {
     float: none;
     clear: both;
+}
+
+li.token-input-input-token > input {
+    max-width: 100%;
+    width: auto !important;
 }
 
 li.token-input-token span.token-input-delete-token {
@@ -295,6 +301,6 @@ label {
 }
 
 td > div.help-block {
-display: block !important;
+    display: block !important;
 }
 
