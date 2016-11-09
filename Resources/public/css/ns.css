@@ -85,6 +85,7 @@ div.uploader div.controls span.uploader-file-name i.icon-file {
 
 ul.token-input-list {
     border: 1px solid #D5D5D5;
+    max-width: 100%;
 }
 
 ul.token-input-list li {
