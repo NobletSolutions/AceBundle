@@ -8,6 +8,8 @@
 {%- endfor -%}
 {% endmacro %}
 
+{% import _self as macros %}
+
 {% block label %}{{ item.label|trans }}{% endblock %}
 
 {% block item %}
@@ -41,7 +43,7 @@
     {%- endif %}
 
     {# displaying the item #}
-    <li{{ _self.attributes(attributes) }}>
+    <li{{ macros.attributes(attributes) }}>
         {{ block('linkElement') }}
         {# render the list of children#}
         {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : ['submenu'] %}
@@ -52,12 +54,12 @@
 {% endblock %}
     
 {% block linkElement %}
-<a href="{%- if item.uri is not empty and (not item.current or options.currentAsLink) %}{{ item.uri }}{%else%}#{%endif%}"{{ _self.attributes(item.linkAttributes) }} {{ item.hasChildren?'class="dropdown-toggle" data-toggle="dropdown"':'' }}>
+<a href="{%- if item.uri is not empty and (not item.current or options.currentAsLink) %}{{ item.uri }}{%else%}#{%endif%}"{{ macros.attributes(item.linkAttributes) }} {{ item.hasChildren?'class="dropdown-toggle" data-toggle="dropdown"':'' }}>
     {% if item.getExtra('icon', false) %}
     <i class="menu-icon {{ item.getExtra('icon')}}"></i> 
     {%endif %}
 
-    <span class="menu-text" {%- if item.uri is empty or item.current or not options.currentAsLink %}{{ _self.attributes(item.labelAttributes) }}{%endif%}> {{block('label')}}</span>
+    <span class="menu-text" {%- if item.uri is empty or item.current or not options.currentAsLink %}{{ macros.attributes(item.labelAttributes) }}{%endif%}> {{block('label')}}</span>
 
     {% if item.hasChildren %}
     <b class="arrow fa fa-angle-down"></b>
