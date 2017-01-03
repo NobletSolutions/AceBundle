@@ -179,17 +179,14 @@
             <div class="main-content">
                 {% block breadcrumbs %}{% endblock %}
                 <div class="page-content">
-                    {% set _ptitle = block('pagetitle') %}
-                    {% set _pdescription = block('pagedescription') %}
-                    {% if _ptitle is not empty %}
-                        {% set _pheader = block('pageheader') %}
-                        {% if _pheader is empty %}
+                    {% if block('pagetitle') is defined %}
+                        {% if block('pageheader') is not defined %}
                             <div class="page-header">
                                 {% block pageactions %}{% endblock %}
-                                <h1>{{ _ptitle|raw }} {%if _pdescription is not empty %}<small><i class="fa fa-double-angle-right"></i> {{_pdescription|raw}}</small>{%endif%}</h1>
+                                <h1>{{ block('pagetitle') }} {% if block('pagedescription') is defined %}<small><i class="fa fa-double-angle-right"></i> {{ block('pagedescription') }}</small>{% endif %}</h1>
                             </div>
                         {% else %}
-                            {{ _pheader|raw }}
+                            {{ block('pageheader') }}
                         {% endif %}
                     {% endif %}
 
