@@ -31,7 +31,10 @@
         "lexik/form-filter-bundle": "~5.0"
     },
     "autoload": {
-        "psr-4": { "NS\\AceBundle\\": "" }
+        "psr-4": { "NS\\AceBundle\\": "src" }
+    },
+    "autoload-dev": {
+	"psr-4": { "NS\\AceBundle\\Tests\\": "Tests" }
     },
     "extra": {
         "branch-alias": {
