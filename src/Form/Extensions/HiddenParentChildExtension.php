@@ -22,7 +22,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-	$attr = (in_array('checkbox',$view->vars['block_prefixes'])) ? 'label_attr':'attr';
+        $attr = (in_array('checkbox', $view->vars['block_prefixes'])) ? 'label_attr' : 'attr';
 
         if (isset($options['hidden-parent'])) {
             $view->vars[$attr]['data-context-parent'] = $options['hidden-parent'];
@@ -35,6 +35,20 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         if (isset($options['hidden-child'])) {
             $view->vars['attr']['data-context-child'] = $options['hidden-child'];
         }
+
+        if (isset($options['hidden'])) {
+            if (isset($options['hidden']['parent'])) {
+                $view->vars[$attr]['data-context-parent'] = $options['hidden']['parent'];
+            }
+
+            if (isset($options['hidden']['child'])) {
+                $view->vars[$attr]['data-context-child'] = $options['hidden']['child'];
+            }
+
+            if (isset($options['hidden']['value'])) {
+                $view->vars[$attr]['data-context-value'] = $options['hidden']['value'];
+            }
+        }
     }
 
     /**
@@ -42,7 +56,8 @@ class HiddenParentChildExtension extends AbstractTypeExtension
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(['hidden-parent', 'hidden-child', 'hidden-value']);
+        $resolver->setDefined(['hidden-parent', 'hidden-child', 'hidden-value', 'hidden']);
+        $resolver->setAllowedTypes('hidden', 'array');
     }
 
     /**
