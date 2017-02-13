@@ -3,6 +3,7 @@ VERSION 2  SYMFONY 3.0 SUPPORT
 ==============================
 
    Version 2.0 - symfony 3.0 support
+      13/02/2017 16:24  2.0.44  Improvements to modal flash messages
       26/01/2017 11:11  2.0.43  Hidden options as array
       10/01/2017 10:02  2.0.42  Added nomenu template
       03/01/2017 14:25  2.0.41  Fixed twig deprecation notices
