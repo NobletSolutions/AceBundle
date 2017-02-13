@@ -232,6 +232,43 @@ label {
     color: #d16e6c;
 }
 
+.modal.openOnLoad .modal-dialog, .modal.openOnLoad .modal-content, .modal.openOnLoad .modal-footer {
+    background: transparent;
+    border: none;
+}
+
+.modal.openOnLoad .modal-body {
+    border: none;
+}
+
+.modal.openOnLoad .modal-header {
+    border: none;
+    padding: 0;
+}
+
+.modal.openOnLoad .modal-header button {
+    background: rgba(248,248,248,0.8);
+    margin-bottom: -40px;
+    z-index: 100;
+    position: relative;
+    width: 30px;
+    line-height: 30px;
+    padding: 0;
+    opacity: 0.6;
+}
+
+.modal.openOnLoad .modal-header button:hover {
+    opacity: 0.8;
+}
+
+.modal.openOnLoad .modal-footer {
+    display: none;
+}
+
+.modal.openOnLoad .modal-header h4 {
+    display: none;
+}
+
 .modal-dialog.modal-12 {
     width: 100%;
 }
