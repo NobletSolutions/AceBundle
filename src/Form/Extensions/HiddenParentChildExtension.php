@@ -29,7 +29,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         }
 
         if (isset($options['hidden-value'])) {
-            $view->vars[$attr]['data-context-value'] = $options['hidden-value'];
+            $view->vars[$attr]['data-context-value'] = (is_array($options['hidden-value'])? json_encode($options['hidden-value']):$options['hidden-value']);
         }
 
         if (isset($options['hidden-child'])) {
@@ -46,7 +46,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
             }
 
             if (isset($options['hidden']['value'])) {
-                $view->vars[$attr]['data-context-value'] = $options['hidden']['value'];
+                $view->vars[$attr]['data-context-value'] = (is_array($options['hidden']['value'])? json_encode($options['hidden']['value']):$options['hidden']['value']);
             }
         }
     }
