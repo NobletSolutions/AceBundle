@@ -19,6 +19,7 @@ class WidgetExtension extends \Twig_Extension
         'close_icon' => 'fa-minus',
         'target_text' => 'Filters',
         'include_expander' => true,
+        'start_open' => false,
     );
 
     /**
@@ -50,7 +51,7 @@ class WidgetExtension extends \Twig_Extension
     {
         return sprintf('<div class="widget-toolbar">
                             <a href="#%s" data-toggle="collapse" class="white small"><i class="ace-icon fa %s" data-icon-hide="%s" data-icon-show="%s"></i> %s</a>
-                        </div>',$options['filter_id'],$options['open_icon'],$options['close_icon'],$options['open_icon'],$options['target_text']);
+                        </div>',$options['filter_id'],($options['start_open']) ?  $options['close_icon']:$options['open_icon'],$options['close_icon'],$options['open_icon'],$options['target_text']);
     }
 
     /**
