@@ -28,7 +28,7 @@ class WidgetExtensionTest extends \PHPUnit_Framework_TestCase
     public function testGetFilterString($options,$contains)
     {
         $extension = new WidgetExtension();
-        $output = $extension->getFilterString($options);
+        $output = $extension->getFilterString(array_merge($options,['start_open'=>false]));
 
         foreach($contains as $contain) {
             $this->assertContains($contain, $output);
@@ -49,7 +49,7 @@ class WidgetExtensionTest extends \PHPUnit_Framework_TestCase
 
         return array(
             array($defaults, $defaults),
-            array($second,$second),
+            array($second, $second),
         );
     }
 
