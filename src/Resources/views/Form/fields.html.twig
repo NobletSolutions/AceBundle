@@ -276,3 +276,24 @@
         </label>
     </div>
 {% endblock %}
+
+{%- block time_widget -%}
+    {%- if widget == 'single_text' -%}
+        {{ block('form_widget_simple') }}
+    {%- else -%}
+        {%- set vars = widget == 'text' ? { 'attr': { 'size': 1 }} : {} -%}
+        <div {{ block('widget_container_attributes') }}>
+            {{ form_label(form) }}
+            {{ form_widget(form.hour, vars) }}{% if with_minutes %}:{{ form_widget(form.minute, vars) }}{% endif %}{% if with_seconds %}:{{ form_widget(form.second, vars) }}{% endif %}
+        </div>
+    {%- endif -%}
+{%- endblock time_widget -%}
+
+{% block time_row %}
+    {% spaceless %}
+        <div class="form-group{% if not form.vars.valid %} has-error{% endif %}">
+            {{ form_widget(form) }}
+            {{ form_errors(form) }}
+        </div>
+    {% endspaceless %}
+{% endblock time_row %}
