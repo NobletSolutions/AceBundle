@@ -19,10 +19,10 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $treeBuilder->root('ns_ace');
-//        $rootNode = $treeBuilder->root('ns_ace');
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode = $treeBuilder->root('ns_ace');
+        $rootNode->children()
+            ->scalarNode('use_knp_menu')->defaultTrue()->end()
+            ->end();
 
         return $treeBuilder;
     }

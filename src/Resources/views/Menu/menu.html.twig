@@ -54,7 +54,7 @@
 {% endblock %}
     
 {% block linkElement %}
-<a href="{%- if item.uri is not empty and (not item.current or options.currentAsLink) %}{{ item.uri }}{%else%}#{%endif%}"{{ macros.attributes(item.linkAttributes) }} {{ item.hasChildren?'class="dropdown-toggle" data-toggle="dropdown"':'' }}>
+<a href="{%- if item.uri is not empty and (not item.current or options.currentAsLink) %}{{ item.uri }}{%else%}#{%endif%}"{{ macros.attributes(item.linkAttributes) }} {{ item.hasChildren?'class="dropdown-toggle"':'' }}>
     {% if item.getExtra('icon', false) %}
     <i class="menu-icon {{ item.getExtra('icon')}}"></i> 
     {%endif %}
