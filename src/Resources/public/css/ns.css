@@ -341,3 +341,6 @@ td > div.help-block {
     display: block !important;
 }
 
+td > div.checkbox label {
+    margin-left: -10px;
+}
