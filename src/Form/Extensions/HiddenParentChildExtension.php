@@ -90,11 +90,11 @@ class HiddenParentChildExtension extends AbstractTypeExtension
     private function processParentConfig(array $config, FormInterface $childItem, FormView $view)
     {
         if (!isset($view[$config['parent']])) {
-            throw new \InvalidArgumentException('Unable to find parent form field: ' . $childItem->getName());
+            throw new \InvalidArgumentException(sprintf('Unable to find parent form \'%s\' field \'%s\' ',$config['parent'],$childItem->getName()));
         }
 
         $parentName = $view[$config['parent']]->vars['full_name'];
-        $fullName = $this->findFormFullName($view, $childItem->getName());
+        $fullName = $this->findFormFullName($view, $childItem);
 
         if ($fullName === null) {
             throw new \RuntimeException("Unable to locate view for " . $childItem->getName());
@@ -109,10 +109,12 @@ class HiddenParentChildExtension extends AbstractTypeExtension
 
     private function processChildConfig(array $hiddenConfig, FormInterface $childItem, FormView $view)
     {
-        $parentName = $this->findFormFullName($view, $childItem->getName());
+        $parentName = $this->findFormFullName($view, $childItem);
         if ($parentName === null) {
             throw new \RuntimeException("Unable to locate view for " . $childItem->getName());
         }
+
+        $parentName = is_array($parentName) ? current($parentName) : $parentName;
 
         if (!isset($config[$parentName])) {
             $this->config[$parentName] = [];
@@ -123,15 +125,32 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         }
     }
 
-    private function findFormFullName(FormView $view, $name)
+    private function findFormFullName(FormView $view, FormInterface $form)
     {
-        if (isset($view[$name])) {
-            return $view[$name]->vars['full_name'];
+        $isCompound = ($form->getConfig()->getOption('compound',false) && $form->count() > 0);
+
+        // Is a root form relative to the view
+        if (isset($view[$form->getName()])) {
+            if ($isCompound) {
+                $names = [$view[$form->getName()]->vars['full_name']];
+                /** @var FormView $childView */
+                $childView = $view[$form->getName()];
+
+                /** @var FormInterface $childItem */
+                foreach($form as $childItem) {
+                    $names[] = $this->findFormFullName($childView, $childItem);
+                }
+
+                return $names;
+            }
+
+            return $view[$form->getName()]->vars['full_name'];
         }
 
+        // Form is a sub-form of the root
         if ($view->count() > 0) {
             foreach ($view as $childView) {
-                $retValue = $this->findFormFullName($childView, $name);
+                $retValue = $this->findFormFullName($childView, $form);
                 if ($retValue) {
                     return $retValue;
                 }
