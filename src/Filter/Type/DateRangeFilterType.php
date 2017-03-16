@@ -2,9 +2,10 @@
 
 namespace NS\AceBundle\Filter\Type;
 
-use \Symfony\Component\Form\AbstractType;
-use \Symfony\Component\Form\FormBuilderInterface;
-use \Symfony\Component\OptionsResolver\OptionsResolver;
+use Lexik\Bundle\FormFilterBundle\Filter\Query\QueryInterface;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Description of DateRangeFilterType
@@ -38,7 +39,24 @@ class DateRangeFilterType extends AbstractType
                 'left_date_options'      => array(),
                 'right_date_options'     => array(),
                 'data_extraction_method' => 'value_keys',
+                'apply_filter'           => [$this, 'filterDateRange'],
             ))
             ->setAllowedValues('data_extraction_method', array('value_keys'));
+    }
+
+    /**
+     * @param QueryInterface $filterQuery
+     * @param $field
+     * @param $values
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Condition\ConditionInterface
+     */
+    public function filterDateRange(QueryInterface $filterQuery, $field, $values)
+    {
+        $value  = $values['value'];
+
+        if (isset($value['left_date'][0]) || isset($value['right_date'][0])) {
+            $expr = $filterQuery->getExpressionBuilder();
+            return $filterQuery->createCondition($expr->dateInRange($field, $value['left_date'][0], $value['right_date'][0]));
+        }
     }
 }
