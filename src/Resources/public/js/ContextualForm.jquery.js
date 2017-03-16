@@ -367,7 +367,7 @@
             //We do this after the loop, because if we do it within, the disField.hide() call could hide a field we just showed in the previous loop
             $.each(show, function(index, $field)
             {
-                $field.show();
+                $field.show().trigger('nsFormUpdate');
             });
         }
     }
