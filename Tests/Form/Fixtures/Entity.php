@@ -9,8 +9,10 @@ namespace NS\AceBundle\Tests\Form\Fixtures;
  */
 class Entity
 {
+    /** @var int|null */
     private $id;
 
+    /** @var string */
     private $name;
 
     /**
@@ -18,12 +20,12 @@ class Entity
      */
     public function __construct($id = null)
     {
-        if ($id !== NULL)
+        if ($id !== NULL) {
             $this->id = $id;
+        }
     }
 
     /**
-     *
      * @return integer
      */
     public function getId()
@@ -32,7 +34,6 @@ class Entity
     }
 
     /**
-     *
      * @return string
      */
     public function getName()
@@ -41,30 +42,22 @@ class Entity
     }
 
     /**
-     *
      * @param string $name
-     * @return \NS\AceBundle\Tests\Form\Fixtures\Entity
      */
     public function setName($name)
     {
         $this->name = $name;
-
-        return $this;
     }
 
     /**
-     *
      * @param integer $id
-     * @return \NS\AceBundle\Tests\Form\Entity
      */
     public function setId($id)
     {
         $this->id = $id;
-        return $this;
     }
 
     /**
-     *
      * @return string
      */
     public function __toString()
@@ -73,7 +66,6 @@ class Entity
     }
 
     /**
-     *
      * @return string
      */
     public function getSomeProperty()

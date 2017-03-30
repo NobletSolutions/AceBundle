@@ -36,7 +36,7 @@ class EntityToJson extends AbstractObjectToJson
      */
     public function reverseTransform($id)
     {
-        if ($id === null) {
+        if ($id === null || empty($id)) {
             return null;
         }
 

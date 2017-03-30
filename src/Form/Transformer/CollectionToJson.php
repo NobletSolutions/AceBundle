@@ -47,13 +47,13 @@ class CollectionToJson extends AbstractObjectToJson
      * Transforms an json string to an entity
      *
      * @param  string|null $ids
-     * @return Entity
+     * @return array
      * @throws UnexpectedTypeException
      */
     public function reverseTransform($ids)
     {
         if ('' === $ids || null === $ids || empty($ids)) {
-            return new ArrayCollection();
+            return [];
         }
 
         if (!is_string($ids)) {
@@ -63,7 +63,7 @@ class CollectionToJson extends AbstractObjectToJson
         $idsArray = explode(',', $ids);
 
         if (empty($idsArray)) {
-            return new ArrayCollection();
+            return [];
         }
 
         array_walk($idsArray, array($this, 'walk'));
