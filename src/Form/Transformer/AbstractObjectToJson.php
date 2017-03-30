@@ -91,39 +91,6 @@ abstract class AbstractObjectToJson implements DataTransformerInterface
 
     /**
      *
-     * @param string $propertyMethod
-     * @return \NS\AceBundle\Form\Transformer\AbstractObjectToJson
-     */
-    public function setPropertyMethod($propertyMethod)
-    {
-        $this->propertyMethod = $propertyMethod;
-        return $this;
-    }
-
-    /**
-     *
-     * @param ObjectManager $entityMgr
-     * @return \NS\AceBundle\Form\Transformer\AbstractObjectToJson
-     */
-    public function setEntityManager(ObjectManager $entityMgr)
-    {
-        $this->entityMgr = $entityMgr;
-        return $this;
-    }
-
-    /**
-     *
-     * @param string $class
-     * @return \NS\AceBundle\Form\Transformer\AbstractObjectToJson
-     */
-    public function setClass($class)
-    {
-        $this->class = $class;
-        return $this;
-    }
-
-    /**
-     *
      * @param array $item
      * @param mixed $key
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
@@ -135,6 +102,7 @@ abstract class AbstractObjectToJson implements DataTransformerInterface
 
     /**
      * @param integer $id
+     * @return object|null
      */
     public function getReference($id)
     {

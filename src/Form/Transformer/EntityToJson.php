@@ -12,7 +12,7 @@ class EntityToJson extends AbstractObjectToJson
     /**
      * Transforms an object (issue) to a json {"id": integer, "name": "string" }
      *
-     * @param  Entity|null $entity
+     * @param  object|null $entity
      * @return string
      */
     public function transform($entity)
@@ -32,7 +32,7 @@ class EntityToJson extends AbstractObjectToJson
      * Transforms an json string to an entity
      *
      * @param  string|null $id
-     * @return Entity
+     * @return object
      */
     public function reverseTransform($id)
     {
