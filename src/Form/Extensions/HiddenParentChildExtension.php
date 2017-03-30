@@ -89,11 +89,12 @@ class HiddenParentChildExtension extends AbstractTypeExtension
 
     private function processParentConfig(array $config, FormInterface $childItem, FormView $view)
     {
-        if (!isset($view[$config['parent']])) {
-            throw new \InvalidArgumentException(sprintf('Unable to find parent form \'%s\' field \'%s\' ',$config['parent'],$childItem->getName()));
+        $parentView = $this->findView($config['parent'], $view);
+        if (!$parentView) {
+            throw new \InvalidArgumentException(sprintf('Unable to find parent form \'%s\' field \'%s\' \'%s\'', $config['parent'], $childItem->getName(),print_r(array_keys($view->children),true)));
         }
 
-        $parentName = $view[$config['parent']]->vars['full_name'];
+        $parentName = $parentView->vars['full_name'];
         $fullName = $this->findFormFullName($view, $childItem);
 
         if ($fullName === null) {
@@ -123,6 +124,24 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         foreach ($hiddenConfig['children'] as $id => $values) {
             $this->config[$parentName][] = ['display' => (array)$id, 'values' => (array)$values];
         }
+    }
+
+    private function findView($name, FormView $view)
+    {
+        if (isset($view[$name])) {
+            return $view[$name];
+        }
+
+        if ($view->count() > 0) {
+            foreach ($view as $childView) {
+                $retValue = $this->findView($name, $childView);
+                if ($retValue) {
+                    return $retValue;
+                }
+            }
+        }
+
+        return null;
     }
 
     private function findFormFullName(FormView $view, FormInterface $form)
