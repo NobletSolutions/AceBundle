@@ -2,16 +2,18 @@
 
 namespace NS\AceBundle\Form;
 
-use \Doctrine\Common\Persistence\ObjectManager;
-use \Symfony\Component\Form\AbstractType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use \Symfony\Component\Form\FormInterface;
-use \Symfony\Component\Form\FormBuilderInterface;
-use \Symfony\Component\Form\FormView;
-use \Symfony\Component\OptionsResolver\OptionsResolver;
-use \Symfony\Component\Routing\RouterInterface;
-use \NS\AceBundle\Form\Transformer\EntityToJson;
-use \NS\AceBundle\Form\Transformer\CollectionToJson;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
+use NS\AceBundle\Form\Transformer\EntityToJson;
+use NS\AceBundle\Form\Transformer\CollectionToJson;
 
 /**
  * Description of SwitchType
@@ -28,18 +30,18 @@ class AutocompleterType extends AbstractType
     private $router;
 
     /**
-     *  @var $entityMgr ObjectManager
+     *  @var $entityMgr EntityManagerInterface
      */
     private $entityMgr;
 
     /**
-     * @param ObjectManager $entityMgr
+     * @param EntityManagerInterface $entityMgr
      * @param RouterInterface $router
      */
-    public function __construct(ObjectManager $entityMgr, RouterInterface $router = null)
+    public function __construct(EntityManagerInterface $entityMgr, RouterInterface $router = null)
     {
-        $this->router    = $router;
         $this->entityMgr = $entityMgr;
+        $this->router    = $router;
     }
 
     /**
@@ -48,15 +50,17 @@ class AutocompleterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if (isset($options['class'])) {
-            $property    = (isset($options['property'])) ? $options['property'] : null;
-            if(!isset($options['transformer']))
-            {
-              $transformer = ($options['multiple'] == true) ? new CollectionToJson($this->entityMgr, $options['class'], $property) : new EntityToJson($this->entityMgr, $options['class'], $property);
+            $property = (isset($options['property'])) ? $options['property'] : null;
+
+            if (!isset($options['transformer'])) {
+                if ($options['multiple'] === true) {
+                    $builder->addViewTransformer(new CollectionToJson($this->entityMgr, $options['class'], $property));
+                } else {
+                    $builder->addViewTransformer(new EntityToJson($this->entityMgr, $options['class'], $property));
+                }
+            } elseif ($options['transformer'] !== false) {
+                $builder->addViewTransformer($options['transformer']);
             }
-            else {
-              $transformer = $options['transformer'];
-            }
-            $builder->addModelTransformer($transformer);
         }
     }
 
@@ -78,6 +82,14 @@ class AutocompleterType extends AbstractType
             'multiple'      => false,
             'attr'          => array('class' => 'nsAutocompleter'),
         ));
+
+        $resolver->setNormalizer('multiple', function (Options $options, $multiple) {
+            if (!empty($options['data_class']) && $multiple === true) {
+                throw new InvalidOptionsException('You cannot set a data_class when you accept multiple results');
+            }
+
+            return $multiple;
+        });
     }
 
     /**

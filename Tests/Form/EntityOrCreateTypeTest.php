@@ -2,10 +2,11 @@
 
 namespace NS\AceBundle\Tests\Form;
 
-use \NS\AceBundle\Form\AutocompleterType;
-use \NS\AceBundle\Form\EntityOrCreateType;
-use \Symfony\Component\Form\PreloadedExtension;
-use \Symfony\Component\Form\Test\TypeTestCase;
+use Doctrine\ORM\EntityManagerInterface;
+use NS\AceBundle\Form\AutocompleterType;
+use NS\AceBundle\Form\EntityOrCreateType;
+use Symfony\Component\Form\PreloadedExtension;
+use Symfony\Component\Form\Test\TypeTestCase;
 
 /**
  * Description of EntityOrCreateTypeTest
@@ -14,6 +15,7 @@ use \Symfony\Component\Form\Test\TypeTestCase;
  */
 class EntityOrCreateTypeTest extends TypeTestCase
 {
+    /** @var EntityManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $entityMgr;
 
     public function testFormType()
@@ -37,8 +39,8 @@ class EntityOrCreateTypeTest extends TypeTestCase
             ->add('entity', EntityOrCreateType::class, $formOptions)
             ->getForm();
 
-        $this->assertArrayHasKey('finder', $form['entity']);
-        $this->assertArrayHasKey('createForm', $form['entity']);
+        $this->assertTrue($form['entity']->has('finder'));
+        $this->assertTrue($form['entity']->has('createForm'));
 
         $form->submit($formData);
 
@@ -79,13 +81,7 @@ class EntityOrCreateTypeTest extends TypeTestCase
 
     public function getExtensions()
     {
-        $this->entityMgr = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectManager')
-            ->disableOriginalConstructor()
-            ->setMethods(array('getReference', 'find', 'persist', 'merge', 'clear',
-                'detach', 'refresh', 'flush', 'getRepository', 'remove', 'getClassMetadata',
-                'getMetadataFactory', 'initializeObject', 'contains'))
-            ->getMock();
-
+        $this->entityMgr = $this->createMock(EntityManagerInterface::class);
         $type = new AutocompleterType($this->entityMgr);
 
         return array(
