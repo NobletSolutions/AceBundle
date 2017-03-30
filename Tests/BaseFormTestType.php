@@ -12,6 +12,24 @@ use Symfony\Component\Form\Test\TypeTestCase;
  */
 class BaseFormTestType extends TypeTestCase
 {
+    protected function createMock($originalClassName)
+    {
+        if (method_exists(parent::class, 'createMock')) {
+            return parent::createMock($originalClassName);
+        }
+
+        $obj = $this->getMockBuilder($originalClassName)
+            ->disableOriginalConstructor()
+            ->disableOriginalClone()
+            ->disableArgumentCloning();
+
+        if (method_exists($obj, 'disallowMockingUnknownTypes')) {
+            $obj->disallowMockingUnknownTypes();
+        }
+
+        return $obj->getMock();
+    }
+
     /**
      *
      * @param FormInterface $form
