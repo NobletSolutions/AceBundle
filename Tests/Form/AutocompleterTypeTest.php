@@ -4,7 +4,6 @@ namespace NS\AceBundle\Tests\Form;
 
 use Doctrine\ORM\EntityManagerInterface;
 use NS\AceBundle\Form\AutocompleterType;
-use NS\AceBundle\Form\Transformer\CollectionToJson;
 use NS\AceBundle\Tests\BaseFormTestType;
 use NS\AceBundle\Tests\Form\Fixtures\Entity;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -213,7 +212,12 @@ class AutocompleterTypeTest extends BaseFormTestType
 
     public function testMultipleWithDataClassIsException()
     {
-        $this->expectException(InvalidOptionsException::class);
+        if(method_exists($this,'expectException')) {
+            $this->expectException(InvalidOptionsException::class);
+        } else {
+            $this->setExpectedException(InvalidOptionsException::class);
+        }
+
         $this->factory->create(AutocompleterType::class,null,['multiple'=>true,'data_class'=>Entity::class]);
     }
 }

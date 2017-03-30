@@ -5,15 +5,15 @@ namespace NS\AceBundle\Tests\Form;
 use Doctrine\ORM\EntityManagerInterface;
 use NS\AceBundle\Form\AutocompleterType;
 use NS\AceBundle\Form\EntityOrCreateType;
+use NS\AceBundle\Tests\BaseFormTestType;
 use Symfony\Component\Form\PreloadedExtension;
-use Symfony\Component\Form\Test\TypeTestCase;
 
 /**
  * Description of EntityOrCreateTypeTest
  *
  * @author gnat
  */
-class EntityOrCreateTypeTest extends TypeTestCase
+class EntityOrCreateTypeTest extends BaseFormTestType
 {
     /** @var EntityManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $entityMgr;

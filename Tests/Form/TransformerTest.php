@@ -2,8 +2,11 @@
 
 namespace NS\AceBundle\Tests\Form;
 
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use \NS\AceBundle\Form\Transformer\CollectionToJson;
 use \NS\AceBundle\Form\Transformer\EntityToJson;
+use NS\AceBundle\Tests\BaseTestCase;
 use \NS\AceBundle\Tests\Form\Fixtures\Entity;
 
 /**
@@ -11,7 +14,7 @@ use \NS\AceBundle\Tests\Form\Fixtures\Entity;
  *
  * @author gnat
  */
-class TransformerTest extends \PHPUnit_Framework_TestCase
+class TransformerTest extends BaseTestCase
 {
     /**
      *
@@ -146,11 +149,6 @@ class TransformerTest extends \PHPUnit_Framework_TestCase
      */
     private function getEntityManager()
     {
-        return $this->getMockBuilder('Doctrine\Common\Persistence\ObjectManager')
-                ->disableOriginalConstructor()
-                ->setMethods(array('getReference', 'find', 'persist', 'merge', 'clear',
-                    'detach', 'refresh', 'flush', 'getRepository', 'remove', 'getClassMetadata',
-                    'getMetadataFactory', 'initializeObject', 'contains'))
-                ->getMock();
+        return $this->createMock(EntityManagerInterface::class);
     }
 }
