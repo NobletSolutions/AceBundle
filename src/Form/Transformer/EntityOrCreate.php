@@ -38,7 +38,7 @@ class EntityOrCreate implements DataTransformerInterface
     public function reverseTransform($value)
     {
         if ($this->expectMultiple) {
-            if (is_array($value['finder'])) {
+            if (is_array($value['finder']) && !empty($value['finder'])) {
                 foreach ($value['finder'] as $subObject) {
                     if (!$subObject instanceof $this->class) {
                         throw new TransformationFailedException("Expected object of type {$this->class} got " . get_class($subObject));

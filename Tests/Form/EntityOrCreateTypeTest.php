@@ -89,11 +89,6 @@ class EntityOrCreateTypeTest extends BaseFormTestType
         $firstEntity = new Entity(1);
         $secondEntity = new Entity(2);
 
-        $map = [
-            [Entity::class, 1, $firstEntity],
-            [Entity::class, 2, $secondEntity]
-        ];
-
         $this->entityMgr
             ->method('getReference')
             ->will($this->returnCallback(function($class,$id) use ($firstEntity,$secondEntity){
@@ -129,8 +124,38 @@ class EntityOrCreateTypeTest extends BaseFormTestType
         $form->submit($formData);
 
         $data = $form['entity']->getData();
-        $this->assertTrue(is_array($data),gettype($data));
-//        $this->assertEquals(1, $data->getId());
+        $this->assertTrue(is_array($data));
+        $this->assertEquals(1, $data[0]->getId());
+    }
+
+    public function testMultipleCreate()
+    {
+        $this->entityMgr
+            ->expects($this->never())
+            ->method('getReference');
+
+        $formData = [
+            'entity' => ['finder' => '','createForm'=>['id'=>'theId','name'=>'theName']],
+        ];
+
+        $formOptions = [
+            'type'  => EntityType::class,
+            'class' => Entity::class,
+            'entity_options' => ['multiple' => true],
+        ];
+
+        $form = $this->factory->createBuilder()
+            ->add('entity', EntityOrCreateType::class, $formOptions)
+            ->getForm();
+
+        $this->assertTrue($form['entity']->has('finder'));
+        $this->assertTrue($form['entity']->has('createForm'));
+
+        $form->submit($formData);
+
+        $data = $form['entity']->getData();
+        $this->assertTrue(is_array($data));
+        $this->assertEquals('theId', $data[0]->getId());
     }
 
     public function getExtensions()
