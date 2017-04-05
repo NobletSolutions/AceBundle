@@ -9,7 +9,7 @@
 >
     <testsuites>
         <testsuite name="AceBundle Test Suite">
-            <directory>Tests</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 

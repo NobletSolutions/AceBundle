@@ -34,7 +34,7 @@
         "psr-4": { "NS\\AceBundle\\": "src" }
     },
     "autoload-dev": {
-	"psr-4": { "NS\\AceBundle\\Tests\\": "Tests" }
+	"psr-4": { "NS\\AceBundle\\Tests\\": "tests" }
     },
     "extra": {
         "branch-alias": {
