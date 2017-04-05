@@ -16,7 +16,7 @@ class CollectionToJson extends AbstractObjectToJson
     /**
      * Transforms an object (issue) to a json {id: integer, string: string }
      *
-     * @param  Entity|null $entities
+     * @param  Collection|array|null $entities
      * @return string
      * @throws UnexpectedTypeException
      */

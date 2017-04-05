@@ -31,7 +31,7 @@ class EntityOrCreateType extends AbstractType
             $builder->add('createForm', $options['type'], isset($options['create_options']) ? $options['create_options'] : []);
         }
 
-        $builder->addModelTransformer(new EntityOrCreate());
+        $builder->addViewTransformer(new EntityOrCreate((isset($entityOptions['multiple']) && $entityOptions['multiple']), $options['class']));
     }
 
     /**

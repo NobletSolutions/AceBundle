@@ -81,6 +81,58 @@ class EntityOrCreateTypeTest extends BaseFormTestType
         $this->assertEquals('Other Name', $data->getName());
     }
 
+    /**
+     * @group multiple
+     */
+    public function testMultipleFinder()
+    {
+        $firstEntity = new Entity(1);
+        $secondEntity = new Entity(2);
+
+        $map = [
+            [Entity::class, 1, $firstEntity],
+            [Entity::class, 2, $secondEntity]
+        ];
+
+        $this->entityMgr
+            ->method('getReference')
+            ->will($this->returnCallback(function($class,$id) use ($firstEntity,$secondEntity){
+                if ($class == Entity::class) {
+                    if ($id == $firstEntity->getId()) {
+                        return $firstEntity;
+                    }
+                    if ($id == $secondEntity->getId()) {
+                        return $secondEntity;
+                    }
+                }
+
+                throw new \RuntimeException("Class:$class, $id");
+            }));
+
+        $formData = [
+            'entity' => ['finder' => '1,2'],
+        ];
+
+        $formOptions = [
+            'type'  => EntityType::class,
+            'class' => Entity::class,
+            'entity_options' => ['multiple' => true],
+        ];
+
+        $form = $this->factory->createBuilder()
+            ->add('entity', EntityOrCreateType::class, $formOptions)
+            ->getForm();
+
+        $this->assertTrue($form['entity']->has('finder'));
+        $this->assertTrue($form['entity']->has('createForm'));
+
+        $form->submit($formData);
+
+        $data = $form['entity']->getData();
+        $this->assertTrue(is_array($data),gettype($data));
+//        $this->assertEquals(1, $data->getId());
+    }
+
     public function getExtensions()
     {
         $this->entityMgr = $this->createMock(EntityManagerInterface::class);
