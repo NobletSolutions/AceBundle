@@ -24,9 +24,9 @@ class EntityType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'NS\AceBundle\Tests\Form\Fixtures\Entity'
-        ));
+        ]);
     }
 
     public function getBlockPrefix()

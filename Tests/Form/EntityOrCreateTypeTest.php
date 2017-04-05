@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use NS\AceBundle\Form\AutocompleterType;
 use NS\AceBundle\Form\EntityOrCreateType;
 use NS\AceBundle\Tests\BaseFormTestType;
+use NS\AceBundle\Tests\Form\Fixtures\Entity;
+use NS\AceBundle\Tests\Form\Fixtures\EntityType;
 use Symfony\Component\Form\PreloadedExtension;
 
 /**
@@ -20,20 +22,20 @@ class EntityOrCreateTypeTest extends BaseFormTestType
 
     public function testFormType()
     {
-        $entity          = new Fixtures\Entity(1);
+        $entity          = new Entity(1);
         $this->entityMgr->expects($this->once())
             ->method('getReference')
             ->willReturn($entity);
 
         $className = 'NS\AceBundle\Tests\Form\Fixtures\Entity';
-        $formData = array(
-            'entity' => array('finder' => 1),
-        );
+        $formData = [
+            'entity' => ['finder' => 1],
+        ];
 
-        $formOptions = array(
-            'type'  => Fixtures\EntityType::class,
+        $formOptions = [
+            'type'  => EntityType::class,
             'class' => $className,
-        );
+        ];
 
         $form = $this->factory->createBuilder()
             ->add('entity', EntityOrCreateType::class, $formOptions)
@@ -54,14 +56,14 @@ class EntityOrCreateTypeTest extends BaseFormTestType
         $this->entityMgr->expects($this->never())->method('getReference');
 
         $className = 'NS\AceBundle\Tests\Form\Fixtures\Entity';
-        $formData  = array(
-            'entity' => array('createForm' => array('id' => 2, 'name' => 'Other Name')),
-        );
+        $formData  = [
+            'entity' => ['createForm' => ['id' => 2, 'name' => 'Other Name']],
+        ];
 
-        $formProperties = array(
-            'type'  => Fixtures\EntityType::class,
+        $formProperties = [
+            'type'  => EntityType::class,
             'class' => $className,
-        );
+        ];
         
         $form = $this->factory->createBuilder()
             ->add('entity', EntityOrCreateType::class, $formProperties)
@@ -84,7 +86,7 @@ class EntityOrCreateTypeTest extends BaseFormTestType
         $this->entityMgr = $this->createMock(EntityManagerInterface::class);
         $type = new AutocompleterType($this->entityMgr);
 
-        return array(
-            new PreloadedExtension(array($type), array()));
+        return [
+            new PreloadedExtension([$type], [])];
     }
 }

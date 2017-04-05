@@ -28,11 +28,11 @@ class TransformerTest extends BaseTestCase
 
         $entityMgrMock = $this->getEntityManager();
 
-        $map = array(
-            array($className, '1', $classes[0]),
-            array($className, '2', $classes[1]),
-            array($className, '3', $classes[2]),
-        );
+        $map = [
+            [$className, '1', $classes[0]],
+            [$className, '2', $classes[1]],
+            [$className, '3', $classes[2]],
+        ];
 
         // Configure the stub.
         $entityMgrMock
@@ -64,11 +64,11 @@ class TransformerTest extends BaseTestCase
 
         $entityMgrMock = $this->getEntityManager();
 
-        $jsonStr = json_encode(array(
-            array('id' => $classes[0]->getId(), 'name' => 'Does Not Matter'),
-            array('id' => $classes[1]->getId(), 'name' => 'Does Not Matter'),
-            array('id' => $classes[2]->getId(), 'name' => 'Does Not Matter'),
-        ));
+        $jsonStr = json_encode([
+            ['id' => $classes[0]->getId(), 'name' => 'Does Not Matter'],
+            ['id' => $classes[1]->getId(), 'name' => 'Does Not Matter'],
+            ['id' => $classes[2]->getId(), 'name' => 'Does Not Matter'],
+        ]);
 
         $transformer = new CollectionToJson($entityMgrMock, $className);
         $obj         = $transformer->transform($classes);
@@ -120,11 +120,11 @@ class TransformerTest extends BaseTestCase
 
         $entityMgrMock = $this->getEntityManager();
 
-        $jsonStr = json_encode(array(
-            array('id' => $classes[0]->getId(), 'name' => 'It Matters'),
-            array('id' => $classes[1]->getId(), 'name' => 'It Matters'),
-            array('id' => $classes[2]->getId(), 'name' => 'It Matters'),
-        ));
+        $jsonStr = json_encode([
+            ['id' => $classes[0]->getId(), 'name' => 'It Matters'],
+            ['id' => $classes[1]->getId(), 'name' => 'It Matters'],
+            ['id' => $classes[2]->getId(), 'name' => 'It Matters'],
+        ]);
 
         $transformer = new CollectionToJson($entityMgrMock, $className, 'someProperty');
         $obj         = $transformer->transform($classes);

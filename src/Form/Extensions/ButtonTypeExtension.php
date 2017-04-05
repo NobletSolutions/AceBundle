@@ -28,7 +28,7 @@ class ButtonTypeExtension extends AbstractTypeExtension
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(array('icon', 'type'));
+        $resolver->setDefined(['icon', 'type']);
         $resolver->setAllowedTypes('icon','string');
     }
 

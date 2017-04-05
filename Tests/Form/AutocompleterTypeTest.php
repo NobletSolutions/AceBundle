@@ -43,7 +43,7 @@ class AutocompleterTypeTest extends BaseFormTestType
     public function testFormTypeEntityToJson()
     {
         $entity    = new Entity(1);
-        $formData  = array('auto' => '1');
+        $formData  = ['auto' => '1'];
         $routeName = 'routename';
         $this->router->expects($this->once())
             ->method('generate')
@@ -57,11 +57,11 @@ class AutocompleterTypeTest extends BaseFormTestType
 
         $form = $this->factory
             ->createBuilder()
-            ->add('auto', AutocompleterType::class, array(
+            ->add('auto', AutocompleterType::class, [
                 'route'  => $routeName,
                 'class'  => Entity::class,
                 'data_class' => Entity::class,
-                'method' => 'GET'))
+                'method' => 'GET'])
             ->getForm();
 
         $view = $form->createView();
@@ -121,9 +121,9 @@ class AutocompleterTypeTest extends BaseFormTestType
      */
     public function testFormTypeCustomTransformer()
     {
-        $entities = array(new Entity(1), new Entity(2));
+        $entities = [new Entity(1), new Entity(2)];
 
-        $formData  = array('auto' => '1,2');
+        $formData  = ['auto' => '1,2'];
         $routeName = 'routename';
         $jsonStr     = sprintf("%d,%d", $entities[0]->getId(), $entities[1]->getId());
 
@@ -137,11 +137,11 @@ class AutocompleterTypeTest extends BaseFormTestType
 
         $form = $this->factory
             ->createBuilder()
-            ->add('auto', AutocompleterType::class, array(
+            ->add('auto', AutocompleterType::class, [
                 'autocompleteUrl' => $routeName,
                 'class'           => Entity::class,
                 'multiple'        => true,
-                'transformer'     => $customTransformer))
+                'transformer'     => $customTransformer])
             ->getForm();
 
         $view = $form->createView();
@@ -158,10 +158,10 @@ class AutocompleterTypeTest extends BaseFormTestType
     public function testFormWithDataCustomProperty()
     {
         $entity     = new Entity(1);
-        $properties = array(
+        $properties = [
             'property' => 'someProperty',
             'class' => Entity::class,
-        );
+        ];
 
         $form = $this->factory
             ->createBuilder()
@@ -170,7 +170,7 @@ class AutocompleterTypeTest extends BaseFormTestType
 
         $viewData = $form->getViewData();
         $this->assertNull($viewData);
-        $form->setData(array('auto' => $entity));
+        $form->setData(['auto' => $entity]);
         $view = $form->createView();
         $viewData = $form->getViewData();
         $this->assertNotNull($viewData);
@@ -184,12 +184,12 @@ class AutocompleterTypeTest extends BaseFormTestType
 
         $form = $this->factory
             ->createBuilder()
-            ->add('auto', AutocompleterType::class, array('class' => Entity::class,))
+            ->add('auto', AutocompleterType::class, ['class' => Entity::class,])
             ->getForm();
 
         $viewData = $form->getViewData();
         $this->assertNull($viewData);
-        $form->setData(array('auto' => $entity));
+        $form->setData(['auto' => $entity]);
         $view     = $form->createView();
         $this->assertEquals('[{"id":1,"name":"Does Not Matter"}]', $view['auto']->vars['value']);
     }
@@ -202,10 +202,10 @@ class AutocompleterTypeTest extends BaseFormTestType
 
         $form = $this->factory
             ->createBuilder()
-            ->add('auto', AutocompleterType::class, array('class' => Entity::class,))
+            ->add('auto', AutocompleterType::class, ['class' => Entity::class,])
             ->getForm();
 
-        $form->submit(array());
+        $form->submit([]);
         $data = $form['auto']->getData();
         $this->assertNull($data);
     }

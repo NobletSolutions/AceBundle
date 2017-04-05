@@ -20,7 +20,7 @@ class KnobType extends AbstractType
     /**
      * @var array
      */
-    private $defaults = array(
+    private $defaults = [
         'min'             => false,
         'max'             => false,
         'width'           => 80,
@@ -32,8 +32,8 @@ class KnobType extends AbstractType
         'angleOffset'     => false,
         'displayInput'    => true,
         'linecap'         => 'butt',
-        'attr'            => array('class'=>'input-small nsKnob'),
-    );
+        'attr'            => ['class'=>'input-small nsKnob'],
+    ];
 
     /**
      * {@inheritdoc}

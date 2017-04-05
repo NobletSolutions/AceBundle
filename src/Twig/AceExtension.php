@@ -9,9 +9,9 @@ class AceExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('form_horizontal', null, array('node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', 'is_safe' => array('html')))
-        );
+        return [
+            new \Twig_SimpleFunction('form_horizontal', null, ['node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', 'is_safe' => ['html']])
+        ];
     }
 
     /**

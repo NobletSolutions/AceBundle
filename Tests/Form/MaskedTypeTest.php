@@ -17,9 +17,9 @@ class MaskedTypeTest extends BaseFormTestType
      */
     public function testFormType()
     {
-        $formData = array(
+        $formData = [
             'masked' => 1,
-        );
+        ];
 
         $formBuilder = $this->factory->createBuilder();
         $formBuilder->add('masked', MaskedType::class);

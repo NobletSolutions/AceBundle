@@ -24,12 +24,12 @@ class TagType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'caseInsensitive' => true,
             'allowDuplicates' => false,
             'autocompleteOnComma' => false,
             'arrayOutput' => false,
-        ));
+        ]);
     }
 
     /**

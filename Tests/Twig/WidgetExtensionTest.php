@@ -37,26 +37,26 @@ class WidgetExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function getOptions()
     {
-        $defaults = array(
+        $defaults = [
             'filter_id' => 'filters',
             'open_icon' => 'fa-plus',
             'close_icon' => 'fa-minus',
             'target_text' => 'Filters',
-        );
+        ];
 
         $second = $defaults;
         $second['open_icon'] = 'fa-cog';
 
-        return array(
-            array($defaults, $defaults),
-            array($second, $second),
-        );
+        return [
+            [$defaults, $defaults],
+            [$second, $second],
+        ];
     }
 
     public function testGetFullScreen()
     {
         $extension = new WidgetExtension();
-        $this->assertNull($extension->getFullScreenString(array('include_expander'=>false)));
-        $this->assertNotEmpty($extension->getFullScreenString(array('include_expander'=>true)));
+        $this->assertNull($extension->getFullScreenString(['include_expander'=>false]));
+        $this->assertNotEmpty($extension->getFullScreenString(['include_expander'=>true]));
     }
 }

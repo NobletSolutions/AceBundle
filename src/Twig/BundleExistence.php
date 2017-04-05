@@ -30,9 +30,9 @@ class BundleExistence extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('bundleExists', array($this, 'bundleExists')),
-        );
+        return [
+            new \Twig_SimpleFunction('bundleExists', [$this, 'bundleExists']),
+        ];
     }
 
     /**

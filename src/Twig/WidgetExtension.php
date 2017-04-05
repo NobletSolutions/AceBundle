@@ -13,30 +13,30 @@ class WidgetExtension extends \Twig_Extension
     /**
      * @var array
      */
-    private $options = array(
+    private $options = [
         'filter_id' => 'filters',
         'open_icon' => 'fa-plus',
         'close_icon' => 'fa-minus',
         'target_text' => 'Filters',
         'include_expander' => true,
         'start_open' => false,
-    );
+    ];
 
     /**
      * @inheritDoc
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('widget_filter_toolbox', array($this, 'renderFilterToolbox'), array('is_safe'=>array('html')))
-        );
+        return [
+            new \Twig_SimpleFunction('widget_filter_toolbox', [$this, 'renderFilterToolbox'], ['is_safe'=> ['html']])
+        ];
     }
 
     /**
      * @param array $options
      * @return string
      */
-    public function renderFilterToolbox(array $options = array())
+    public function renderFilterToolbox(array $options = [])
     {
         $applied = array_merge($this->options,$options);
 
@@ -47,7 +47,7 @@ class WidgetExtension extends \Twig_Extension
      * @param array $options
      * @return mixed
      */
-    public function getFilterString(array $options = array())
+    public function getFilterString(array $options = [])
     {
         return sprintf('<div class="widget-toolbar">
                             <a href="#%s" data-toggle="collapse" class="white small"><i class="ace-icon fa %s" data-icon-hide="%s" data-icon-show="%s"></i> %s</a>
@@ -58,7 +58,7 @@ class WidgetExtension extends \Twig_Extension
      * @param array $options
      * @return null|string
      */
-    public function getFullScreenString(array $options = array())
+    public function getFullScreenString(array $options = [])
     {
         $output = null;
         if($options['include_expander'] === true) {

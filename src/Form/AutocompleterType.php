@@ -69,9 +69,9 @@ class AutocompleterType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(array('route', 'autocompleteUrl', 'class', 'property', 'icon', 'secondary-field', 'resultsFormatter', 'tokenFormatter', 'transformer'));
+        $resolver->setDefined(['route', 'autocompleteUrl', 'class', 'property', 'icon', 'secondary-field', 'resultsFormatter', 'tokenFormatter', 'transformer']);
 
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'method'        => 'POST',
             'queryParam'    => 'q',
             'minChars'      => 2,
@@ -80,8 +80,8 @@ class AutocompleterType extends AbstractType
             'noResultsText' => 'No results',
             'searchingText' => 'Searching',
             'multiple'      => false,
-            'attr'          => array('class' => 'nsAutocompleter'),
-        ));
+            'attr'          => ['class' => 'nsAutocompleter'],
+        ]);
 
         $resolver->setNormalizer('multiple', function (Options $options, $multiple) {
             if (!empty($options['data_class']) && $multiple === true) {
@@ -98,7 +98,7 @@ class AutocompleterType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $ar   = array('method', 'queryParam', 'minChars', 'prePopulate', 'hintText','noResultsText', 'searchingText');
+        $ar   = ['method', 'queryParam', 'minChars', 'prePopulate', 'hintText','noResultsText', 'searchingText'];
         $opts = array_intersect_key($options, array_flip($ar));
 
         $opts['tokenLimit'] = $options['multiple'] ? null : 1;

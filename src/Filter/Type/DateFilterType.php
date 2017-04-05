@@ -38,15 +38,15 @@ class DateFilterType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(array(
+            ->setDefaults([
                 'required'               => false,
                 'data_extraction_method' => 'default',
                 'widget'   => 'single_text',
                 'compound' => false,
                 'format'   => $this->converter->getFormat(true),
                 'apply_filter' => [$this,'filterDate'],
-            ))
-            ->setAllowedValues('data_extraction_method',array('default'))
+            ])
+            ->setAllowedValues('data_extraction_method', ['default'])
         ;
     }
 

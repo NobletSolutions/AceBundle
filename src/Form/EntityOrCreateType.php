@@ -23,19 +23,18 @@ class EntityOrCreateType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $entityOptions = array_merge($options['entity_options'], array('class' => $options['class']));
+        $entityOptions = array_merge($options['entity_options'], ['class' => $options['class']]);
 
         $builder->add('finder', 'NS\AceBundle\Form\AutocompleterType', $entityOptions);
 
         if ($options['include_form']) {
-            $builder->add('createForm', $options['type'], isset($options['create_options']) ? $options['create_options'] : array());
+            $builder->add('createForm', $options['type'], isset($options['create_options']) ? $options['create_options'] : []);
         }
 
         $builder->addModelTransformer(new EntityOrCreate());
     }
 
     /**
-     *
      * @param FormView $view
      * @param FormInterface $form
      * @param array $options
@@ -52,21 +51,20 @@ class EntityOrCreateType extends AbstractType
     }
 
     /**
-     *
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(array('class', 'type'));
-        $resolver->setDefined(array('create_options', 'modal_size'));
-        $resolver->setDefaults(array(
+        $resolver->setRequired(['class', 'type']);
+        $resolver->setDefined(['create_options', 'modal_size']);
+        $resolver->setDefaults([
             'include_button' => true,
             'include_form'   => true,
             'error_bubbling' => false,
-            'entity_options' => array(),
-        ));
+            'entity_options' => [],
+        ]);
 
-        $resolver->setAllowedValues('modal_size', array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
+        $resolver->setAllowedValues('modal_size', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
     }
 
     /**

@@ -17,9 +17,9 @@ class SliderTypeTest extends BaseFormTestType
      */
     public function testFormType()
     {
-        $formData = array(
+        $formData = [
             'slider' => 1,
-        );
+        ];
 
         $formBuilder = $this->factory->createBuilder();
         $formBuilder->add('slider', SliderType::class);

@@ -22,15 +22,15 @@ class SpinnerType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'min' => 0,
             'max' => 100,
             'step' => 1,
             'touchscreen' => false, //built for touchscreen
             'on_sides' => false,
             'pos_neg' => false,
-            'attr' => array('class' => 'nsSpinner')
-        ));
+            'attr' => ['class' => 'nsSpinner']
+        ]);
     }
 
     /**
@@ -39,14 +39,14 @@ class SpinnerType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $opts = array();
+        $opts = [];
 
-        foreach (array('min', 'max', 'step', 'on_sides') as $opt) {
+        foreach (['min', 'max', 'step', 'on_sides'] as $opt) {
             $opts[$opt] = $options[$opt];
         }
 
         if ($options['pos_neg']) {
-            $opts += array('icon_up' => 'icon-plus smaller-75', 'icon_down' => 'icon-minus smaller-75', 'btn_up_class' => 'btn-success', 'btn_down_class' => 'btn-danger');
+            $opts += ['icon_up' => 'icon-plus smaller-75', 'icon_down' => 'icon-minus smaller-75', 'btn_up_class' => 'btn-success', 'btn_down_class' => 'btn-danger'];
         }
 
         if ($options['touchscreen']) {

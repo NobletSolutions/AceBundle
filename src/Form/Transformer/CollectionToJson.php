@@ -30,10 +30,12 @@ class CollectionToJson extends AbstractObjectToJson
             throw new UnexpectedTypeException($entities, 'PersistentCollection or ArrayCollection');
         }
 
-        $idsArray = array();
+        $idsArray = [];
         // check for interface...
         foreach ($entities as $entity) {
-            $idsArray[] = array('id' => $entity->getId(), 'name' => $this->getProperty($entity));
+            if ($entity !== null) {
+                $idsArray[] = ['id' => $entity->getId(), 'name' => $this->getProperty($entity)];
+            }
         }
 
         if (empty($idsArray)) {
@@ -66,7 +68,7 @@ class CollectionToJson extends AbstractObjectToJson
             return [];
         }
 
-        array_walk($idsArray, array($this, 'walk'));
+        array_walk($idsArray, [$this, 'walk']);
 
         return $idsArray;
     }

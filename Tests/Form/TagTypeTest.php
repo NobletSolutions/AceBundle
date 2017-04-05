@@ -17,9 +17,9 @@ class TagTypeTest extends BaseFormTestType
      */
     public function testFormType()
     {
-        $formData = array(
+        $formData = [
             'tag' => 1,
-        );
+        ];
 
         $formBuilder = $this->factory->createBuilder();
         $formBuilder->add('tag', TagType::class);

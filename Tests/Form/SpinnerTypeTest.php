@@ -17,9 +17,9 @@ class SpinnerTypeTest extends BaseFormTestType
      */
     public function testFormType()
     {
-        $formData = array(
+        $formData = [
             'spinner' => 1,
-        );
+        ];
 
         $formBuilder = $this->factory->createBuilder();
         $formBuilder->add('spinner', SpinnerType::class);

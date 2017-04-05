@@ -17,9 +17,9 @@ class FileUploadTypeTest extends BaseFormTestType
      */
     public function testFormType()
     {
-        $formData = array(
+        $formData = [
             'file' => 1,
-        );
+        ];
 
         $formBuilder = $this->factory->createBuilder();
         $formBuilder->add('file', FileUploadType::class);

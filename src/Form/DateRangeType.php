@@ -35,11 +35,11 @@ class DateRangeType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'widget'   => 'single_text',
             'compound' => false,
             'format'   => $this->converter->getFormat(true),
-        ));
+        ]);
     }
 
     /**

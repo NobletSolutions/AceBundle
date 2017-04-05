@@ -25,7 +25,7 @@ class EntityToJson extends AbstractObjectToJson
             throw new \InvalidArgumentException(sprintf("Expecting entity of type '%s' but received '%s'", $this->class, get_class($entity)));
         }
 
-        return json_encode(array(array('id' => $entity->getId(), 'name' => $this->getProperty($entity))));
+        return json_encode([['id' => $entity->getId(), 'name' => $this->getProperty($entity)]]);
     }
 
     /**
