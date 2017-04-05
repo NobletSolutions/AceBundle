@@ -3,6 +3,7 @@ VERSION 3  NEW HIDDEN FORM FIELD HANDLING EXTENSION
 ===================================================
 
    Version 3.0 - New hidden form field handling extension
+      04/04/2017 23:44  3.0.6  Handle EntityOrCreateType createForm when multiple
       04/04/2017 22:24  3.0.5  Improved EntityOrCreateType
       30/03/2017 16:01  3.0.4  Updated Autocomplete form to use view transformer
       16/03/2017 13:14  3.0.3  Added apply_filter to date filter form types
