@@ -3,6 +3,7 @@
 namespace NS\AceBundle\Form;
 
 use \Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use \Symfony\Component\Form\FormBuilderInterface;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
 use \Symfony\Component\Form\FormView;
@@ -28,10 +29,12 @@ class EntityOrCreateType extends AbstractType
         $builder->add('finder', 'NS\AceBundle\Form\AutocompleterType', $entityOptions);
 
         if ($options['include_form']) {
-            $builder->add('createForm', $options['type'], isset($options['create_options']) ? $options['create_options'] : []);
+            $builder
+                ->add('createFormClicked',HiddenType::class,['data'=>'finder'])
+                ->add('createForm', $options['type'], isset($options['create_options']) ? $options['create_options'] : []);
         }
 
-        $builder->addViewTransformer(new EntityOrCreate((isset($entityOptions['multiple']) && $entityOptions['multiple']), $options['class']));
+        $builder->addViewTransformer(new EntityOrCreate((isset($entityOptions['multiple']) && $entityOptions['multiple']), $options['include_form'], $options['class']));
     }
 
     /**

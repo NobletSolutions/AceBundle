@@ -29,7 +29,7 @@ class EntityOrCreateTypeTest extends BaseFormTestType
 
         $className = 'NS\AceBundle\Tests\Form\Fixtures\Entity';
         $formData = [
-            'entity' => ['finder' => 1],
+            'entity' => ['finder' => 1,'createFormClicked'=>'finder'],
         ];
 
         $formOptions = [
@@ -57,7 +57,10 @@ class EntityOrCreateTypeTest extends BaseFormTestType
 
         $className = 'NS\AceBundle\Tests\Form\Fixtures\Entity';
         $formData  = [
-            'entity' => ['createForm' => ['id' => 2, 'name' => 'Other Name']],
+            'entity' => [
+                'finder' => '',
+                'createFormClicked'=> 'create',
+                'createForm' => ['id' => 2, 'name' => 'Other Name'],],
         ];
 
         $formProperties = [
@@ -69,9 +72,9 @@ class EntityOrCreateTypeTest extends BaseFormTestType
             ->add('entity', EntityOrCreateType::class, $formProperties)
             ->getForm();
 
-        $this->assertCount(2, $form['entity']);
         $this->assertArrayHasKey('finder', $form['entity']);
         $this->assertArrayHasKey('createForm', $form['entity']);
+        $this->assertArrayHasKey('createFormClicked', $form['entity']);
 
         $form->submit($formData);
 
@@ -105,7 +108,10 @@ class EntityOrCreateTypeTest extends BaseFormTestType
             }));
 
         $formData = [
-            'entity' => ['finder' => '1,2'],
+            'entity' => [
+                'finder' => '1,2',
+                'createFormClicked'=>'finder',
+                ],
         ];
 
         $formOptions = [
@@ -135,7 +141,11 @@ class EntityOrCreateTypeTest extends BaseFormTestType
             ->method('getReference');
 
         $formData = [
-            'entity' => ['finder' => '','createForm'=>['id'=>'theId','name'=>'theName']],
+            'entity' => [
+                'finder' => '',
+                'createForm' => ['id' => 'theId', 'name' => 'theName'],
+                'createFormClicked' => 'create',
+            ],
         ];
 
         $formOptions = [

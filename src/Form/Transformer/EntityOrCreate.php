@@ -12,8 +12,12 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
  */
 class EntityOrCreate implements DataTransformerInterface
 {
+
     /** @var bool */
     private $expectMultiple;
+
+    /** @var bool */
+    private $expectCreateForm;
 
     /** @var string */
     private $class;
@@ -21,11 +25,13 @@ class EntityOrCreate implements DataTransformerInterface
     /**
      * EntityOrCreate constructor.
      * @param bool $expectMultiple
+     * @param bool $expectCreateForm
      * @param string $class
      */
-    public function __construct($expectMultiple, $class)
+    public function __construct($expectMultiple, $expectCreateForm, $class)
     {
         $this->expectMultiple = $expectMultiple;
+        $this->expectCreateForm = $expectCreateForm;
         $this->class = $class;
     }
 
@@ -37,6 +43,34 @@ class EntityOrCreate implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
+        if ($this->expectCreateForm) {
+            if (!isset($value['createFormClicked'])) {
+                throw new TransformationFailedException("Unable to reverseTransform as we expected the createFormClicked but it wasn't submitted");
+            }
+
+            switch($value['createFormClicked']) {
+                case 'finder':
+                    return $this->handleFinder($value);
+                case 'create':
+                    return $this->handleCreate($value);
+                default:
+                    throw new TransformationFailedException("CreateFormClicked invalid");
+            }
+        }
+
+        return $this->handleFinder($value);
+    }
+
+    /**
+     * @param array $value
+     * @return array|mixed|null
+     */
+    private function handleFinder(array $value)
+    {
+        if (!isset($value['finder'])) {
+            throw new TransformationFailedException("Missing 'finder' array key");
+        }
+
         if ($this->expectMultiple) {
             if (is_array($value['finder']) && !empty($value['finder'])) {
                 foreach ($value['finder'] as $subObject) {
@@ -47,19 +81,27 @@ class EntityOrCreate implements DataTransformerInterface
 
                 return $value['finder'];
             }
+        }
 
-            if (!empty($value['createForm']) && $value['createForm'] instanceof $this->class) {
-                return [$value['createForm']];
-            }
+        if ($value['finder'] instanceof $this->class) {
+            return $value['finder'];
+        }
 
-        } elseif (!$this->expectMultiple) {
-            if ($value['finder'] instanceof $this->class) {
-                return $value['finder'];
-            }
+        return null;
+    }
 
-            if (!empty($value['createForm']) && $value['createForm'] instanceof $this->class) {
-                return $value['createForm'];
-            }
+    /**
+     * @param array $value
+     * @return array|mixed|null
+     */
+    private function handleCreate(array $value)
+    {
+        if (!isset($value['createForm'])) {
+            throw new TransformationFailedException("Missing 'createForm' array key");
+        }
+
+        if (!empty($value['createForm']) && $value['createForm'] instanceof $this->class) {
+            return ($this->expectMultiple) ? [$value['createForm']]: $value['createForm'];
         }
 
         return null;
