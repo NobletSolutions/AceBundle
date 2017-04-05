@@ -178,7 +178,7 @@
             var $f = this.FindWrapperForFieldType($form, $el);
 
             //If that gave us something, return it.  Otherwise, merge the form field and its label into a single collection we can toggle at once
-            return $f ? $f : $el.add($form.find($('label[for='+$el.attr('id'))));
+            return $f ? $f : $el.add($form.find($('label[for='+$el.attr('id')+']')));
         },
 
         /**
