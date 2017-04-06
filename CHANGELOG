@@ -3,6 +3,7 @@ VERSION 3  NEW HIDDEN FORM FIELD HANDLING EXTENSION
 ===================================================
 
    Version 3.0 - New hidden form field handling extension
+      06/04/2017 10:32  3.0.8  Fixed JS event listener
       05/04/2017 16:07  3.0.7  Improved EntityOrCreate and fixed JS syntax error
       04/04/2017 23:44  3.0.6  Handle EntityOrCreateType createForm when multiple
       04/04/2017 22:24  3.0.5  Improved EntityOrCreateType
