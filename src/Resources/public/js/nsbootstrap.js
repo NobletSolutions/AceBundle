@@ -60,6 +60,7 @@ $(document).click(function(ev)
         var index      = collection.data('index');
         var newForm    = collection.data('prototype').replace(/__name__/g, index);
         collection.append(newForm);
+        collection.data('index',index+1);
         $(document).trigger('nsFormUpdate');
     }
 
