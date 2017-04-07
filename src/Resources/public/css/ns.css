@@ -109,7 +109,6 @@ li.token-input-token p {
 
 li.token-input-input-token {
     float: none;
-    clear: both;
 }
 
 li.token-input-input-token > input {
