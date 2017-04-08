@@ -170,8 +170,20 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
             el.nsFieldActive = true;
             var options = $el.data('options');
 
-            if($el.val())
-                options.prePopulate = JSON.parse($el.val());
+            if($el.val()) {
+                try {
+                    options.prePopulate = JSON.parse($el.val());
+                }
+                catch (e) {
+                    console.log("Unable to parse tokenInput JSON error: "+e);
+                    var jsonStr = '[{"id":"'+$el.val()+'","name":"'+$el.val()+'"}]';
+                    try {
+                        options.prePopulate = JSON.parse(jsonStr);
+                    } catch (subE) {
+                        console.log("Unable to parse manually crafted tokenInput JSON error: "+subE);
+                    }
+                }
+            }
 
             var queryUrl = $el.data('autocompleteurl');
 
