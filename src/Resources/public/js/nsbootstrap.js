@@ -204,18 +204,19 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
                 }
             }
 
-            options.onReady = function()
-            {
+            options.onReady = function() {
                 $el.tokenInput('setOptions', {'url':queryUrl});
             };
 
-            if($el.data('resultsformatter'))
-            {
+            if ($el.data('tokenValue')) {
+                options.tokenValue = eval($el.data('tokenValue'));
+            }
+
+            if ($el.data('resultsformatter')) {
                 options.resultsFormatter=eval($el.data('resultsformatter'));
             }
 
-            if($el.data('tokenformatter'))
-            {
+            if ($el.data('tokenformatter')) {
                 options.tokenFormatter=eval($el.data('tokenformatter'));
             }
 
