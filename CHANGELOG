@@ -3,6 +3,7 @@ VERSION 3  NEW HIDDEN FORM FIELD HANDLING EXTENSION
 ===================================================
 
    Version 3.0 - New hidden form field handling extension
+      11/04/2017 11:25  3.0.11  tokenValue
       07/04/2017 12:21  3.0.10  Fixed nsAddForm js error
       07/04/2017 09:23  3.0.9  Style fix for AutocompleterType
       06/04/2017 10:32  3.0.8  Fixed JS event listener
