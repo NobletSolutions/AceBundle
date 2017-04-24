@@ -343,3 +343,15 @@ td > div.help-block {
 td > div.checkbox label {
     margin-left: -10px;
 }
+
+div.readmore {
+    overflow-y: hidden;
+    padding-bottom: 20px;
+}
+
+a.readmore-expander {
+    cursor: default;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
