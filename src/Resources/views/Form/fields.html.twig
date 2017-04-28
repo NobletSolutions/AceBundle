@@ -223,13 +223,13 @@
                 <button id="{{form.vars.name}}_clear" class="btn btn-default btn-sm modal-clear" data-dismiss="modal">Clear/Close</button>
                 <button id="{{form.vars.name}}_save" class="btn btn-success btn-sm" data-dismiss="modal">Apply changes</button>
                 <script type="text/javascript">
-                    var was_submitted = document.getElementByID('{{ form.createFormClicked.vars.id }}');
-                    document.getElementByID('{{form.vars.name}}_clear').onclick = function() {
+                    var was_submitted = document.getElementById('{{ form.createFormClicked.vars.id }}');
+                    document.getElementById('{{form.vars.name}}_clear').onclick = function() {
                         was_submitted.value = 'finder';
-                    }
-                    document.getElementByID('{{form.vars.name}}_save').onclick = function() {
+                    };
+                    document.getElementById('{{form.vars.name}}_save').onclick = function() {
                         was_submitted.value = 'create';
-                    }
+                    };
                 </script>
             </div>
         </div>
