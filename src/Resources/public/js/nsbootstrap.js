@@ -228,7 +228,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
             };
 
             if ($el.data('tokenvalue')) {
-                options.tokenvalue = eval($el.data('tokenvalue'));
+                options.tokenValue = eval($el.data('tokenvalue'));
             }
 
             if ($el.data('resultsformatter')) {
