@@ -3,6 +3,7 @@ VERSION 3  NEW HIDDEN FORM FIELD HANDLING EXTENSION
 ===================================================
 
    Version 3.0 - New hidden form field handling extension
+      03/05/2017 15:38  3.0.17  Fixed tokenValue handling again
       28/04/2017 09:30  3.0.16  Fixed JS
       27/04/2017 14:50  3.0.15  JS TokenValue case sensitivity
       27/04/2017 12:28  3.0.14  Fixed CSS
