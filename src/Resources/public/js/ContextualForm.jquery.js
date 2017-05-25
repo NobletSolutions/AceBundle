@@ -9,9 +9,11 @@
      * @param autoinit Boolean #Whether or not to automatically init the form handlers as soon as the class is instantiated.  Defaults to true
      * @constructor
      */
-    $.ContextualForm = function(element, globalConfig, autoinit)
+    $.ContextualForm = function(element, globalConfig, autoinit, events)
     {
-        var autoinit = autoinit ? autoinit: true;
+        var autoinit = typeof(autoinit) !== 'undefined' ? autoinit: true;
+        var events   = typeof(events) !== 'undefined' ? events : 'nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element ajaxComplete shown.ace.widget';
+
         var defaultConfig = {
             'event': 'input',
             'ignoreClass': 'ignore'
@@ -29,7 +31,16 @@
 
         if(autoinit)
         {
-            this.Init();
+            var cf = this;
+            cf.Init();
+
+            if(events)
+            {
+                $(document).on(events, function(ev)
+                {
+                    cf.Init();
+                });
+            }
         }
     };
 
@@ -41,7 +52,7 @@
         Init: function()
         {
             var cform   = this; //#JustJavascriptScopeThings
-            cform.forms = cform.element.find('form[data-context-config]'); //Find any forms that have a config
+            cform.forms = cform.element.find('[data-context-config]'); //Find any forms that have a config
 
             //Parse the config for each form and add it to the DOM element
             cform.forms.each(function()
