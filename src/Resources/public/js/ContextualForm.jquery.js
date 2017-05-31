@@ -57,7 +57,9 @@
             //Parse the config for each form and add it to the DOM element
             cform.forms.each(function()
             {
-                this.contextConfig = $(this).data('context-config');
+                //Make sure this isn't a reference because we need to modify the copy
+                var conf = $(this).data('context-config');
+                this.contextConfig = $.extend(true, {}, conf);
             });
             this.AddListeners();
         },
@@ -378,7 +380,7 @@
             //We do this after the loop, because if we do it within, the disField.hide() call could hide a field we just showed in the previous loop
             $.each(show, function(index, $field)
             {
-                $field.show().trigger('nsFormUpdate');
+                $field.show();
             });
         }
     }
