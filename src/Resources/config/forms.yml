@@ -15,6 +15,11 @@ services:
     tags:
       - { name: form.type_extension, alias: form, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
+  ns_ace.form.input_addon:
+    class: NS\AceBundle\Form\Extensions\InputGroupAddonExtension
+    tags:
+      - { name: form.type_extension, alias: form, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
   ns_ace.form.iconbutton:
     class: NS\AceBundle\Form\IconButtonType
     tags:
