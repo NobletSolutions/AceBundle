@@ -18,7 +18,6 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('ns_ace');
         $rootNode = $treeBuilder->root('ns_ace');
         $rootNode->children()
             ->scalarNode('use_knp_menu')->defaultTrue()->end()
