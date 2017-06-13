@@ -3,6 +3,7 @@ VERSION 3  NEW HIDDEN FORM FIELD HANDLING EXTENSION
 ===================================================
 
    Version 3.0 - New hidden form field handling extension
+      13/06/2017 11:12  3.0.22  Update to ContextualForm JS
       07/06/2017 13:51  3.0.21  Add print styles
       31/05/2017 16:59  3.0.20  Added Input Addon Group
       31/05/2017 16:52  3.0.19  Update to ContextualField
