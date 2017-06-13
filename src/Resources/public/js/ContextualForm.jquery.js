@@ -109,10 +109,14 @@
                 if(conf.display instanceof Array) {
                     $.each(conf.display, function(i, dis)
                     {
-                        targets.push(cform.DisplayConfToSelector($form, dis));
+                        $sel = cform.DisplayConfToSelector($form, dis);
+                        $sel.data('visibleParents', {});
+                        targets.push($sel);
                     });
                 } else {
-                    targets = [cform.DisplayConfToSelector($form, conf.display)];
+                    $sel = cform.DisplayConfToSelector($form, dis);
+                    $sel.data('visibleParents', {});
+                    targets = [$sel];
                 }
 
                 //Make this always an array for ease of comparison
@@ -151,7 +155,7 @@
 
             var event = $field.is('[type=checkbox], [type=radio], select') ? 'change':cform.globalConfig.event; //Sadly, chrome only supports oninput on text fields
 
-            $field.on(event, function($event)
+            $field.on(event, function($event, param1)
             {
                 cform.Go($(this), config, $event)
             });
@@ -350,6 +354,21 @@
             return intersect.length > 0;
         },
 
+        TriggerChangeEvent: function($field)
+        {
+            if($field.is('input, select, textarea'))
+            {
+                var $fInput = $field;
+            }
+            else
+            {
+                var $fInput = $field.find('input, select, textarea');
+            }
+
+            var event = $fInput.is('[type=checkbox], [type=radio], select') ? 'change':this.globalConfig.event; //Sadly, chrome only supports oninput on text fields
+            $fInput.trigger(event, ['fromShow']);
+        },
+
         /**
          * Fire the show/hide event
          *
@@ -361,26 +380,38 @@
         {
             var cform = this;
             var show  = [];
+            var id    = $field.attr('id');
 
             //There are potentially multiple configs for this field, for different sets of child fields dependent on different form values.
             $.each(config, function(index, conf)
             {
                 //Loop through each "child" field that is controlled by this "parent" field, in this config
-                $.each(conf.display, function(index, disField)
+                $.each(conf.display, function(index, $disField)
                 {
-                    disField.hide();//Reset everything
+                    $disField.hide();//Reset everything
+
+                    delete $disField.data('visibleParents')[id];
+
                     //If the parent field value matches the value in the config, display the child fields
-                    if(cform.MatchFieldValue($field, conf.values))
+                    if(($field.is(':visible') || !$.isEmptyObject($disField.data('visibleParents'))) && cform.MatchFieldValue($field, conf.values))
                     {
-                        show.push(disField);
+                        show.push($disField);
+                        if($field.is(':visible'))
+                        {
+                            $disField.data('visibleParents')[id] = true;
+                        }
                     }
+
+                    cform.TriggerChangeEvent($disField);
                 });
             });
 
             //We do this after the loop, because if we do it within, the disField.hide() call could hide a field we just showed in the previous loop
-            $.each(show, function(index, $field)
+            $.each(show, function(index, $disField)
             {
-                $field.show();
+                $disField.show();
+
+                cform.TriggerChangeEvent($disField);
             });
         }
     }
