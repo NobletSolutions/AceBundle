@@ -110,13 +110,19 @@
                     $.each(conf.display, function(i, dis)
                     {
                         $sel = cform.DisplayConfToSelector($form, dis);
-                        $sel.data('visibleParents', {});
-                        targets.push($sel);
+                        if($sel.length)
+                        {
+                            $sel.data('visibleParents', []);
+                            targets.push($sel);
+                        }
                     });
                 } else {
                     $sel = cform.DisplayConfToSelector($form, dis);
-                    $sel.data('visibleParents', {});
-                    targets = [$sel];
+                    if($sel.length)
+                    {
+                        $sel.data('visibleParents', []);
+                        targets = [$sel];
+                    }
                 }
 
                 //Make this always an array for ease of comparison
@@ -390,7 +396,8 @@
                 {
                     $disField.hide();//Reset everything
 
-                    delete $disField.data('visibleParents')[id];
+                    // delete $disField.data('visibleParents')[id];
+                    $disField.data('visibleParents').splice(id, 1);
 
                     //If the parent field value matches the value in the config, display the child fields
                     if(($field.is(':visible') || !$.isEmptyObject($disField.data('visibleParents'))) && cform.MatchFieldValue($field, conf.values))
