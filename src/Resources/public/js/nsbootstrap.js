@@ -106,7 +106,7 @@ $(document).click(function(ev)
     }
 });
 
-$(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element ajaxComplete shown.ace.widget', function(ev)
+$(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element ajaxComplete shown.ace.widget contextFormUpdate', function(ev)
 {
     bindNsAjaxEvents();
 

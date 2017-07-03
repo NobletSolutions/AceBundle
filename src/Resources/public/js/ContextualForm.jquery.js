@@ -9,10 +9,11 @@
      * @param autoinit Boolean #Whether or not to automatically init the form handlers as soon as the class is instantiated.  Defaults to true
      * @constructor
      */
-    $.ContextualForm = function(element, globalConfig, autoinit, events)
+    $.ContextualForm = function(element, globalConfig, autoinit, events, onSuccessEvent)
     {
         var autoinit = typeof(autoinit) !== 'undefined' ? autoinit: true;
         var events   = typeof(events) !== 'undefined' ? events : 'nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element ajaxComplete shown.ace.widget';
+        this.onSuccessEvent = typeof(onSuccessEvent) !== 'undefined' ? onSuccessEvent : 'contextFormUpdate';
 
         var defaultConfig = {
             'event': 'input',
@@ -375,6 +376,11 @@
             $fInput.trigger(event, ['fromShow']);
         },
 
+        TriggerSuccessEvent: function()
+        {
+            $(document).trigger(this.onSuccessEvent);
+        },
+
         /**
          * Fire the show/hide event
          *
@@ -419,6 +425,7 @@
                 $disField.show();
 
                 cform.TriggerChangeEvent($disField);
+                cform.TriggerSuccessEvent();
             });
         }
     }
