@@ -14,6 +14,9 @@
         var autoinit = typeof(autoinit) !== 'undefined' ? autoinit: true;
         var events   = typeof(events) !== 'undefined' ? events : 'nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element ajaxComplete shown.ace.widget';
         this.onSuccessEvent = typeof(onSuccessEvent) !== 'undefined' ? onSuccessEvent : 'contextFormUpdate';
+        this.activityMap = {}; //We need to store a mapping of what fields are currently active and "visible"; storing this info right on the field is problematic because it may or may not be an actual <input> element
+        this.toBeProcessed = {};
+        this.isFirstRun = true;
 
         var defaultConfig = {
             'event': 'input',
@@ -53,6 +56,7 @@
         Init: function()
         {
             var cform   = this; //#JustJavascriptScopeThings
+            cform.isFirstRun = true;
             cform.forms = cform.element.find('[data-context-config]'); //Find any forms that have a config
 
             //Parse the config for each form and add it to the DOM element
@@ -63,12 +67,12 @@
                 this.contextConfig = $.extend(true, {}, conf);
             });
             this.AddListeners();
+            cform.isFirstRun = false;
         },
 
         /**
          * Loop through the form configs, find which fields we need to add handlers to, and start the process
          *
-         * @constructor
          */
         AddListeners: function()
         {
@@ -93,13 +97,14 @@
          * @param $form Object #The current form element (JQuery object)
          * @param field String #The name of the field to process the config for
          * @param config Object #The config (JSON) for this field
-         * @constructor
          */
         ProcessFormConfig: function($form, field, config)
         {
             var cform = this;
             //Get the actual form element
             var $field = $form.find('[name="'+field+'"], [name="'+field+'[]"]');//Checkboxes will append a [] to the name
+
+            this.toBeProcessed[$field.attr('id')] = true;
 
             //We're doing all of this before the event handler so it only happens once on init.
 
@@ -154,7 +159,6 @@
          *
          * @param $field Object #The form field.  JQuery object.
          * @param config
-         * @constructor
          */
         AddListener: function($field, config)
         {
@@ -162,8 +166,15 @@
 
             var event = $field.is('[type=checkbox], [type=radio], select') ? 'change':cform.globalConfig.event; //Sadly, chrome only supports oninput on text fields
 
-            $field.on(event, function($event, param1)
+            $field.off(event+'.cf'); //Init() could have been called more than once; remove any previous handlers so we don't get doubles
+
+            $field.on(event+'.cf', function($event, param1)
             {
+                if(!param1)
+                {
+                    cform.activityMap[$field.attr('id')] = true;//param1 is only true if this came from a trigger() call; we only want to update the activityMap after the user actually changes a field
+                }
+
                 cform.Go($(this), config, $event)
             });
         },
@@ -174,7 +185,6 @@
          * @param $form Object #The current form
          * @param dis String #The name or ID of the element we want to toggle
          * @returns {*}
-         * @constructor
          */
         DisplayConfToSelector: function($form, dis)
         {
@@ -194,7 +204,6 @@
          * @param $form Object #The current form
          * @param $el Object #Form field we're toggling
          * @returns {*}
-         * @constructor
          */
         FindWrapper: function($form, $el)
         {
@@ -202,7 +211,9 @@
             var $f = this.FindWrapperForFieldType($form, $el);
 
             //If that gave us something, return it.  Otherwise, merge the form field and its label into a single collection we can toggle at once
-            return $f ? $f : $el.add($form.find($('label[for='+$el.attr('id')+']')));
+            var $wrapper = $f ? $f : $el.add($form.find($('label[for='+$el.attr('id')+']')));
+            $wrapper.data('fieldId', $el.attr('id')); //we need a quick way to get the actual form field ID from the wrapper element if needed
+            return $wrapper;
         },
 
         /**
@@ -211,7 +222,6 @@
          * @param $form Object #The current form
          * @param $field Object #The current field
          * @returns {boolean}
-         * @constructor
          */
         FindWrapperForFieldType: function($form, $field)
         {
@@ -241,7 +251,6 @@
          * @param $form Object #The current form
          * @param $field Object #The current field
          * @returns {*}
-         * @constructor
          */
         FindWrapperForInput: function($form, $field)
         {
@@ -266,7 +275,6 @@
          * @param $form Object #The current form
          * @param $field Object #The current field
          * @returns {*}
-         * @constructor
          */
         FindWrapperForCheckbox: function($form, $field)
         {
@@ -291,7 +299,6 @@
          * @param $form Object #The current form
          * @param $field Object #The current field
          * @returns {*}
-         * @constructor
          */
         FindWrapperForRadioButton: function($form, $field)
         {
@@ -316,7 +323,6 @@
          * Convert the ignore arg to a Jquery selector so we don't have to concat the . every time
          *
          * @returns {string}
-         * @constructor
          */
         GetIgnoreSelector: function()
         {
@@ -329,7 +335,6 @@
          * @param $field Object #The current field
          * @param match Array #The values we want to match the field against
          * @returns {boolean}
-         * @constructor
          */
         MatchFieldValue: function($field, match)
         {
@@ -373,7 +378,7 @@
             }
 
             var event = $fInput.is('[type=checkbox], [type=radio], select') ? 'change':this.globalConfig.event; //Sadly, chrome only supports oninput on text fields
-            $fInput.trigger(event, ['fromShow']);
+            $fInput.trigger(event, ['fromShow']); //Pass a parameter so we can tell whether the event was fired from a trigger() call or user input
         },
 
         TriggerSuccessEvent: function()
@@ -386,7 +391,6 @@
          *
          * @param $field Object #The form field having the event
          * @param config Object #The config for this form field
-         * @constructor
          */
         Go: function($field, config)
         {
@@ -394,24 +398,35 @@
             var show  = [];
             var id    = $field.attr('id');
 
+            if(cform.isFirstRun && !cform.toBeProcessed[id])
+            {
+                return;
+            }
+
             //There are potentially multiple configs for this field, for different sets of child fields dependent on different form values.
             $.each(config, function(index, conf)
             {
                 //Loop through each "child" field that is controlled by this "parent" field, in this config
                 $.each(conf.display, function(index, $disField)
                 {
+                    var dId = $disField.data('fieldId');
+
                     $disField.hide();//Reset everything
+                    cform.activityMap[dId] = false;
 
                     // delete $disField.data('visibleParents')[id];
                     $disField.data('visibleParents').splice(id, 1);
 
                     //If the parent field value matches the value in the config, display the child fields
-                    if(($field.is(':visible') || !$.isEmptyObject($disField.data('visibleParents'))) && cform.MatchFieldValue($field, conf.values))
+                    if((cform.activityMap[id] || $disField.data('visibleParents').length) && cform.MatchFieldValue($field, conf.values))
                     {
                         show.push($disField);
-                        if($field.is(':visible'))
+                        if(cform.activityMap[id])
                         {
-                            $disField.data('visibleParents')[id] = true;
+                            cform.activityMap[dId] = true;//If we get here, this field is supposed to be visible, so update the activity map
+                            var vparents = $disField.data('visibleParents');
+                            vparents[id] = true;
+                            $disField.data('visibleParents', vparents);
                         }
                     }
 
@@ -424,9 +439,10 @@
             {
                 $disField.show();
 
-                cform.TriggerChangeEvent($disField);
                 cform.TriggerSuccessEvent();
             });
+
+            cform.toBeProcessed[id] = false;
         }
     }
 }(jQuery));
