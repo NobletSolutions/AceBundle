@@ -157,7 +157,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
 
                 /** @var FormInterface $childItem */
                 foreach($form as $childItem) {
-                    $names[] = $this->findFormFullName($childView, $childItem);
+                    $names = array_merge($names, (array)$this->findFormFullName($childView, $childItem));
                 }
 
                 return $names;
