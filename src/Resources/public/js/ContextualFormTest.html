@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contextual Form Test</title>
+    <script
+            src="http://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="ContextualForm.jquery.js"></script>
+    <script type="text/javascript">
+        var contextConfig = {
+            "field1": [
+                {
+                    "display":[
+                        "field2"
+                    ],
+                    'values':[true]
+                }
+            ],
+            "field2": [
+                {
+                    "display":[
+                        "field3",
+                        "field4"
+                    ],
+                    'values':[true]
+                }
+            ],
+            "field4": [
+                {
+                    "display":[
+                        "field5"
+                    ],
+                    'values':[true]
+                }
+            ],
+            "select1": [
+                {
+                    "display":[
+                        "select2"
+                    ],
+                    'values':[2]
+                },
+                {
+                    "display":[
+                        "select3"
+                    ],
+                    'values':[3, 4]
+                },
+                {
+                    "display":[
+                        "select4"
+                    ],
+                    'values':[4]
+                }
+            ],
+            "prefilled1": [
+                {
+                    "display":[
+                        "prefilled2"
+                    ],
+                    'values':[true]
+                }
+            ],
+            "prefilled2": [
+                {
+                    "display":[
+                        "prefilled3"
+                    ],
+                    'values':[true]
+                }
+            ],
+            "prefilled3": [
+                {
+                    "display":[
+                        "prefilled4"
+                    ],
+                    'values':[true]
+                }
+            ]
+        };
+
+        window.context_config = JSON.stringify(contextConfig);
+    </script>
+</head>
+<body>
+<form id="form1">
+    <div class="form-group">
+        <input type="checkbox" value="true" id="field1" name="field1" /> Field 1 (Show field 2)
+    </div>
+    <div class="form-group">
+        <input type="checkbox" value="true" id="field2" name="field2" /> Field 2 (Show fields 3 and 4);
+    </div>
+    <div class="form-group">
+        <input type="checkbox" value="true" id="field3" name="field3" /> Field 3;
+    </div>
+    <div class="form-group">
+        <input type="checkbox" value="true" id="field4" name="field4" checked /> Field 4 (Show field 5);
+    </div>
+    <div class="form-group">
+        <input type="checkbox" value="true" id="field5" name="field5" /> Field 5;
+    </div>
+    <div class="form-group">
+        Select 1
+        <select id="select1" name="select1">
+            <option></option>
+            <option value="2">Show Select 2</option>
+            <option value="3">Show Select 3</option>
+            <option value="4">Show Select 3 and 4</option>
+        </select>
+    </div>
+    <div class="form-group">
+        Select 2
+        <select id="select2" name="select2">
+            <option></option>
+        </select>
+    </div>
+    <div class="form-group">
+        Select 3
+        <select id="select3" name="select3">
+            <option></option>
+        </select>
+    </div>
+    <div class="form-group">
+        Select 4
+        <select id="select4" name="select4">
+            <option></option>
+        </select>
+    </div>
+    <div class="form-group">
+        <input type="checkbox" value="true" id="prefilled1" name="prefilled1" checked /> Prefilled Field 1 (Show field 2)
+    </div>
+    <div class="form-group">
+        <input type="checkbox" value="true" id="prefilled2" name="prefilled2" checked /> Prefilled Field 2 (Show field 3);
+    </div>
+    <div class="form-group">
+        <input type="checkbox" value="true" id="prefilled3" name="prefilled3" /> Field 3 (Show field 4)
+    </div>
+    <div class="form-group">
+        <input type="checkbox" value="true" id="prefilled4" name="prefilled4" /> Field 4
+    </div>
+</form>
+<script type="text/javascript">
+    $('#form1').attr('data-context-config', window.context_config);
+
+    new $.ContextualForm();
+</script>
+<!--<form>-->
+    <!--<div class="form-group">-->
+        <!--<select id="select1" /> Field 1 (Show field 2)-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+        <!--<input type="checkbox" value="true" id="field2" /> Field 2 (Show fields 3 and 4);-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+        <!--<input type="checkbox" value="true" id="field3" /> Field 3 (Show fields 3 and 4);-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+        <!--<input type="checkbox" value="true" id="field4" checked /> Field 4 (Show field 5);-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+        <!--<input type="checkbox" value="true" id="field5" /> Field 5;-->
+    <!--</div>-->
+<!--</form>-->
+
+</body>
+</html>

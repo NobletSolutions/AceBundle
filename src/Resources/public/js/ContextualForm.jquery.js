@@ -402,6 +402,10 @@
             {
                 return;
             }
+            else if(cform.isFirstRun && cform.activityMap[id] === undefined)
+            {
+                cform.activityMap[id] = true;
+            }
 
             //There are potentially multiple configs for this field, for different sets of child fields dependent on different form values.
             $.each(config, function(index, conf)
