@@ -3,6 +3,7 @@ VERSION 3  NEW HIDDEN FORM FIELD HANDLING EXTENSION
 ===================================================
 
    Version 3.0 - New hidden form field handling extension
+      15/08/2017 14:35  3.0.30  update to contextual fields
       03/08/2017 14:16  3.0.29  Fixed hidden compound fields
       03/08/2017 11:15  3.0.28  Update ContextualForms
       01/08/2017 15:06  3.0.27  Update nsboostrap
