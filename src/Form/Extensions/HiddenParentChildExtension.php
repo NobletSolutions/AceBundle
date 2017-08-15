@@ -65,6 +65,10 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         });
     }
 
+    /**
+     * @param FormInterface $form
+     * @param FormView $view
+     */
     public function processForm(FormInterface $form, FormView $view)
     {
         /** @var FormInterface $childItem */
@@ -87,6 +91,11 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         }
     }
 
+    /**
+     * @param array $config
+     * @param FormInterface $childItem
+     * @param FormView $view
+     */
     private function processParentConfig(array $config, FormInterface $childItem, FormView $view)
     {
         $parentView = $this->findView($config['parent'], $view);
@@ -108,6 +117,11 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         }
     }
 
+    /**
+     * @param array $hiddenConfig
+     * @param FormInterface $childItem
+     * @param FormView $view
+     */
     private function processChildConfig(array $hiddenConfig, FormInterface $childItem, FormView $view)
     {
         $parentName = $this->findFormFullName($view, $childItem);
@@ -126,6 +140,11 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         }
     }
 
+    /**
+     * @param $name
+     * @param FormView $view
+     * @return mixed|null|FormView
+     */
     private function findView($name, FormView $view)
     {
         if (isset($view[$name])) {
@@ -144,6 +163,11 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         return null;
     }
 
+    /**
+     * @param FormView $view
+     * @param FormInterface $form
+     * @return array|null
+     */
     private function findFormFullName(FormView $view, FormInterface $form)
     {
         $isCompound = ($form->getConfig()->getOption('compound',false) && $form->count() > 0);
