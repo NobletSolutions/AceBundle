@@ -17,6 +17,7 @@
         this.activityMap = {}; //We need to store a mapping of what fields are currently active and "visible"; storing this info right on the field is problematic because it may or may not be an actual <input> element
         this.toBeProcessed = {};
         this.isFirstRun = true;
+        this.collectionref = 1;
 
         var defaultConfig = {
             'event': 'input',
@@ -103,6 +104,17 @@
             var cform = this;
             //Get the actual form element
             var $field = $form.find('[name="'+field+'"], [name="'+field+'[]"]');//Checkboxes will append a [] to the name
+
+            //Determine if we're looking at a single field (text input, select, or boolean checkbox, or multiple elements (expanded checkboxes)
+            if($field.length > 1)
+            {
+                $field.attr('data-iscollection', true);
+                $field.attr('data-collectionref', cform.collectionref++);
+            }
+            else
+            {
+                $field.data('iscollection', false);
+            }
 
             this.toBeProcessed[$field.attr('id')] = true;
 
@@ -342,11 +354,28 @@
             var $fields;
             if($field.is('[type=checkbox]') || $field.is('[type=radio]'))
             {
-                $fields = $field.filter(':checked');
-                $fields.each(function()
+                //If the field is an expanded collection
+                if($field.data('iscollection'))
                 {
-                    vals.push(String($(this).val()));
-                });
+                    $fields = $('[data-collectionref='+$field.data('collectionref')+']').filter(':checked');
+                    $fields.each(function ()
+                    {
+                        vals.push(String($(this).val()));
+                    });
+                }
+                //if the field is a boolean
+                else
+                {
+                    //This will get the true/false state of the boolean field, and we can match it against the true/false value in the config.  Also convert it to string, because all the conf values we're matching against will be strings
+                    if($field.is(':checked'))
+                    {
+                        vals.push(true, 1, "true", "1");
+                    }
+                    else
+                    {
+                        vals.push(false, 0, "false", "0");
+                    }
+                }
             }
             else if($field.is('select[multiple]'))
             {
@@ -402,7 +431,7 @@
             {
                 return;
             }
-            else if(cform.isFirstRun && cform.activityMap[id] === undefined)
+            else if(cform.activityMap[id] === undefined)
             {
                 cform.activityMap[id] = true;
             }

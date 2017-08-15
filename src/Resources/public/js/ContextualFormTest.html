@@ -13,7 +13,8 @@
             "field1": [
                 {
                     "display":[
-                        "field2"
+                        "field2",
+                        "notAField"
                     ],
                     'values':[true]
                 }
@@ -78,7 +79,43 @@
                     ],
                     'values':[true]
                 }
+            ],
+            "booleanCheckTrue": [
+                {
+                    "display":[
+                        "#booleanTrue"
+                    ],
+                    'values':[true]
+                }
+            ],
+            "booleanCheckFalse": [
+                {
+                    "display":[
+                        "#booleanFalse"
+                    ],
+                    'values':[false]
+                }
+            ],
+            "expanded": [
+                {
+                    "display":[
+                        "#expanded_a"
+                    ],
+                    'values':["A"]
+                },
+                {
+                    "display":[
+                        "#expanded_b"
+                    ],
+                    'values':["B"]
+                },{
+                    "display":[
+                        "#expanded_c"
+                    ],
+                    'values':["C"]
+                },
             ]
+
         };
 
         window.context_config = JSON.stringify(contextConfig);
@@ -138,8 +175,28 @@
         <input type="checkbox" value="true" id="prefilled3" name="prefilled3" /> Field 3 (Show field 4)
     </div>
     <div class="form-group">
-        <input type="checkbox" value="true" id="prefilled4" name="prefilled4" /> Field 4
+        <input type="file" value="true" id="prefilled4" name="prefilled4" /> Field 4
     </div>
+    <div class="form-group">
+        <input type="checkbox" value="true" id="booleanCheckTrue" name="booleanCheckTrue" /> Boolean True
+    </div>
+    <p id="booleanTrue">Boolean True</p>
+    <div class="form-group">
+        <input type="checkbox" value="true" id="booleanCheckFalse" name="booleanCheckFalse" /> Boolean False
+    </div>
+    <p id="booleanFalse">Boolean False</p>
+    <div class="form-group">
+        <input type="checkbox" value="A" id="expanded_check_a" name="expanded[]" /> Expanded A
+    </div>
+    <p id="expanded_a">Expanded A</p>
+    <div class="form-group">
+        <input type="checkbox" value="B" id="expanded_check_b" name="expanded[]" /> Expanded B
+    </div>
+    <p id="expanded_b">Expanded B</p>
+    <div class="form-group">
+        <input type="checkbox" value="C" id="expanded_check_c" name="expanded[]" /> Expanded C
+    </div>
+    <p id="expanded_c">Expanded C</p>
 </form>
 <script type="text/javascript">
     $('#form1').attr('data-context-config', window.context_config);
