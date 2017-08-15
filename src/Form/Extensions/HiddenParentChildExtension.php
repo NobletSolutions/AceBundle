@@ -49,10 +49,6 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         $resolver->setDefined(['hidden']);
         $resolver->setAllowedTypes('hidden', 'array');
         $resolver->setAllowedValues('hidden', function ($config) {
-            if (!is_array($config)) {
-                return false;
-            }
-
             if (!isset($config['children']) && !isset($config['parent'])) {
                 return false;
             }
