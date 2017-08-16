@@ -43,6 +43,17 @@ class HiddenParentChildExtension extends AbstractTypeExtension
     /**
      * @inheritDoc
      */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $hiddenConfig = $form->getConfig()->getOption('hidden',false);
+        if ($hiddenConfig !== false) {
+            $view->vars['data-hidden'] = $hiddenConfig;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getExtendedType()
     {
         return FormType::class;
