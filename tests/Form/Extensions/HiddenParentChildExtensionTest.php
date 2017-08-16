@@ -45,8 +45,11 @@ class HiddenParentChildExtensionTest extends TypeTestCase
 
     public function testHiddenIsEmpty()
     {
-        $this->expectException('Symfony\Component\OptionsResolver\Exception\InvalidOptionsException');
-        $builder = $this->factory->createBuilder();
+        if(method_exists($this,'expectException')) {
+            $this->expectException('Symfony\Component\OptionsResolver\Exception\InvalidOptionsException');
+        } else {
+            $this->setExpectedException('Symfony\Component\OptionsResolver\Exception\InvalidOptionsException');
+        }        $builder = $this->factory->createBuilder();
         $builder
             ->add('text', TextType::class)
             ->add('number', NumberType::class)
@@ -57,8 +60,11 @@ class HiddenParentChildExtensionTest extends TypeTestCase
 
     public function testHiddenIsNotArray()
     {
-        $this->expectException('Symfony\Component\OptionsResolver\Exception\InvalidOptionsException');
-        $builder = $this->factory->createBuilder();
+        if(method_exists($this,'expectException')) {
+            $this->expectException('Symfony\Component\OptionsResolver\Exception\InvalidOptionsException');
+        } else {
+            $this->setExpectedException('Symfony\Component\OptionsResolver\Exception\InvalidOptionsException');
+        }        $builder = $this->factory->createBuilder();
         $builder
             ->add('text', TextType::class)
             ->add('number', NumberType::class)
@@ -69,7 +75,12 @@ class HiddenParentChildExtensionTest extends TypeTestCase
 
     public function testHiddenHasNoValueForParent()
     {
-        $this->expectException('Symfony\Component\OptionsResolver\Exception\InvalidOptionsException');
+        if(method_exists($this,'expectException')) {
+            $this->expectException('Symfony\Component\OptionsResolver\Exception\InvalidOptionsException');
+        } else {
+            $this->setExpectedException('Symfony\Component\OptionsResolver\Exception\InvalidOptionsException');
+        }
+
         $builder = $this->factory->createBuilder();
         $builder
             ->add('text', TextType::class)
@@ -78,7 +89,6 @@ class HiddenParentChildExtensionTest extends TypeTestCase
 
         $builder->getForm()->createView();
     }
-
 
     protected function getExtensions()
     {
