@@ -19,6 +19,9 @@ class HiddenParentChildExtension extends AbstractTypeExtension
     /** @var array */
     private $config = [];
 
+    /** @var array */
+    private $prototypes = [];
+
     /**
      * @inheritDoc
      */
@@ -29,6 +32,10 @@ class HiddenParentChildExtension extends AbstractTypeExtension
 
             if (!empty($this->config)) {
                 $view->vars['attr'] = (isset($view->vars['attr'])) ? array_merge($view->vars['attr'], ['data-context-config' => json_encode($this->config)]) : ['data-context-config' => json_encode($this->config)];
+            }
+
+            if (!empty($this->prototypes)) {
+                $view->vars['attr'] = (isset($view->vars['attr'])) ? array_merge($view->vars['attr'], ['data-context-prototypes' => json_encode($this->prototypes)]) : ['data-context-prototypes' => json_encode($this->prototypes)];
             }
         }
     }
@@ -83,6 +90,34 @@ class HiddenParentChildExtension extends AbstractTypeExtension
 
             if ($childItem->count() > 0) {
                 $this->processForm($childItem, $view);
+            }
+        }
+    }
+
+    /**
+     * @param FormView $view
+     */
+    private function processPrototypes(FormView $view)
+    {
+        foreach ($view as $childView) {
+            if (isset($childView->vars['prototype'])) {
+                $prototype = $childView->vars['prototype'];
+                foreach ($prototype->children as $prototypeChildView) {
+                    if (isset($prototypeChildView->vars['data-hidden'])) {
+                        $config = $prototypeChildView->vars['data-hidden'];
+                        $parentView = $this->findView($config['parent'], $prototype);
+                        $parentName = $parentView->vars['full_name'];
+                        if (!isset($this->prototypes[$parentName])) {
+                            $this->prototypes[$parentName] = [['display' => (array)$parentName, 'values' => (array)$config['value']]];
+                        } else {
+                            $this->prototypes[$parentName][] = ['display' => (array)$parentName, 'values' => (array)$config['value']];
+                        }
+                    }
+                }
+            }
+
+            if ($childView->count() > 0) {
+                $this->processPrototypes($childView);
             }
         }
     }
