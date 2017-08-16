@@ -92,6 +92,8 @@ class HiddenParentChildExtension extends AbstractTypeExtension
                 $this->processForm($childItem, $view);
             }
         }
+
+        $this->processPrototypes($view);
     }
 
     /**
