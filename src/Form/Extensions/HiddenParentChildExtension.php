@@ -29,6 +29,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
     {
         if (!$form->getParent()) {
             $this->processForm($form, $view);
+            $this->processPrototypes($view);
 
             if (!empty($this->config)) {
                 $view->vars['attr'] = (isset($view->vars['attr'])) ? array_merge($view->vars['attr'], ['data-context-config' => json_encode($this->config)]) : ['data-context-config' => json_encode($this->config)];
@@ -103,8 +104,6 @@ class HiddenParentChildExtension extends AbstractTypeExtension
                 $this->processForm($childItem, $view);
             }
         }
-
-        $this->processPrototypes($view);
     }
 
     /**
@@ -120,10 +119,11 @@ class HiddenParentChildExtension extends AbstractTypeExtension
                         $config = $prototypeChildView->vars['data-hidden'];
                         $parentView = $this->findView($config['parent'], $prototype);
                         $parentName = $parentView->vars['full_name'];
+                        $childName = $this->findPrototypeFullName($prototypeChildView);
                         if (!isset($this->prototypes[$parentName])) {
-                            $this->prototypes[$parentName] = [['display' => (array)$parentName, 'values' => (array)$config['value']]];
+                            $this->prototypes[$parentName] = [['display' => $childName, 'values' => (array)$config['value']]];
                         } else {
-                            $this->prototypes[$parentName][] = ['display' => (array)$parentName, 'values' => (array)$config['value']];
+                            $this->prototypes[$parentName][] = ['display' => $childName, 'values' => (array)$config['value']];
                         }
                     }
                 }
@@ -133,6 +133,24 @@ class HiddenParentChildExtension extends AbstractTypeExtension
                 $this->processPrototypes($childView);
             }
         }
+    }
+
+    /**
+     * @param FormView $view
+     * @return array
+     */
+    private function findPrototypeFullName(FormView $view)
+    {
+        if ($view->count() == 0) {
+            return [$view->vars['full_name']];
+        }
+
+        $children = [];
+        foreach($view as $childView) {
+            $children[] = $childView->vars['full_name'];
+        }
+
+        return $children;
     }
 
     /**
