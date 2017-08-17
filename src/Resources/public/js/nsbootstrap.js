@@ -80,6 +80,13 @@ $(document).click(function(ev)
         var newForm    = collection.data('prototype').replace(/__name__/g, index);
         collection.append(newForm);
         collection.data('index',index+1);
+
+        var $form = collection.closest('form');
+        if($form[0].ContextualForm)
+        {
+            $form[0].ContextualForm.AddConfigFromPrototype($form, index);
+        }
+
         $(document).trigger('nsFormUpdate').trigger('nsAddForm');
     }
 

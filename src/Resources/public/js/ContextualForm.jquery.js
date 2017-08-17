@@ -65,10 +65,43 @@
             {
                 //Make sure this isn't a reference because we need to modify the copy
                 var conf = $(this).data('context-config');
+                var prototypes = $(this).data('context-prototypes');
                 this.contextConfig = $.extend(true, {}, conf);
+                this.prototypeConfig = $.extend(true, {}, prototypes);
+                this.ContextualForm = cform; // Give the form element a reference back to this ContextualForm object
             });
             this.AddListeners();
             cform.isFirstRun = false;
+        },
+
+        AddConfigFromPrototype: function(form, index, replace)
+        {
+            var replace = replace !== undefined ? replace : '__name__';
+            var $form = form;
+            var form = form[0];
+
+            if(form.prototypeConfig)
+            {
+                $.each(form.prototypeConfig, function(key, values)
+                {
+                    var name = key.replace(replace, index);
+                    if(!$form.data('context-config')[name])
+                    {
+                        $form.data('context-config')[name] = [];
+                        $.each(values, function(key, val)
+                        {
+                            var display = val.display.slice();
+                            var values = val.values.slice();
+                            $.each(display, function(k, v)
+                            {
+                                display[k] = v.replace(replace, index);
+                            })
+
+                            $form.data('context-config')[name].push({'display':display, 'values':values});
+                        });
+                    }
+                });
+            }
         },
 
         /**
@@ -84,6 +117,7 @@
             {
                 var $form  = $(this); //This is the <form> element in this context
                 var config = this.contextConfig;
+                var prototypeConfig = this.prototypeConfig;
 
                 //Grab each element from the config and add the event listeners for it
                 $.each(config, function(index, value){
