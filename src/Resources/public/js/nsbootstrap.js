@@ -429,8 +429,8 @@ var bindNsAjaxEvents = function () {
                     success: function (responsedata, status, jqxhr)
                     {
                         var $update = $($updater.data('update'));
-                        $update.html(responsedata);
                         $update.trigger('ns:AjaxFormComplete');
+                        $update.html(responsedata);
                     }
                 });
 
