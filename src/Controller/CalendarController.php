@@ -17,8 +17,8 @@ class CalendarController extends Controller
 {
     public function loadCalendarEventsAction(Request $request)
     {
-        $startDatetime = new \DateTime(sprintf('@%d',$request->get('start')));
-        $endDatetime = new \DateTime(sprintf('@%d',$request->get('end')));
+        $startDatetime = new \DateTime($request->get('start'));
+        $endDatetime = new \DateTime($request->get('end'));
 
         $events = $this->container->get('event_dispatcher')->dispatch(CalendarEvent::CONFIGURE, new CalendarEvent($startDatetime, $endDatetime))->getEvents();
 
