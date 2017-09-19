@@ -140,14 +140,19 @@
             var $field = $form.find('[name="'+field+'"], [name="'+field+'[]"]');//Checkboxes will append a [] to the name
 
             //Determine if we're looking at a single field (text input, select, or boolean checkbox, or multiple elements (expanded checkboxes)
-            if($field.length > 1)
+            if($field.length > 1 || $field.attr('name').includes('[]'))
             {
+                cform.collectionref++;
+
                 $field.attr('data-iscollection', true);
-                $field.attr('data-collectionref', cform.collectionref++);
+                $field.data('iscollection', true);
+                $field.attr('data-collectionref', cform.collectionref);
+                $field.data('collectionref', cform.collectionref);
             }
             else
             {
                 $field.data('iscollection', false);
+                $field.removeAttr('iscollection');
             }
 
             this.toBeProcessed[$field.attr('id')] = true;
@@ -302,17 +307,17 @@
         {
             var $parent = $field.closest('.form-group').not(this.GetIgnoreSelector());
 
-            if ($parent) {
+            if ($parent.length) {
                 return $parent;
             }
 
             $parent = $field.parent('label').not(this.GetIgnoreSelector());
 
-            if ($parent) {
+            if ($parent.length) {
                 return $parent;
             }
 
-            return false;
+            return $field;
         },
 
         /**
@@ -326,13 +331,13 @@
         {
             var $group = $field.closest('.form-group').not(this.GetIgnoreSelector());
 
-            if($group) {
+            if($group.length) {
                 return $group;
             }
 
             var $parent = $field.closest('.checkbox').not(this.GetIgnoreSelector());
 
-            if($parent) {
+            if($parent.length) {
                 return $parent;
             }
 
@@ -350,14 +355,14 @@
         {
             var $group = $field.closest('.form-group').not(this.GetIgnoreSelector());
 
-            if($group)
+            if($group.length)
             {
                 return $group;
             }
 
             var $parent = $field.closest('.radio').not(this.GetIgnoreSelector());
 
-            if($parent)
+            if($parent.length)
             {
                 return $parent;
             }
@@ -426,7 +431,8 @@
 
             var intersect = ns_array_intersect([vals, match]); //Some form fields return multiple values, so we have to intersect those with the ones we're looking for
 
-            return intersect.length > 0;
+            var result = intersect.length > 0;
+            return result;
         },
 
         TriggerChangeEvent: function($field)
