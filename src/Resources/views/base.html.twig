@@ -101,7 +101,7 @@
             {% endblock %}
         {% endblock %}
 </head>
-<body class="no-skin {% block body_class %}{% endblock %}">
+<body class="{% block body_class %}no-skin{% endblock %}">
     {% block topbar %}
         <div class="navbar navbar-default {% block navbar_class %}{% endblock %}" id="navbar">
          <script type="text/javascript">
