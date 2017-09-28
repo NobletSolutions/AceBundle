@@ -2,6 +2,17 @@
 
 #Features
 
+### AJAX Links
+
+Add class 'ajaxForm' and data-update to the target to update with the return of the ajax call.
+
+```twig
+<form action="..." method="post" class="ajaxForm" data-update="#divToUpdate">...</form>
+```
+
+Then the form will be submitted over AJAX and the returned content if successful is put as the HTML content of
+the element with id divToUpdate. (Via Jquery $element.html(response)).
+
 ### FullCalendar
 
 Add the routing configuration
