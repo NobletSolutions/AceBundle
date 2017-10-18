@@ -27,7 +27,18 @@ class HiddenParentChildExtension extends AbstractTypeExtension
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
+        // we reset these here because if we're handling more than one form in a given request they become cumulative
+        // We should investigate namespacing the form configs?
+        $this->config = [];
+        $this->prototypes = [];
+
         if (!$form->getParent()) {
+
+            // Ignore the CSRF _token field which comes in without a parent
+            if ($form->getConfig()->getMapped() === false && $form->getName() == $options['csrf_field_name']) {
+                return;
+            }
+
             $this->processForm($form, $view);
             $this->processPrototypes($view);
 
