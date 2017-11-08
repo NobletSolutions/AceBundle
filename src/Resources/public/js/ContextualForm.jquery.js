@@ -140,7 +140,7 @@
             var $field = $form.find('[name="'+field+'"], [name="'+field+'[]"]');//Checkboxes will append a [] to the name
 
             //Determine if we're looking at a single field (text input, select, or boolean checkbox, or multiple elements (expanded checkboxes)
-            if($field.length > 1 || $field.attr('name').includes('[]'))
+            if($field.length > 1 || $field.attr('name').indexOf('[]') >= 0)
             {
                 cform.collectionref++;
 
