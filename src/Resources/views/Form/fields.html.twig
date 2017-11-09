@@ -245,15 +245,15 @@
             </div>
             <div class="modal-footer">
                 <span>This {{ form.vars.name|humanize }} will be saved when you submit the original form. </span>
-                <button id="{{form.vars.name}}_clear" class="btn btn-default btn-sm modal-clear" data-dismiss="modal">Clear/Close</button>
-                <button id="{{form.vars.name}}_save" class="btn btn-success btn-sm" data-dismiss="modal">Apply changes</button>
+                <button id="{{form.createFormClicked.vars.id}}_clear" class="btn btn-default btn-sm modal-clear" data-dismiss="modal">Clear/Close</button>
+                <button id="{{form.createFormClicked.vars.id}}_save" class="btn btn-success btn-sm" data-dismiss="modal">Apply changes</button>
                 <script type="text/javascript">
-                    var was_submitted = document.getElementById('{{ form.createFormClicked.vars.id }}');
-                    document.getElementById('{{form.vars.name}}_clear').onclick = function() {
-                        was_submitted.value = 'finder';
+                    var {{ form.createFormClicked.vars.id }}_var = document.getElementById('{{ form.createFormClicked.vars.id }}');
+                    document.getElementById('{{form.createFormClicked.vars.id}}_clear').onclick = function() {
+                        {{ form.createFormClicked.vars.id }}_var.value = 'finder';
                     };
-                    document.getElementById('{{form.vars.name}}_save').onclick = function() {
-                        was_submitted.value = 'create';
+                    document.getElementById('{{form.createFormClicked.vars.id}}_save').onclick = function() {
+                        {{ form.createFormClicked.vars.id }}_var.value = 'create';
                     };
                 </script>
             </div>
