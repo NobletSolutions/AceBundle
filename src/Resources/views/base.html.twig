@@ -12,11 +12,11 @@
 
         {% block stylesheets %}
             <!-- bootstrap & fontawesome -->
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
             <!-- page specific plugin styles -->
-            <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0-rc.1/themes/smoothness/jquery-ui.css" />
+            <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
             <link rel="stylesheet" href="{{ asset('/bundles/nsace/components/chosen/chosen.min.css') }}" />
             <link rel="stylesheet" href="{{ asset('/bundles/nsace/components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css') }}" />
             <link rel="stylesheet" href="{{ asset('/bundles/nsace/components/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" />
@@ -50,7 +50,10 @@
 
             {% block jqueryScripts %}
                 <!--[if !IE]> -->
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+                <script>
+                    window.jQuery || document.write('<script src="{{ asset('/bundles/nsace/js/jquery.min.js') }}"><\/script>');
+                </script>
                 <!-- <![endif]-->
 
                 <!--[if IE]>
@@ -60,11 +63,13 @@
 
             {% set jqm = asset('/bundles/nsace/components/_mod/jquery.mobile.custom/jquery.mobile.custom.min.js') %}
             <script type="text/javascript">
-                if('ontouchstart' in document.documentElement) document.write("<script src='{{ jqm }}'>"+"<"+"/script>");
+                if('ontouchstart' in document.documentElement) document.write('<script src="{{ jqm }}"><\/script>');//+"<"+"/script>");
             </script>
 
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+            <script>
+                $.fn.modal || document.write('<script src="{{ asset('/bundles/nsace/js/bootstrap.min.js') }}"><\/script>');
+            </script>
             <!-- page specific plugin scripts -->
 
             <!--[if lte IE 8]>
@@ -98,12 +103,21 @@
             <script src="{{asset('/bundles/nsace/js/nsFileUploader.js')}}"></script>
             <script src="{{asset('/bundles/nsace/js/nsbootstrap.js')}}"></script>
 
+            <script type="text/javascript">
+                if ($('#bootstrapHiddenTest').is(':visible') === true) {
+                    $('<link href="{{ asset('/bundles/nsace/css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" />').appendTo('head');
+                    $('<link href="{{ asset('/bundles/nsace/css/font-awesome.min.css') }}" rel="stylesheet" />').appendTo('head');
+                    $('<link href="{{ asset('/bundles/nsace/css/jquery-ui.css') }}" rel="stylesheet" />').appendTo('head');
+                }
+            </script>
+
             <!-- inline scripts related to this page -->
             {% block inlinescripts %}
             {% endblock %}
         {% endblock %}
 </head>
 <body class="{% block body_class %}no-skin{% endblock %}">
+<div id="bootstrapHiddenTest" class="hidden"></div>
     {% block topbar %}
         <div class="navbar navbar-default {% block navbar_class %}{% endblock %}" id="navbar">
          <script type="text/javascript">
