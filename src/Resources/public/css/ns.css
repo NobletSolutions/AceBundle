@@ -361,3 +361,9 @@ a.readmore-expander {
     right: -5px;
 }
 
+.widget-toolbar > .nav-tabs > li > a {
+    margin-top: 0;
+}
+.widget-toolbar > .nav-tabs {
+    top: 0 !important;
+}
