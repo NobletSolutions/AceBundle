@@ -139,7 +139,7 @@
             //Get the actual form element
             var $field = $form.find('[name="'+field+'"], [name="'+field+'[]"]');//Checkboxes will append a [] to the name
 
-            if ($field.attr('name') === undefined) {
+            if ($field.length == 0) {
                 console.debug("FIELD name is undefined");
                 return;
             }
