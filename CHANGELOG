@@ -3,6 +3,7 @@ VERSION 3  NEW HIDDEN FORM FIELD HANDLING EXTENSION
 ===================================================
 
    Version 3.1 - Added jQuery Fullcalendar support
+      19/01/2018 16:26  3.1.12  Better JS testing
       19/01/2018 16:24  3.1.11  ContextForm fix
       16/01/2018 16:08  3.1.10  Improved CSS for widgetbox>tab containers
       04/12/2017 18:35  3.1.9  Fetch js/css locally if cdn is unavailable
