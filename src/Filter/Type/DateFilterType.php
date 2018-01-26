@@ -73,4 +73,12 @@ class DateFilterType extends AbstractType
     {
         return ParentDateFilterType::class;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'filter_date';
+    }
 }

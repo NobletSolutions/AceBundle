@@ -46,8 +46,16 @@ class DateRangeFilterType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getParent()
     {
         return ParentDateRangeFilterType::class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'filter_date_range';
     }
 }
