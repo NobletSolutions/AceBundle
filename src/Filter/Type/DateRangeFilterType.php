@@ -2,10 +2,9 @@
 
 namespace NS\AceBundle\Filter\Type;
 
-use \Symfony\Component\Form\AbstractType;
-use \Symfony\Component\Form\FormBuilderInterface;
-use \Symfony\Component\OptionsResolver\OptionsResolver;
-use Lexik\Bundle\FormFilterBundle\Filter\Form\Type\DateRangeFilterType as ParentDateRangeFilterType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Description of DateRangeFilterType
@@ -41,14 +40,6 @@ class DateRangeFilterType extends AbstractType
                 'data_extraction_method' => 'value_keys',
             ))
             ->setAllowedValues('data_extraction_method', array('value_keys'));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
-    {
-        return ParentDateRangeFilterType::class;
     }
 
     /**
