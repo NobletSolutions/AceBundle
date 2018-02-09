@@ -3,6 +3,7 @@ VERSION 3  NEW HIDDEN FORM FIELD HANDLING EXTENSION
 ===================================================
 
    Version 3.1 - Added jQuery Fullcalendar support
+      09/02/2018 11:15  3.1.13  Updated to handle knp bundle changes
       19/01/2018 16:26  3.1.12  Better JS testing
       19/01/2018 16:24  3.1.11  ContextForm fix
       16/01/2018 16:08  3.1.10  Improved CSS for widgetbox>tab containers
