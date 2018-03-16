@@ -7,12 +7,14 @@
      *          event: The form event to listen for.  Defaults to 'input' so we don't have to defocus the field to get feedback
      *          ignoreClass: Class name of elements to be ignored from the toggling functionality.  Defaults to 'ignore'
      * @param autoinit Boolean #Whether or not to automatically init the form handlers as soon as the class is instantiated.  Defaults to true
+     * @param events string Document events to initialize the contextual form on
+     * @param onSuccessEvent string Event to throw when a form field is shown or hidden
      * @constructor
      */
     $.ContextualForm = function(element, globalConfig, autoinit, events, onSuccessEvent)
     {
-        var autoinit = typeof(autoinit) !== 'undefined' ? autoinit: true;
-        var events   = typeof(events) !== 'undefined' ? events : 'nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element ajaxComplete shown.ace.widget';
+        autoinit = typeof(autoinit) !== 'undefined' ? autoinit: true;
+        events   = typeof(events) !== 'undefined' ? events : 'nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element ajaxComplete shown.ace.widget';
         this.onSuccessEvent = typeof(onSuccessEvent) !== 'undefined' ? onSuccessEvent : 'contextFormUpdate';
         this.activityMap = {}; //We need to store a mapping of what fields are currently active and "visible"; storing this info right on the field is problematic because it may or may not be an actual <input> element
         this.toBeProcessed = {};
@@ -41,7 +43,7 @@
 
             if(events)
             {
-                $(document).on(events, function(ev)
+                $(document).on(events, function()
                 {
                     cf.Init();
                 });
@@ -76,9 +78,9 @@
 
         AddConfigFromPrototype: function(form, index, replace)
         {
-            var replace = replace !== undefined ? replace : '__name__';
+            replace = replace !== undefined ? replace : '__name__';
             var $form = form;
-            var form = form[0];
+            form = $form[0];
 
             if(form.prototypeConfig)
             {
@@ -95,7 +97,7 @@
                             $.each(display, function(k, v)
                             {
                                 display[k] = v.replace(replace, index);
-                            })
+                            });
 
                             $form.data('context-config')[name].push({'display':display, 'values':values});
                         });
@@ -117,7 +119,6 @@
             {
                 var $form  = $(this); //This is the <form> element in this context
                 var config = this.contextConfig;
-                var prototypeConfig = this.prototypeConfig;
 
                 //Grab each element from the config and add the event listeners for it
                 $.each(config, function(index, value){
@@ -139,7 +140,7 @@
             //Get the actual form element
             var $field = $form.find('[name="'+field+'"], [name="'+field+'[]"]');//Checkboxes will append a [] to the name
 
-            if ($field.length == 0) {
+            if ($field.length === 0) {
                 console.debug("FIELD name is undefined");
                 return;
             }
@@ -171,7 +172,7 @@
                 if(conf.display instanceof Array) {
                     $.each(conf.display, function(i, dis)
                     {
-                        $sel = cform.DisplayConfToSelector($form, dis);
+                        var $sel = cform.DisplayConfToSelector($form, dis);
                         if($sel.length)
                         {
                             $sel.data('visibleParents', []);
@@ -179,7 +180,7 @@
                         }
                     });
                 } else {
-                    $sel = cform.DisplayConfToSelector($form, dis);
+                    var $sel = cform.DisplayConfToSelector($form, conf.display);
                     if($sel.length)
                     {
                         $sel.data('visibleParents', []);
@@ -252,6 +253,7 @@
             {
                 return this.FindWrapper($form, $form.find('[name="'+dis+'"], [name="'+dis+'[]"]')); //Otherwise, find the field by name.
             }
+
         },
 
         /**
@@ -436,19 +438,20 @@
 
             var intersect = ns_array_intersect([vals, match]); //Some form fields return multiple values, so we have to intersect those with the ones we're looking for
 
-            var result = intersect.length > 0;
-            return result;
+            return intersect.length > 0;
         },
 
         TriggerChangeEvent: function($field)
         {
+            var $fInput;
+
             if($field.is('input, select, textarea'))
             {
-                var $fInput = $field;
+                $fInput = $field;
             }
             else
             {
-                var $fInput = $field.find('input, select, textarea');
+                $fInput = $field.find('input, select, textarea');
             }
 
             var event = $fInput.is('[type=checkbox], [type=radio], select') ? 'change':this.globalConfig.event; //Sadly, chrome only supports oninput on text fields
