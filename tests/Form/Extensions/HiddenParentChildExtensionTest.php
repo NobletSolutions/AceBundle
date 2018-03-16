@@ -105,7 +105,7 @@ class HiddenParentChildExtensionTest extends TypeTestCase
         $form = $builder->getForm();
         $view = $form->createView();
         $this->assertArrayHasKey('data-context-prototypes', $view->vars['attr']);
-        $this->assertEquals('{"form[stuff][__name__][text]":[{"display":"#something","value":"value"}],"form[stuff][__name__][number]":[{"display":["form[stuff][__name__][textarea]"],"values":[1]}]}', $view->vars['attr']['data-context-prototypes']);
+        $this->assertEquals('{"form[stuff][__name__][text]":[{"display":"#form_stuff___name___text_something","values":"value"}],"form[stuff][__name__][number]":[{"display":["form[stuff][__name__][textarea]"],"values":[1]}]}', $view->vars['attr']['data-context-prototypes']);
     }
 
     public function testPrototypeDeeperLevelConfig()
@@ -116,7 +116,7 @@ class HiddenParentChildExtensionTest extends TypeTestCase
         $form = $builder->getForm();
         $view = $form->createView();
         $this->assertArrayHasKey('data-context-prototypes', $view->vars['attr']);
-        $this->assertEquals('{"form[deeper][something][__name__][text]":[{"display":"#something","value":"value"}],"form[deeper][something][__name__][number]":[{"display":["form[deeper][something][__name__][textarea]"],"values":[1]}]}', $view->vars['attr']['data-context-prototypes']);
+        $this->assertEquals('{"form[deeper][something][__name__][text]":[{"display":"#form_deeper_something___name___text_something","values":"value"}],"form[deeper][something][__name__][number]":[{"display":["form[deeper][something][__name__][textarea]"],"values":[1]}]}',$view->vars['attr']['data-context-prototypes']);
     }
 
     protected function getExtensions()

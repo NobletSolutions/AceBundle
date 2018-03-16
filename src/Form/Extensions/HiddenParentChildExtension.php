@@ -172,7 +172,8 @@ class HiddenParentChildExtension extends AbstractTypeExtension
                             $this->prototypes[$prototypeChildView->vars['full_name']] = [];// = ['display'=>'#something','value'=>'value'];
                         }
 
-                        $this->prototypes[$prototypeChildView->vars['full_name']][] = ['display' => $id, 'value' => $value];
+                        $newId = str_replace('#','#'.$prototypeChildView->vars['id'].'_',$id);
+                        $this->prototypes[$prototypeChildView->vars['full_name']][] = ['display' => $newId, 'values' => $value];
                     }
                 }
             }
@@ -245,8 +246,11 @@ class HiddenParentChildExtension extends AbstractTypeExtension
             $this->config[$parentName] = [];
         }
 
+        $parentId = $this->findFormFullId($view,$childItem);
+
         foreach ($hiddenConfig['children'] as $id => $values) {
-            $this->config[$parentName][] = ['display' => (array)$id, 'values' => (array)$values];
+            $newId = str_replace('#',"#{$parentId}_",$id);
+            $this->config[$parentName][] = ['display' => (array)$newId, 'values' => (array)$values];
         }
     }
 
@@ -304,6 +308,42 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         if ($view->count() > 0) {
             foreach ($view as $childView) {
                 $retValue = $this->findFormFullName($childView, $form);
+                if ($retValue) {
+                    return $retValue;
+                }
+            }
+        }
+
+        return null;
+    }
+
+
+    private function findFormFullId(FormView $view, FormInterface $form)
+    {
+        $isCompound = ($form->getConfig()->getOption('compound', false) && $form->count() > 0);
+
+        // Is a root form relative to the view
+        if (isset($view[$form->getName()])) {
+            if ($isCompound) {
+                $names = [$view[$form->getName()]->vars['id']];
+                /** @var FormView $childView */
+                $childView = $view[$form->getName()];
+
+                /** @var FormInterface $childItem */
+                foreach ($form as $childItem) {
+                    $names = array_merge($names, (array)$this->findFormFullId($childView, $childItem));
+                }
+
+                return $names;
+            }
+
+            return $view[$form->getName()]->vars['id'];
+        }
+
+        // Form is a sub-form of the root
+        if ($view->count() > 0) {
+            foreach ($view as $childView) {
+                $retValue = $this->findFormFullId($childView, $form);
                 if ($retValue) {
                     return $retValue;
                 }
