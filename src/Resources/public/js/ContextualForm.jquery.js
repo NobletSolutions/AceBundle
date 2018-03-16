@@ -92,8 +92,8 @@
                         $form.data('context-config')[name] = [];
                         $.each(values, function(key, val)
                         {
-                            var display = val.display.slice();
-                            var values = val.values.slice();
+                            var display = Array.isArray(val.display) ? val.display.slice() : [val.display];
+                            var values = Array.isArray(val.values) ? val.values.slice() : [val.values];
                             $.each(display, function(k, v)
                             {
                                 display[k] = v.replace(replace, index);
