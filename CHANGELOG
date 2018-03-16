@@ -3,6 +3,7 @@ VERSION 3  NEW HIDDEN FORM FIELD HANDLING EXTENSION
 ===================================================
 
    Version 3.1 - Added jQuery Fullcalendar support
+      16/03/2018 16:28  3.1.19  Updated Children config id injection
       16/03/2018 16:03  3.1.18  ContextForm update
       16/03/2018 13:40  3.1.17  Update to COntextualForm js
       16/03/2018 13:16  3.1.16  Improved prototype form config handling
