@@ -58,7 +58,7 @@
         {
             var cform   = this; //#JustJavascriptScopeThings
             cform.isFirstRun = true;
-            cform.forms = cform.element.find('form[data-context-config]'); //Find any forms that have a config
+            cform.forms = cform.element.find('form[data-context-config]').addBack('form[data-context-config]'); //Find any forms that have a config
 
             //Parse the config for each form and add it to the DOM element
             cform.forms.each(function()
