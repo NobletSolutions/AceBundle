@@ -33,7 +33,6 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         $this->prototypes = [];
 
         if (!$form->getParent()) {
-
             // Ignore the CSRF _token field which comes in without a parent
             if ($form->getConfig()->getMapped() === false && $form->getName() == $options['csrf_field_name']) {
                 return;
@@ -47,6 +46,11 @@ class HiddenParentChildExtension extends AbstractTypeExtension
             }
 
             if (!empty($this->prototypes)) {
+                foreach ($this->prototypes as $key => $value) {
+                    if (strpos($key, '__name__') === false) {
+                        unset($this->prototypes[$key]);
+                    }
+                }
                 $view->vars['attr'] = (isset($view->vars['attr'])) ? array_merge($view->vars['attr'], ['data-context-prototypes' => json_encode($this->prototypes)]) : ['data-context-prototypes' => json_encode($this->prototypes)];
             }
         }
@@ -57,7 +61,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $hiddenConfig = $form->getConfig()->getOption('hidden',false);
+        $hiddenConfig = $form->getConfig()->getOption('hidden', false);
         if ($hiddenConfig !== false) {
             $view->vars['data-hidden'] = $hiddenConfig;
         }
@@ -101,7 +105,6 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         foreach ($form as $childItem) {
             $hiddenConfig = $childItem->getConfig()->getOption('hidden', false);
             if ($hiddenConfig) {
-
                 if (isset($hiddenConfig['parent'])) {
                     $this->processParentConfig($hiddenConfig, $childItem, $view);
                 }
@@ -123,25 +126,59 @@ class HiddenParentChildExtension extends AbstractTypeExtension
     private function processPrototypes(FormView $view)
     {
         foreach ($view as $childView) {
-            if (isset($childView->vars['prototype'])) {
-                $prototype = $childView->vars['prototype'];
-                foreach ($prototype->children as $prototypeChildView) {
-                    if (isset($prototypeChildView->vars['data-hidden'])) {
-                        $config = $prototypeChildView->vars['data-hidden'];
-                        $parentView = $this->findView($config['parent'], $prototype);
-                        $parentName = $parentView->vars['full_name'];
-                        $childName = $this->findPrototypeFullName($prototypeChildView);
-                        if (!isset($this->prototypes[$parentName])) {
-                            $this->prototypes[$parentName] = [['display' => $childName, 'values' => (array)$config['value']]];
-                        } else {
-                            $this->prototypes[$parentName][] = ['display' => $childName, 'values' => (array)$config['value']];
-                        }
+            if (isset($childView->vars['data-hidden'])) {
+                $config = $childView->vars['data-hidden'];
+                if (isset($config['parent'])) {
+                    $parentView = $this->findView($config['parent'], $view);
+                    $parentName = $parentView->vars['full_name'];
+                    $childName = $this->findPrototypeFullName($childView);
+                    if (!isset($this->prototypes[$parentName])) {
+                        $this->prototypes[$parentName] = [['display' => $childName, 'values' => (array)$config['value']]];
+                    } else {
+                        $this->prototypes[$parentName][] = ['display' => $childName, 'values' => (array)$config['value']];
                     }
                 }
             }
 
+            if (isset($childView->vars['prototype'])) {
+                $this->processPrototype($childView->vars['prototype']);
+            }
+
             if ($childView->count() > 0) {
                 $this->processPrototypes($childView);
+            }
+        }
+    }
+
+    private function processPrototype(FormView $view)
+    {
+        foreach ($view->children as $prototypeChildView) {
+            if (isset($prototypeChildView->vars['data-hidden'])) {
+                $config = $prototypeChildView->vars['data-hidden'];
+                if (isset($config['parent'])) {
+                    $parentView = $this->findView($config['parent'], $view);
+                    $parentName = $parentView->vars['full_name'];
+                    $childName = $this->findPrototypeFullName($prototypeChildView);
+                    if (!isset($this->prototypes[$parentName])) {
+                        $this->prototypes[$parentName] = [['display' => $childName, 'values' => (array)$config['value']]];
+                    } else {
+                        $this->prototypes[$parentName][] = ['display' => $childName, 'values' => (array)$config['value']];
+                    }
+                }
+
+                if (isset($config['children'])) {
+                    foreach ($config['children'] as $id => $value) {
+                        if (!isset($this->prototypes[$prototypeChildView->vars['full_name']])) {
+                            $this->prototypes[$prototypeChildView->vars['full_name']] = [];// = ['display'=>'#something','value'=>'value'];
+                        }
+
+                        $this->prototypes[$prototypeChildView->vars['full_name']][] = ['display' => $id, 'value' => $value];
+                    }
+                }
+            }
+
+            if ($prototypeChildView->count() > 0) {
+                $this->processPrototype($prototypeChildView);
             }
         }
     }
@@ -157,7 +194,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         }
 
         $children = [];
-        foreach($view as $childView) {
+        foreach ($view as $childView) {
             $children[] = $childView->vars['full_name'];
         }
 
@@ -173,7 +210,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
     {
         $parentView = $this->findView($config['parent'], $view);
         if (!$parentView) {
-            throw new \InvalidArgumentException(sprintf('Unable to find parent form \'%s\' field \'%s\' \'%s\'', $config['parent'], $childItem->getName(),print_r(array_keys($view->children),true)));
+            throw new \InvalidArgumentException(sprintf('Unable to find parent form \'%s\' field \'%s\' \'%s\'', $config['parent'], $childItem->getName(), print_r(array_keys($view->children), true)));
         }
 
         $parentName = $parentView->vars['full_name'];
@@ -243,7 +280,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
      */
     private function findFormFullName(FormView $view, FormInterface $form)
     {
-        $isCompound = ($form->getConfig()->getOption('compound',false) && $form->count() > 0);
+        $isCompound = ($form->getConfig()->getOption('compound', false) && $form->count() > 0);
 
         // Is a root form relative to the view
         if (isset($view[$form->getName()])) {
@@ -253,7 +290,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
                 $childView = $view[$form->getName()];
 
                 /** @var FormInterface $childItem */
-                foreach($form as $childItem) {
+                foreach ($form as $childItem) {
                     $names = array_merge($names, (array)$this->findFormFullName($childView, $childItem));
                 }
 
