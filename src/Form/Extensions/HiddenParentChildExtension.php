@@ -204,7 +204,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
 
         $parentName = is_array($parentName) ? current($parentName) : $parentName;
 
-        if (!isset($config[$parentName])) {
+        if (!isset($this->config[$parentName])) {
             $this->config[$parentName] = [];
         }
 
