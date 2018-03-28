@@ -249,7 +249,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
             var url = $el.data('autocompleteurl');
 
             //is the url a JS defined function
-            if(window[url] !== undefined) {
+            if(typeof window[url] !== "undefined") {
                 $el.tokenInput(window[url], options);
             } else {
                 $el.tokenInput(url, options);
