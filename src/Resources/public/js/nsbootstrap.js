@@ -246,7 +246,14 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
                 options.tokenFormatter=eval($el.data('tokenformatter'));
             }
 
-            $el.tokenInput($el.data('autocompleteurl'), options);
+            var url = $el.data('autocompleteurl');
+
+            //is the url a JS defined function
+            if(window[url] !== undefined) {
+                $el.tokenInput(window[url], options);
+            } else {
+                $el.tokenInput(url, options);
+            }
         }
     });
 
