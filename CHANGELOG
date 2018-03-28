@@ -3,6 +3,7 @@ VERSION 3  NEW HIDDEN FORM FIELD HANDLING EXTENSION
 ===================================================
 
    Version 3.1 - Added jQuery Fullcalendar support
+      28/03/2018 14:36  3.1.23  JS Syntax
       28/03/2018 14:34  3.1.22  Small JS improvements
       28/03/2018 11:09  3.1.21  Update nsboostrap
       28/03/2018 10:24  3.1.20  Update nsbootstrap.js
