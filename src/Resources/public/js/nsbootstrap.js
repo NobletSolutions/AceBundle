@@ -82,7 +82,7 @@ $(document).click(function(ev)
         collection.data('index',index+1);
 
         var $form = collection.closest('form');
-        if($form[0].ContextualForm)
+        if($form.length > 0 && $form[0].ContextualForm)
         {
             $form[0].ContextualForm.AddConfigFromPrototype($form, index);
         }
