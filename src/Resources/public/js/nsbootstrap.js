@@ -449,24 +449,49 @@ var bindNsAjaxEvents = function () {
             $form.submit(function (event)
             {
                 event.preventDefault();
+
+                var success  = $form.data('success');
+                var error    = $form.data('error');
+                var complete = $form.data('complete');
                 var formData = new FormData($form[0]);
+
                 $($form).trigger('ns:AjaxFormSend');
+
                 $.ajax($form.attr('action'), {
                     method: $form.attr('method'),
                     data: formData,
                     processData: false,
                     contentType: false,
-                    success: function (responsedata, status, jqxhr)
+                    success: function (responsedata, textStatus, jqXHR)
                     {
                         var $update = $($form.data('update'));
+                        var $tgt = $(document);
+
                         if($update.length)//update is optional
                         {
+                            $tgt = $update;
                             $update.html(responsedata);
-                            $update.trigger('ns:AjaxFormComplete');
                         }
-                        else
+
+                        if(success && window[success])
                         {
-                            $(document).trigger('ns:AjaxFormComplete');
+                            window[success]($form, responsedata, textStatus, jqXHR);
+                        }
+
+                        $tgt.trigger('ns:AjaxFormComplete');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        if(error && window[error])
+                        {
+                            window[error]($form, jqXHR, textStatus, errorThrown);
+                        }
+                    },
+                    complete: function(jqXHR, textStatus)
+                    {
+                        if(complete && window[complete])
+                        {
+                            window[complete]($form, jqXHR, textStatus);
                         }
                     }
                 });
