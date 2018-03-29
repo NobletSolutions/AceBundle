@@ -76,13 +76,20 @@ $(document).click(function(ev)
     {
         ev.preventDefault();
         var collection = $('[data-collection=' + target.data('collectionholder') + ']').first();
+        var prototype_name = collection.data('prototype-name');
+        if (typeof prototype_name !== "undefined") {
+            prototype_name = new RegExp(prototype_name,'g');
+        } else {
+            prototype_name = new RegExp('__name__','g');
+        }
+
         var index      = collection.data('index');
-        var newForm    = collection.data('prototype').replace(/__name__/g, index);
+        var newForm    = collection.data('prototype').replace(prototype_name, index);
         collection.append(newForm);
         collection.data('index',index+1);
 
         var $form = collection.closest('form');
-        if($form[0].ContextualForm)
+        if($form.length > 0 && $form[0].ContextualForm)
         {
             $form[0].ContextualForm.AddConfigFromPrototype($form, index);
         }
@@ -246,7 +253,14 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
                 options.tokenFormatter=eval($el.data('tokenformatter'));
             }
 
-            $el.tokenInput($el.data('autocompleteurl'), options);
+            var url = $el.data('autocompleteurl');
+
+            //is the url a JS defined function
+            if(typeof window[url] !== "undefined") {
+                $el.tokenInput(window[url], options);
+            } else {
+                $el.tokenInput(url, options);
+            }
         }
     });
 
