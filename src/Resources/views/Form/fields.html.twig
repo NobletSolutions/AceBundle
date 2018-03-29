@@ -294,7 +294,9 @@
         {{- " " -}}
         {{- attrname }}="{{ attrvalue }}"
         {%- endfor -%}>
-            {% set attr = attr|merge({'class':'ace'}) %}
+            {% if attr.class is not defined %}
+                {% set attr = attr|merge({'class':'ace'}) %}
+            {% endif %}
             <input {{ block('widget_attributes') }} type="checkbox" {% if checked %}checked{%endif%}{% if value is defined %} value="{{ value }}"{% endif %} />
             <span class="lbl">
                 {% if label is not same as(false) -%}
