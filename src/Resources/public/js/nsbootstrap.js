@@ -76,8 +76,15 @@ $(document).click(function(ev)
     {
         ev.preventDefault();
         var collection = $('[data-collection=' + target.data('collectionholder') + ']').first();
+        var prototype_name = collection.data('prototype-name');
+        if (typeof prototype_name !== "undefined") {
+            prototype_name = new RegExp(prototype_name,'g');
+        } else {
+            prototype_name = new RegExp('__name__','g');
+        }
+
         var index      = collection.data('index');
-        var newForm    = collection.data('prototype').replace(/__name__/g, index);
+        var newForm    = collection.data('prototype').replace(prototype_name, index);
         collection.append(newForm);
         collection.data('index',index+1);
 
