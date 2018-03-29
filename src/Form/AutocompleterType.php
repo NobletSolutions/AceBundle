@@ -69,7 +69,7 @@ class AutocompleterType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(['route', 'autocompleteUrl', 'class', 'property', 'icon', 'secondary-field', 'resultsFormatter', 'tokenFormatter', 'transformer', 'tokenValue', 'allowFreeTagging']);
+        $resolver->setDefined(['route', 'autocompleteUrl', 'class', 'property', 'icon', 'secondary-field', 'resultsFormatter', 'tokenFormatter', 'transformer', 'tokenValue', 'allowFreeTagging', 'caching']);
 
         $resolver->setDefaults([
             'method'        => 'POST',
@@ -81,6 +81,7 @@ class AutocompleterType extends AbstractType
             'searchingText' => 'Searching',
             'multiple'      => false,
             'attr'          => ['class' => 'nsAutocompleter'],
+            'caching'       => true
         ]);
 
         $resolver->setNormalizer('multiple', function (Options $options, $multiple) {
@@ -98,7 +99,7 @@ class AutocompleterType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $ar   = ['method', 'queryParam', 'minChars', 'prePopulate', 'hintText','noResultsText', 'searchingText', 'allowFreeTagging'];
+        $ar   = ['method', 'queryParam', 'minChars', 'prePopulate', 'hintText','noResultsText', 'searchingText', 'allowFreeTagging', 'caching'];
         $opts = array_intersect_key($options, array_flip($ar));
 
         $opts['tokenLimit'] = $options['multiple'] ? null : 1;

@@ -1,6 +1,8 @@
 /*
+ * Fork: https://github.com/diegograsso/jquery-tokeninput
+ *
  * jQuery Plugin: Tokenizing Autocomplete Text Entry
- * Version 1.6.2
+ * Version 1.7.2
  *
  * Copyright (c) 2009 James Smith (http://loopj.com)
  * Licensed jointly under the GPL and MIT licenses,
@@ -14,6 +16,7 @@
         queryParam: "q",
         searchDelay: 300,
         minChars: 1,
+        caching: true,
         propertyToSearch: "name",
         jsonContainer: null,
         contentType: "json",
@@ -363,8 +366,10 @@
                                     return true;
                                 }
                             }
+                            focusWithTimeout(input_box);
                             event.stopPropagation();
                             event.preventDefault();
+
                         }
                         return false;
 
@@ -399,7 +404,7 @@
                 //return the object to this can be referenced in the callback functions.
                 return hiddenInput;
             })
-            ;
+        ;
 
         // Keep a reference to the selected token and dropdown item
         var selected_token = null;
@@ -668,6 +673,7 @@
 
             // Squeeze input_box so we force no unnecessary line break
             input_box.width(1);
+            focusWithTimeout(input_box);
 
             // Insert the new tokens
             if($(input).data("settings").tokenLimit == null || token_count < $(input).data("settings").tokenLimit) {
@@ -972,7 +978,7 @@
         function run_search(query) {
             var cache_key = query + computeURL();
             var cached_results = cache.get(cache_key);
-            if (cached_results) {
+            if (settings.caching && cached_results) {
                 if ($.isFunction($(input).data("settings").onCachedResult)) {
                     cached_results = $(input).data("settings").onCachedResult.call(hiddenInput, cached_results);
                 }
@@ -991,7 +997,7 @@
                         var param_array = parts[1].split("&");
                         $.each(param_array, function (index, value) {
                             var kv = value.split("=");
-                            ajax_params.data[kv[0]] = kv[1];
+                            ajax_params.data[kv[0]] =  decodeURIComponent(kv[1]);
                         });
                     } else {
                         ajax_params.url = url;
@@ -1007,7 +1013,7 @@
 
                     // exclude current tokens?
                     // send exclude list to the server, so it can also exclude existing tokens
-                    if ($(input).data("settings").excludeCurrent) {
+                    if ($(input).data("settings").excludeCurrent && $(input).data("settings").excludeCurrentParameter!=null) {
                         var currentTokens = $(input).data("tokenInputObject").getTokens();
                         var tokenList = $.map(currentTokens, function (el) {
                             if(typeof $(input).data("settings").tokenValue == 'function')
