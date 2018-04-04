@@ -68,56 +68,63 @@ $(document).ready(function() {
     });
 });
 
-$(document).click(function(ev)
+$(document).on('click', '.nsAddForm', function(ev)
 {
-    var target = $(ev.target);
+    var target = $(ev.currentTarget);
 
     if(target.is('.nsAddForm'))
     {
+        console.log('addForm');
         ev.preventDefault();
         var collection = $('[data-collection=' + target.data('collectionholder') + ']').first();
         var prototype_name = collection.data('prototype-name');
-        if (typeof prototype_name !== "undefined") {
-            prototype_name = new RegExp(prototype_name,'g');
-        } else {
-            prototype_name = new RegExp('__name__','g');
+        if (typeof prototype_name !== "undefined")
+        {
+            prototype_name = new RegExp(prototype_name, 'g');
+        } else
+        {
+            prototype_name = new RegExp('__name__', 'g');
         }
 
-        var index      = collection.data('index');
-        var newForm    = collection.data('prototype').replace(prototype_name, index);
+        var index = collection.data('index');
+        var newForm = collection.data('prototype').replace(prototype_name, index);
         collection.append(newForm);
-        collection.data('index',index+1);
+        collection.data('index', index + 1);
 
         var $form = collection.closest('form');
-        if($form.length > 0 && $form[0].ContextualForm)
+        if ($form.length > 0 && $form[0].ContextualForm)
         {
             $form[0].ContextualForm.AddConfigFromPrototype($form, index);
         }
 
         $(document).trigger('nsFormUpdate').trigger('nsAddForm');
     }
+});
 
-    if(target.is('[data-toggle=modal]'))
+$(document).on('click', '[data-toggle=modal]', function(ev)
+{
+    setTimeout(function()
     {
-        setTimeout(function()
-        {
-            $(document).trigger('nsFormUpdate');
-        }, 200);
-    }
-
-    if(target.is('[data-showelement]'))
-    {
-        $(target.data('showelement')).show();
         $(document).trigger('nsFormUpdate');
-    }
+    }, 200);
+});
 
-    if(target.is('div.modal button.modal-clear'))
-    {
-        target.closest('div.modal').find(':input').val('');
+$(document).on('click', '[data-showelement]', function(ev)
+{
+    var target = $(ev.currentTarget);
 
-        if(!target.data('dismiss'))
-            ev.preventDefault();
-    }
+    $(target.data('showelement')).show();
+    $(document).trigger('nsFormUpdate');
+});
+
+$(document).on('click', 'div.modal button.modal-clear', function(ev)
+{
+    var target = $(ev.currentTarget);
+
+    target.closest('div.modal').find(':input').val('');
+
+    if(!target.data('dismiss'))
+        ev.preventDefault();
 });
 
 $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element ajaxComplete shown.ace.widget contextFormUpdate', function(ev)
