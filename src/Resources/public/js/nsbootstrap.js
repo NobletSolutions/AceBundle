@@ -74,7 +74,6 @@ $(document).on('click', '.nsAddForm', function(ev)
 
     if(target.is('.nsAddForm'))
     {
-        console.log('addForm');
         ev.preventDefault();
         var collection = $('[data-collection=' + target.data('collectionholder') + ']').first();
         var prototype_name = collection.data('prototype-name');
@@ -215,12 +214,12 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
                     options.prePopulate = JSON.parse($el.val());
                 }
                 catch (e) {
-                    console.log("Unable to parse tokenInput JSON error: "+e);
+                    console.warn("Unable to parse tokenInput JSON error: "+e);
                     var jsonStr = '[{"id":"'+$el.val()+'","name":"'+$el.val()+'"}]';
                     try {
                         options.prePopulate = JSON.parse(jsonStr);
                     } catch (subE) {
-                        console.log("Unable to parse manually crafted tokenInput JSON error: "+subE);
+                        console.warn("Unable to parse manually crafted tokenInput JSON error: "+subE);
                     }
                 }
             }
