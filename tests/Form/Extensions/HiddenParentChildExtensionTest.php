@@ -10,6 +10,7 @@ namespace NS\AceBundle\Tests\Form\Extensions;
 
 use NS\AceBundle\Form\Extensions\HiddenParentChildExtension;
 use NS\AceBundle\Tests\Form\Fixtures\DeeperHiddenPrototypeConfigType;
+use NS\AceBundle\Tests\Form\Fixtures\DoubleCollectionDeeperPrototypeType;
 use NS\AceBundle\Tests\Form\Fixtures\UsingHiddenConfigType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -117,6 +118,30 @@ class HiddenParentChildExtensionTest extends TypeTestCase
         $view = $form->createView();
         $this->assertArrayHasKey('data-context-prototypes', $view->vars['attr']);
         $this->assertEquals('{"form[deeper][something][__name__][text]":[{"display":"#form_deeper_something___name___text_something","values":"value"}],"form[deeper][something][__name__][number]":[{"display":["form[deeper][something][__name__][textarea]"],"values":[1]}]}',$view->vars['attr']['data-context-prototypes']);
+    }
+
+    /**
+     * @group multipleDeep
+     */
+    public function testMultipleDeepConfigs()
+    {
+        $builder = $this->factory->createBuilder();
+        $builder->add('deeper',DoubleCollectionDeeperPrototypeType::class);
+
+        $form = $builder->getForm();
+        $form->setData(['deeper'=>[
+            'somethingOne' => [
+                ['text' => 'some text', 'number' => 1, 'textarea' => 'blah blah blah'],
+                ['text' => 'some text', 'number' => 1, 'textarea' => 'blah blah blah'],
+            ],
+            'somethingTwo' => [
+                ['text' => 'some text', 'number' => 1, 'textarea' => 'blah blah blah'],
+                ['text' => 'some text', 'number' => 1, 'textarea' => 'blah blah blah'],
+            ],
+        ]]);
+        $view = $form->createView();
+        $expected = '{"form[deeper][somethingOne][0][text]":[{"display":"#form_deeper_somethingOne_0_text_something","values":"value"}],"form[deeper][somethingOne][0][number]":[{"display":["form[deeper][somethingOne][0][textarea]"],"values":[1]}],"form[deeper][somethingOne][1][text]":[{"display":"#form_deeper_somethingOne_1_text_something","values":"value"}],"form[deeper][somethingOne][1][number]":[{"display":["form[deeper][somethingOne][1][textarea]"],"values":[1]}],"form[deeper][somethingTwo][0][text]":[{"display":"#form_deeper_somethingTwo_0_text_something","values":"value"}],"form[deeper][somethingTwo][0][number]":[{"display":["form[deeper][somethingTwo][0][textarea]"],"values":[1]}],"form[deeper][somethingTwo][1][text]":[{"display":"#form_deeper_somethingTwo_1_text_something","values":"value"}],"form[deeper][somethingTwo][1][number]":[{"display":["form[deeper][somethingTwo][1][textarea]"],"values":[1]}]}';
+        $this->assertEquals($expected,$view->vars['attr']['data-context-config']);
     }
 
     protected function getExtensions()
