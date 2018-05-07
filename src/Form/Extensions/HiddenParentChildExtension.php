@@ -35,18 +35,24 @@ class HiddenParentChildExtension extends AbstractTypeExtension
                 if (isset($config['parent']) && isset($view[$config['parent']])) {
                     $parentView = $view[$config['parent']];
                     $fullName = $view[$name]->vars['full_name'];
+
+                    $display = [$fullName];
+                    foreach($view[$name]->children as $subViewName => $subChildView) {
+                        $display[] = $subChildView->vars['full_name'];
+                    }
+
                     // TODO determine if this is the best way to test if we're dealing with a prototype form
                     if (strpos($fullName, '__') === false) {
                         if (!isset($this->config[$parentView->vars['full_name']])) {
-                            $this->config[$parentView->vars['full_name']] = [['display' => (array)$fullName, 'values' => (array)$config['value']]];
+                            $this->config[$parentView->vars['full_name']] = [['display' => $display, 'values' => (array)$config['value']]];
                         } else {
-                            $this->config[$parentView->vars['full_name']][] = ['display' => (array)$fullName, 'values' => (array)$config['value']];
+                            $this->config[$parentView->vars['full_name']][] = ['display' => $display, 'values' => (array)$config['value']];
                         }
                     } else {
                         if (!isset($this->prototypes[$parentView->vars['full_name']])) {
-                            $this->prototypes[$parentView->vars['full_name']] = [['display' => (array)$fullName, 'values' => (array)$config['value']]];
+                            $this->prototypes[$parentView->vars['full_name']] = [['display' => $display, 'values' => (array)$config['value']]];
                         } else {
-                            $this->prototypes[$parentView->vars['full_name']][] = ['display' => (array)$fullName, 'values' => (array)$config['value']];
+                            $this->prototypes[$parentView->vars['full_name']][] = ['display' => $display, 'values' => (array)$config['value']];
                         }
                     }
                 }
