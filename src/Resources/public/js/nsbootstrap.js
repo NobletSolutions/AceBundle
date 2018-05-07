@@ -72,16 +72,13 @@ $(document).on('click', '.nsAddForm', function(ev)
 {
     var target = $(ev.currentTarget);
 
-    if(target.is('.nsAddForm'))
-    {
+    if (target.is('.nsAddForm')) {
         ev.preventDefault();
         var collection = $('[data-collection=' + target.data('collectionholder') + ']').first();
         var prototype_name = collection.data('prototype-name');
-        if (typeof prototype_name !== "undefined")
-        {
+        if (typeof prototype_name !== "undefined") {
             prototype_name = new RegExp(prototype_name, 'g');
-        } else
-        {
+        } else {
             prototype_name = new RegExp('__name__', 'g');
         }
 
@@ -91,8 +88,7 @@ $(document).on('click', '.nsAddForm', function(ev)
         collection.data('index', index + 1);
 
         var $form = collection.closest('form');
-        if ($form.length > 0 && $form[0].ContextualForm)
-        {
+        if ($form.length > 0 && $form[0].ContextualForm) {
             $form[0].ContextualForm.AddConfigFromPrototype($form, index);
         }
 
