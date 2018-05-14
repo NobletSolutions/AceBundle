@@ -22,6 +22,19 @@ class HiddenParentChildExtension extends AbstractTypeExtension
     /** @var array */
     private $prototypes = [];
 
+    private function collectChildViews(FormView $view, FormInterface $form, array &$display)
+    {
+        foreach ($view->children as $subViewName => $subChildView) {
+            if (!$form[$subViewName]->getConfig()->hasOption('hidden')) {
+                $display[] = $subChildView->vars['full_name'];
+            }
+
+            if ($subChildView->children) {
+                $this->collectChildViews($subChildView, $form[$subViewName], $display);
+            }
+        }
+    }
+
     /**
      * @inheritDoc
      */
@@ -37,9 +50,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
                     $fullName = $view[$name]->vars['full_name'];
 
                     $display = [$fullName];
-                    foreach($view[$name]->children as $subViewName => $subChildView) {
-                        $display[] = $subChildView->vars['full_name'];
-                    }
+                    $this->collectChildViews($view[$name],$childForm,$display);
 
                     // TODO determine if this is the best way to test if we're dealing with a prototype form
                     if (strpos($fullName, '__') === false) {

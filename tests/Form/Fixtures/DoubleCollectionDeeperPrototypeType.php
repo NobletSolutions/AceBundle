@@ -29,9 +29,7 @@ class DoubleCollectionDeeperPrototypeType extends AbstractType
                 'entry_type' => UsingHiddenConfigType::class,
                 'allow_add' => true,
                 'prototype' => true,
-            ])
-
-        ;
+            ]);
     }
 
 }

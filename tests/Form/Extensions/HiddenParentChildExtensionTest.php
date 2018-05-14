@@ -11,6 +11,7 @@ namespace NS\AceBundle\Tests\Form\Extensions;
 use NS\AceBundle\Form\Extensions\HiddenParentChildExtension;
 use NS\AceBundle\Tests\Form\Fixtures\DeeperHiddenPrototypeConfigType;
 use NS\AceBundle\Tests\Form\Fixtures\DoubleCollectionDeeperPrototypeType;
+use NS\AceBundle\Tests\Form\Fixtures\LevelOneType;
 use NS\AceBundle\Tests\Form\Fixtures\UsingHiddenConfigType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -142,6 +143,18 @@ class HiddenParentChildExtensionTest extends TypeTestCase
         $view = $form->createView();
         $expected = '{"form[deeper][somethingOne][0][text]":[{"display":"#form_deeper_somethingOne_0_text_something","values":"value"}],"form[deeper][somethingOne][0][number]":[{"display":["form[deeper][somethingOne][0][textarea]"],"values":[1]}],"form[deeper][somethingOne][1][text]":[{"display":"#form_deeper_somethingOne_1_text_something","values":"value"}],"form[deeper][somethingOne][1][number]":[{"display":["form[deeper][somethingOne][1][textarea]"],"values":[1]}],"form[deeper][somethingTwo][0][text]":[{"display":"#form_deeper_somethingTwo_0_text_something","values":"value"}],"form[deeper][somethingTwo][0][number]":[{"display":["form[deeper][somethingTwo][0][textarea]"],"values":[1]}],"form[deeper][somethingTwo][1][text]":[{"display":"#form_deeper_somethingTwo_1_text_something","values":"value"}],"form[deeper][somethingTwo][1][number]":[{"display":["form[deeper][somethingTwo][1][textarea]"],"values":[1]}]}';
         $this->assertEquals($expected,$view->vars['attr']['data-context-config']);
+    }
+
+    public function testChildrenAreHiddenAsWell()
+    {
+        $builder = $this->factory->createBuilder();
+        $builder->add('deeper',LevelOneType::class);
+
+        $form = $builder->getForm();
+        $view = $form->createView();
+        $expected = '{"form[deeper][field2][l2Field1]":[{"display":["form[deeper][field2][l2Field2]"],"values":["c2"]}],"form[deeper][field1]":[{"display":["form[deeper][field2]","form[deeper][field2][l2Field1]","form[deeper][field2][l2Field3]","form[deeper][field2][l2Field3][id]","form[deeper][field2][l2Field3][name]"],"values":["one"]}]}';
+        $this->assertEquals($expected, $view->vars['attr']['data-context-config']);
+
     }
 
     protected function getExtensions()
