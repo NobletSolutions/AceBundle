@@ -199,7 +199,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
 
     $('input.nsAutocompleter').each(function(i, el)
     {
-        $el = $(el);
+        var $el = $(this);
         if(el.nsFieldActive !== true)
         {
             el.nsFieldActive = true;
@@ -227,14 +227,15 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
                 var sec = $el.data('autocomplete-secondary-field');
                 var $tgt = $('#'+$el.attr('id').replace(sec.s, sec.r));
 
-                if($tgt)
+                if($tgt.length)
                 {
                     var delim = ($el.data('autocompleteurl').indexOf('?') >= 0 ? '&' : '?');
                     queryUrl = $el.data('autocompleteurl')+delim+'secondary-field='+$tgt.val();
 
                     $tgt.change(function()
                     {
-                        $el.tokenInput('setOptions', {'url':$el.data('autocompleteurl')+delim+'secondary-field='+$tgt.val()});
+                        console.log($el.attr('id')+' UPDATING VALUE: '+$tgt.val()+' vs '+$(this).val());
+                        $el.tokenInput('setOptions', {'url':$el.data('autocompleteurl')+delim+'secondary-field='+$(this).val()});
                     });
                 }
             }
