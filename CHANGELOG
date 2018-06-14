@@ -3,6 +3,7 @@ VERSION 4  SUPPORT SF4
 ======================
 
    Version 4.0 - Support SF4
+      14/06/2018 08:40  4.0.2  Updated twig path notation
       13/06/2018 14:59  4.0.1  Minor fixes and SF4 detailed requirements
       13/06/2018 10:18  4.0.0  initial release
 
