@@ -1038,6 +1038,21 @@
                         }
                     };
 
+                    // Attach the error callback
+                    ajax_params.error = function(jqXHR, textStatus, errorThrown) {
+                        var message = jqXHR.getResponseHeader('Autocomplete-Error');
+                        if(message)
+                        {
+                            dropdown.empty();
+                            dropdown.html("<p>" + escapeHTML(message) + "</p>");
+                        }
+                        else
+                        {
+                            dropdown.empty();
+                            dropdown.html("<p>Error</p>");
+                        }
+                    };
+
                     // Provide a beforeSend callback
                     if (settings.onSend) {
                         settings.onSend(ajax_params);
