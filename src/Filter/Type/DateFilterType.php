@@ -89,7 +89,7 @@ class DateFilterType extends AbstractType
             $paramName = sprintf('p_%s', str_replace('.', '_', $field));
             $expr = $filterQuery->getExpressionBuilder();
 
-            return $filterQuery->createCondition($expr->eq($field, ':' . $paramName), [$paramName => [$values['value'], Type::DATE]]);
+            return $filterQuery->createCondition($expr->expr()->eq($field, ':' . $paramName), [$paramName => [$values['value'], Type::DATE]]);
         }
     }
 }
