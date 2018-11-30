@@ -20,11 +20,6 @@ services:
     tags:
       - { name: form.type_extension, alias: form, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
-  ns_ace.form.iconbutton:
-    class: NS\AceBundle\Form\IconButtonType
-    tags:
-      - { name: form.type, alias: iconbutton }
-
   ns_ace.form.type.switch:
     class: NS\AceBundle\Form\SwitchType
     tags:

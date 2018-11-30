@@ -21,8 +21,8 @@ class TwigFormThemeCompilerPass implements CompilerPassInterface
         if ($container->hasParameter('twig.form.resources')) {
             $resources = $container->getParameter('twig.form.resources');
 
-            if (!in_array('NSAceBundle:Form:fields.html.twig', $resources)) {
-                $resources[] = 'NSAceBundle:Form:fields.html.twig';
+            if (!in_array('NSAceBundle:Form:fields.html.twig', $resources) && !in_array('@NSAce/Form/fields.html.twig', $resources)) {
+                $resources[] = '@NSAce/Form/fields.html.twig';
 
                 $container->setParameter('twig.form.resources', $resources);
             }

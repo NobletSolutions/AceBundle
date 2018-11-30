@@ -16,19 +16,21 @@
     ],
     "require": {
         "php":                       ">=5.5.9",
-        "symfony/symfony":           "^2.8|^3.0",
-        "jms/translation-bundle":    "~1.1",
-        "knplabs/knp-menu-bundle":   "~2.0",
+        "symfony/framework-bundle":  "^2.8|^3.0|^4.0",
+        "symfony/form":              "^2.8|^3.0|^4.0",
+        "twig/twig":                 "^1.0|^2.0",
+        "knplabs/knp-menu-bundle":   "^2.0",
         "doctrine/common":           "^2.5|^2.6"
     },
     "require-dev": {
-        "lexik/form-filter-bundle": "~5.0",
+        "lexik/form-filter-bundle": "^5.0",
         "phpunit/phpunit": "^4.8|^5.0"
     },
     "suggest": {
         "punkave/symfony2-file-uploader-bundle": "Allows for drag & drop or multiple file upload",
-        "craue/formflow-bundle": "~3.0@dev",
-        "lexik/form-filter-bundle": "~5.0"
+        "jms/translation-bundle":    "Handle xliff translations",
+        "craue/formflow-bundle": "Provides multi-step forms for which we have a theme",
+        "lexik/form-filter-bundle": "Form filtering"
     },
     "autoload": {
         "psr-4": { "NS\\AceBundle\\": "src" }
@@ -38,7 +40,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.1.x-dev"
+            "dev-master": "4.0.x-dev"
         }
     }
 }
