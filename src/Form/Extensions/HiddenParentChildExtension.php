@@ -45,7 +45,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
             if ($childForm->getConfig()->hasOption('hidden')) {
                 $config = $childForm->getConfig()->getOption('hidden');
 
-                if (isset($config['parent']) && isset($view[$config['parent']])) {
+                if (isset($config['parent'], $view[$config['parent']])) {
                     $parentView = $view[$config['parent']];
                     $fullName = $view[$name]->vars['full_name'];
 
