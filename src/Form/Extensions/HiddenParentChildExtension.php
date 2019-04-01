@@ -98,7 +98,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         }
 
         // Ignore the CSRF _token field which comes in without a parent
-        if ($form->getName() === $options['csrf_field_name'] && $form->getConfig()->getMapped() === false) {
+        if ($form->getConfig()->getMapped() === false && $form->getName() === $options['csrf_field_name']) {
             return;
         }
 
