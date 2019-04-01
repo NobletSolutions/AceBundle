@@ -47,10 +47,10 @@ class HiddenParentChildExtension extends AbstractTypeExtension
 
                 if (isset($config['parent']) && isset($view[$config['parent']])) {
                     $parentView = $view[$config['parent']];
-                    $fullName = $view[$name]->vars['full_name'];
+                    $fullName   = $view[$name]->vars['full_name'];
 
                     $display = [$fullName];
-                    $this->collectChildViews($view[$name],$childForm,$display);
+                    $this->collectChildViews($view[$name], $childForm, $display);
 
                     // TODO determine if this is the best way to test if we're dealing with a prototype form
                     if (strpos($fullName, '__') === false) {
@@ -76,7 +76,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
                                 $this->config[$childView->vars['full_name']] = [];
                             }
 
-                            $newId = str_replace('#', '#' . $childView->vars['id'] . '_', $id);
+                            $newId                                         = str_replace('#', '#' . $childView->vars['id'] . '_', $id);
                             $this->config[$childView->vars['full_name']][] = ['display' => $newId, 'values' => $value];
                         }
                     } else {
@@ -85,7 +85,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
                                 $this->prototypes[$childView->vars['full_name']] = [];
                             }
 
-                            $newId = str_replace('#', '#' . $childView->vars['id'] . '_', $id);
+                            $newId                                             = str_replace('#', '#' . $childView->vars['id'] . '_', $id);
                             $this->prototypes[$childView->vars['full_name']][] = ['display' => $newId, 'values' => $value];
                         }
                     }
@@ -98,21 +98,24 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         }
 
         // Ignore the CSRF _token field which comes in without a parent
-        if ($form->getConfig()->getMapped() === false && $form->getName() == $options['csrf_field_name']) {
+        if ($form->getName() === $options['csrf_field_name'] && $form->getConfig()->getMapped() === false) {
             return;
         }
 
         if (!empty($this->config)) {
-            $view->vars['attr'] = (isset($view->vars['attr'])) ? array_merge($view->vars['attr'], ['data-context-config' => json_encode($this->config)]) : ['data-context-config' => json_encode($this->config)];
+            $view->vars['attr'] = isset($view->vars['attr']) ? array_merge($view->vars['attr'], ['data-context-config' => json_encode($this->config)]) : ['data-context-config' => json_encode($this->config)];
         }
 
         if (!empty($this->prototypes)) {
-            $view->vars['attr'] = (isset($view->vars['attr'])) ? array_merge($view->vars['attr'], ['data-context-prototypes' => json_encode($this->prototypes)]) : ['data-context-prototypes' => json_encode($this->prototypes)];
+            $view->vars['attr'] = isset($view->vars['attr']) ? array_merge($view->vars['attr'], ['data-context-prototypes' => json_encode($this->prototypes)]) : ['data-context-prototypes' => json_encode($this->prototypes)];
+            if (empty($this->config)) {
+                $view->vars['attr'] = array_merge($view->vars['attr'], ['data-context-config' => '[]']);
+            }
         }
 
         // we reset these here because if we're handling more than one form in a given request they become cumulative
         // We should investigate namespacing the form configs?
-        $this->config = [];
+        $this->config     = [];
         $this->prototypes = [];
     }
 
