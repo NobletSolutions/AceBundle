@@ -3,6 +3,7 @@ VERSION 4  SUPPORT SF4
 ======================
 
    Version 4.0 - Support SF4
+      15/10/2019 16:24  4.0.7  Fixed twig path
       01/04/2019 11:10  4.0.6  fixed test order
       01/04/2019 10:43  4.0.5  Minor hidden context fix
       27/07/2018 02:43  4.0.4  Fixed date filter form type
