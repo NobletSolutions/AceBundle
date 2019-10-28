@@ -16,28 +16,16 @@ use NS\AceBundle\Form\Transformer\EntityToJson;
 use NS\AceBundle\Form\Transformer\CollectionToJson;
 
 /**
- * Description of SwitchType
- *
- * @author gnat
- * @author mark
  * @author http://loopj.com/jquery-tokeninput/
  */
 class AutocompleterType extends AbstractType
 {
-    /**
-     *  @var $router RouterInterface
-     */
+    /** @var RouterInterface */
     private $router;
 
-    /**
-     *  @var $entityMgr EntityManagerInterface
-     */
+    /** @var EntityManagerInterface */
     private $entityMgr;
 
-    /**
-     * @param EntityManagerInterface $entityMgr
-     * @param RouterInterface $router
-     */
     public function __construct(EntityManagerInterface $entityMgr, RouterInterface $router = null)
     {
         $this->entityMgr = $entityMgr;
@@ -81,7 +69,8 @@ class AutocompleterType extends AbstractType
             'searchingText' => 'Searching',
             'multiple'      => false,
             'attr'          => ['class' => 'nsAutocompleter'],
-            'caching'       => true
+            'caching'       => true,
+            'include_input_group' => false,
         ]);
 
         $resolver->setNormalizer('multiple', function (Options $options, $multiple) {
@@ -131,6 +120,7 @@ class AutocompleterType extends AbstractType
         }
 
         $view->vars['attr']['data-options'] = json_encode($opts);
+        $view->vars['include_input_group'] = $options['include_input_group'];
     }
 
     /**
