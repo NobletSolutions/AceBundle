@@ -20,6 +20,8 @@
         this.toBeProcessed = {};
         this.isFirstRun = true;
         this.collectionref = 1;
+        this.allTargets = $(); //Straight list of every child element for rapid access
+        this.elementList = [];
 
         var defaultConfig = {
             'event': 'input',
@@ -72,7 +74,15 @@
                 this.prototypeConfig = $.extend(true, {}, prototypes);
                 this.ContextualForm = cform; // Give the form element a reference back to this ContextualForm object
             });
-            this.AddListeners();
+
+            cform.AddListeners();
+            $('.ctxtc').hide();//Hide everything by default and then selectively show what we need
+
+            $.each(cform.elementList, function(key, el)
+            {
+                cform.Go(el.field, el.conf);
+            });
+
             cform.isFirstRun = false;
         },
 
@@ -122,7 +132,9 @@
 
                 //Grab each element from the config and add the event listeners for it
                 $.each(config, function(index, value){
-                    cform.ProcessFormConfig($form, index, value); //'this' refers to the current config item, because loop
+                    data = cform.ProcessFormConfig($form, index, value); //'this' refers to the current config item, because loop
+
+                    cform.elementList.push({'field':data[0], 'conf':data[1]});
                 });
             });
         },
@@ -137,8 +149,9 @@
         ProcessFormConfig: function($form, field, config)
         {
             var cform = this;
-            //Get the actual form element
-            var $field = $form.find('[name="'+field+'"], [name="'+field+'[]"]');//Checkboxes will append a [] to the name
+            //Get the actual form field element
+            var $field = $($form[0].querySelector('[name="'+field+'"]'));
+            $field = $field.add($($form[0].querySelector('[name="'+field+'[]"]')));
 
             if ($field.length === 0) {
                 console.debug("FIELD name is undefined");
@@ -177,6 +190,8 @@
                         {
                             $sel.data('visibleParents', []);
                             targets.push($sel);
+                            cform.allTargets = cform.allTargets.add($sel);
+                            $sel.addClass('ctxtc');
                         }
                     });
                 } else {
@@ -185,6 +200,8 @@
                     {
                         $sel.data('visibleParents', []);
                         targets = [$sel];
+                        cform.allTargets = cform.allTargets.add($sel);
+                        $sel.addClass('ctxtc');
                     }
                 }
 
@@ -202,13 +219,11 @@
                 conf.values = arr;
 
                 conf.display = targets;
-
             });
 
             this.AddListener($field, config);
 
-            //Run once on init to account for pre-filled values
-            this.Go($field, config, false);
+            return [$field, config];
         },
 
         /**
@@ -251,7 +266,10 @@
             }
             else
             {
-                return this.FindWrapper($form, $form.find('[name="'+dis+'"], [name="'+dis+'[]"]')); //Otherwise, find the field by name.
+                let $els = $($form[0].querySelector('[name="'+dis+'"]'));
+                $els = $els.add($($form[0].querySelector('[name="'+dis+'[]"]')));
+
+                return this.FindWrapper($form, $els); //Otherwise, find the field by name.
             }
 
         },
@@ -492,7 +510,6 @@
                 {
                     var dId = $disField.data('fieldId');
 
-                    $disField.hide();//Reset everything
                     cform.activityMap[dId] = false;
 
                     // delete $disField.data('visibleParents')[id];
