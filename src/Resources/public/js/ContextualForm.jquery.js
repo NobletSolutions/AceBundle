@@ -150,8 +150,10 @@
         {
             var cform = this;
             //Get the actual form field element
-            var $field = $($form[0].querySelector('[name="'+field+'"]'));
-            $field = $field.add($($form[0].querySelector('[name="'+field+'[]"]')));
+            var $field = $($form[0].querySelectorAll('[name="'+field+'"]'));
+            $field = $field.add($($form[0].querySelectorAll('[name="'+field+'[]"]')));
+
+            console.log($form[0].querySelector('[name="'+field+'[]"]'));
 
             if ($field.length === 0) {
                 console.debug("FIELD name is undefined");
@@ -509,6 +511,11 @@
                 $.each(conf.display, function(index, $disField)
                 {
                     var dId = $disField.data('fieldId');
+
+                    if($disField.is(':visible')) //Every time an event is triggered for a field, we hide it, and then determine if it should still be shown.
+                    {
+                        $disField.hide();
+                    }
 
                     cform.activityMap[dId] = false;
 
