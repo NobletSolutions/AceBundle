@@ -3,6 +3,7 @@ VERSION 4  SUPPORT SF4
 ======================
 
    Version 4.0 - Support SF4
+      07/02/2020 10:53  4.0.11  Fixed issue with Contextual form fields on checkboxes/radiobuttons
       28/01/2020 14:41  4.0.10  Performance improvements
       01/01/2020 15:40  4.0.9  Split a JS function
       28/10/2019 13:56  4.0.8  Configurable div class
