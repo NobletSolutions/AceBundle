@@ -153,10 +153,7 @@
             var $field = $($form[0].querySelectorAll('[name="'+field+'"]'));
             $field = $field.add($($form[0].querySelectorAll('[name="'+field+'[]"]')));
 
-            console.log($form[0].querySelector('[name="'+field+'[]"]'));
-
             if ($field.length === 0) {
-                console.debug("FIELD name is undefined");
                 return;
             }
 
