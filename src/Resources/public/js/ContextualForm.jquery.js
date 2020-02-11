@@ -265,7 +265,7 @@
             }
             else
             {
-                let $els = $($form[0].querySelector('[name="'+dis+'"]'));
+                var $els = $($form[0].querySelector('[name="'+dis+'"]'));
                 $els = $els.add($($form[0].querySelector('[name="'+dis+'[]"]')));
 
                 return this.FindWrapper($form, $els); //Otherwise, find the field by name.
