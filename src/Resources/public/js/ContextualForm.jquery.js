@@ -134,7 +134,9 @@
                 $.each(config, function(index, value){
                     data = cform.ProcessFormConfig($form, index, value); //'this' refers to the current config item, because loop
 
-                    cform.elementList.push({'field':data[0], 'conf':data[1]});
+                    if (data && data.length === 2) {
+                        cform.elementList.push({'field':data[0], 'conf':data[1]});
+                    }
                 });
             });
         },
