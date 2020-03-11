@@ -3,6 +3,7 @@ VERSION 4  SUPPORT SF4
 ======================
 
    Version 4.0 - Support SF4
+      11/03/2020 11:58  4.0.14  Minor ContextForm.js fix
       11/02/2020 03:49  4.0.13  Consistent var usage
       11/02/2020 03:48  4.0.12  Removed console.log statements
       07/02/2020 10:53  4.0.11  Fixed issue with Contextual form fields on checkboxes/radiobuttons
