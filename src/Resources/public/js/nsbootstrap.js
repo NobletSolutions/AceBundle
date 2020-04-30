@@ -249,7 +249,11 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
             };
 
             if ($el.data('tokenvalue')) {
-                options.tokenValue = eval($el.data('tokenvalue'));
+                try {
+                    options.tokenValue = eval($el.data('tokenvalue'));
+                } catch(err) {
+                    options.tokenValue = $el.data('tokenvalue');
+                }
             }
 
             if ($el.data('resultsformatter')) {
