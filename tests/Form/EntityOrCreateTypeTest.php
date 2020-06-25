@@ -20,14 +20,14 @@ class EntityOrCreateTypeTest extends BaseFormTestType
     /** @var EntityManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $entityMgr;
 
-    public function testFormType()
+    public function testFormType(): void
     {
         $entity          = new Entity(1);
         $this->entityMgr->expects($this->once())
             ->method('getReference')
             ->willReturn($entity);
 
-        $className = 'NS\AceBundle\Tests\Form\Fixtures\Entity';
+        $className = Entity::class;
         $formData = [
             'entity' => ['finder' => 1,'createFormClicked'=>'finder'],
         ];
@@ -51,11 +51,11 @@ class EntityOrCreateTypeTest extends BaseFormTestType
         $this->assertEquals(1, $data->getId());
     }
 
-    public function testFormType2()
+    public function testFormType2(): void
     {
         $this->entityMgr->expects($this->never())->method('getReference');
 
-        $className = 'NS\AceBundle\Tests\Form\Fixtures\Entity';
+        $className = Entity::class;
         $formData  = [
             'entity' => [
                 'finder' => '',
@@ -87,25 +87,25 @@ class EntityOrCreateTypeTest extends BaseFormTestType
     /**
      * @group multiple
      */
-    public function testMultipleFinder()
+    public function testMultipleFinder(): void
     {
-        $firstEntity = new Entity(1);
+        $firstEntity  = new Entity(1);
         $secondEntity = new Entity(2);
 
         $this->entityMgr
             ->method('getReference')
-            ->will($this->returnCallback(function($class,$id) use ($firstEntity,$secondEntity){
-                if ($class == Entity::class) {
-                    if ($id == $firstEntity->getId()) {
+            ->willReturnCallback(static function ($class, int $id) use ($firstEntity, $secondEntity) {
+                if ($class === Entity::class) {
+                    if ($id === $firstEntity->getId()) {
                         return $firstEntity;
                     }
-                    if ($id == $secondEntity->getId()) {
+                    if ($id === $secondEntity->getId()) {
                         return $secondEntity;
                     }
                 }
 
                 throw new \RuntimeException("Class:$class, $id");
-            }));
+            });
 
         $formData = [
             'entity' => [
@@ -130,11 +130,11 @@ class EntityOrCreateTypeTest extends BaseFormTestType
         $form->submit($formData);
 
         $data = $form['entity']->getData();
-        $this->assertTrue(is_array($data));
+        $this->assertIsArray($data);
         $this->assertEquals(1, $data[0]->getId());
     }
 
-    public function testMultipleCreate()
+    public function testMultipleCreate(): void
     {
         $this->entityMgr
             ->expects($this->never())
@@ -164,16 +164,15 @@ class EntityOrCreateTypeTest extends BaseFormTestType
         $form->submit($formData);
 
         $data = $form['entity']->getData();
-        $this->assertTrue(is_array($data));
+        $this->assertIsArray($data);
         $this->assertEquals('theId', $data[0]->getId());
     }
 
-    public function getExtensions()
+    public function getExtensions(): array
     {
         $this->entityMgr = $this->createMock(EntityManagerInterface::class);
         $type = new AutocompleterType($this->entityMgr);
 
-        return [
-            new PreloadedExtension([$type], [])];
+        return [new PreloadedExtension([$type], [])];
     }
 }

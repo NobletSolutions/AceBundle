@@ -9,18 +9,13 @@ use Symfony\Component\Form\NativeRequestHandler;
 use Symfony\Component\Form\RequestHandlerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * Description of SwitchType
- *
- * @author gnat
- */
 class FileUploadTypeTest extends BaseFormTestType
 {
     /**
      * @dataProvider requestHandlerProvider
      * @param $requestHandler
      */
-    public function testFormType($requestHandler)
+    public function testFormType($requestHandler): void
     {
         $form = $this->factory->createBuilder(FileUploadType::class)->setRequestHandler($requestHandler)->getForm();
         $data = $this->createUploadedFileMock($requestHandler, __DIR__.'/Fixtures/Entity.php', 'Entity.php');
@@ -30,26 +25,26 @@ class FileUploadTypeTest extends BaseFormTestType
         $this->assertSame($data, $form->getData());
     }
 
-    public function requestHandlerProvider()
+    public function requestHandlerProvider(): array
     {
-        return array(
-            array(new HttpFoundationRequestHandler()),
-            array(new NativeRequestHandler()),
-        );
+        return [
+            [new HttpFoundationRequestHandler()],
+            [new NativeRequestHandler()],
+        ];
     }
 
     private function createUploadedFileMock(RequestHandlerInterface $requestHandler, $path, $originalName)
     {
         if ($requestHandler instanceof HttpFoundationRequestHandler) {
-            return new UploadedFile($path, $originalName, null, 10, null, true);
+            return new UploadedFile($path, $originalName, null, 10, true);
         }
 
-        return array(
+        return [
             'name' => $originalName,
             'error' => 0,
             'type' => 'text/plain',
             'tmp_name' => $path,
             'size' => 10,
-        );
+        ];
     }
 }

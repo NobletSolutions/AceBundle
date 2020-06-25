@@ -11,11 +11,6 @@ use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\Routing\RouterInterface;
 
-/**
- * Description of AutocompleterTypeTest
- *
- * @author gnat
- */
 class AutocompleterTypeTest extends BaseFormTestType
 {
     /** @var EntityManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
@@ -24,7 +19,7 @@ class AutocompleterTypeTest extends BaseFormTestType
     /** @var  RouterInterface */
     private $router;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->router = $this->createMock(RouterInterface::class);
 
@@ -33,14 +28,14 @@ class AutocompleterTypeTest extends BaseFormTestType
         parent::setUp();
     }
 
-    protected function getExtensions()
+    protected function getExtensions(): array
     {
         $type = new AutocompleterType($this->entityMgr, $this->router);
 
         return [new PreloadedExtension([$type],[])];
     }
 
-    public function testFormTypeEntityToJson()
+    public function testFormTypeEntityToJson(): void
     {
         $entity    = new Entity(1);
         $formData  = ['auto' => '1'];
@@ -73,14 +68,14 @@ class AutocompleterTypeTest extends BaseFormTestType
         $this->assertArrayHasKey('auto', $view);
         $this->assertArrayHasKey('attr', $view['auto']->vars);
         $this->assertArrayHasKey('data-autocompleteUrl', $view['auto']->vars['attr']);
-        $this->assertEquals($view['auto']->vars['attr']['data-autocompleteUrl'], '/route/name');
-        $this->assertContains('GET', $view['auto']->vars['attr']['data-options']);
+        $this->assertEquals('/route/name', $view['auto']->vars['attr']['data-autocompleteUrl']);
+        $this->assertStringContainsString('GET', $view['auto']->vars['attr']['data-options']);
     }
 
     /**
      * @group collection
      */
-    public function testFormTypeCollectionToJson()
+    public function testFormTypeCollectionToJson(): void
     {
         $entities  = [new Entity(1), new Entity(2)];
 
@@ -119,7 +114,7 @@ class AutocompleterTypeTest extends BaseFormTestType
     /**
      * @group customTransformer
      */
-    public function testFormTypeCustomTransformer()
+    public function testFormTypeCustomTransformer(): void
     {
         $entities = [new Entity(1), new Entity(2)];
 
@@ -128,10 +123,10 @@ class AutocompleterTypeTest extends BaseFormTestType
         $jsonStr     = sprintf("%d,%d", $entities[0]->getId(), $entities[1]->getId());
 
         $customTransformer = $this->createMock(DataTransformerInterface::class);
-        $customTransformer->expects($this->any())
+        $customTransformer
             ->method('transform')
             ->willReturn($jsonStr);
-        $customTransformer->expects($this->any())
+        $customTransformer
             ->method('reverseTransform')
             ->willReturn($entities);
 
@@ -155,7 +150,7 @@ class AutocompleterTypeTest extends BaseFormTestType
         $this->assertEquals($view['auto']->vars['attr']['data-autocompleteUrl'], $routeName);
     }
 
-    public function testFormWithDataCustomProperty()
+    public function testFormWithDataCustomProperty(): void
     {
         $entity     = new Entity(1);
         $properties = [
@@ -178,7 +173,7 @@ class AutocompleterTypeTest extends BaseFormTestType
         $this->assertEquals('[{"id":1,"name":"It Matters"}]', $view['auto']->vars['value']);
     }
 
-    public function testFormWithDataToString()
+    public function testFormWithDataToString(): void
     {
         $entity    = new Entity(1);
 
@@ -194,7 +189,7 @@ class AutocompleterTypeTest extends BaseFormTestType
         $this->assertEquals('[{"id":1,"name":"Does Not Matter"}]', $view['auto']->vars['value']);
     }
 
-    public function testFormWithNullData()
+    public function testFormWithNullData(): void
     {
         $this->entityMgr
             ->expects($this->never())
@@ -210,14 +205,9 @@ class AutocompleterTypeTest extends BaseFormTestType
         $this->assertNull($data);
     }
 
-    public function testMultipleWithDataClassIsException()
+    public function testMultipleWithDataClassIsException(): void
     {
-        if(method_exists($this,'expectException')) {
-            $this->expectException(InvalidOptionsException::class);
-        } else {
-            $this->setExpectedException(InvalidOptionsException::class);
-        }
-
+        $this->expectException(InvalidOptionsException::class);
         $this->factory->create(AutocompleterType::class,null,['multiple'=>true,'data_class'=>Entity::class]);
     }
 }

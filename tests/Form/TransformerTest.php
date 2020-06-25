@@ -2,24 +2,15 @@
 
 namespace NS\AceBundle\Tests\Form;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use \NS\AceBundle\Form\Transformer\CollectionToJson;
 use \NS\AceBundle\Form\Transformer\EntityToJson;
-use NS\AceBundle\Tests\BaseTestCase;
 use \NS\AceBundle\Tests\Form\Fixtures\Entity;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Description of TransformerTest
- *
- * @author gnat
- */
-class TransformerTest extends BaseTestCase
+class TransformerTest extends TestCase
 {
-    /**
-     *
-     */
-    public function testCollectionToJsonReverseTransform()
+    public function testCollectionToJsonReverseTransform(): void
     {
         $classes[] = new Entity(1);
         $classes[] = new Entity(2);
@@ -38,24 +29,21 @@ class TransformerTest extends BaseTestCase
         $entityMgrMock
             ->expects($this->any())
             ->method('getReference')
-            ->will($this->returnValueMap($map));
+            ->willReturnMap($map);
 
         $jsonStr     = sprintf("%d,%d,%d", $classes[0]->getId(), $classes[1]->getId(), $classes[2]->getId());
         $transformer = new CollectionToJson($entityMgrMock, $className);
         $obj         = $transformer->reverseTransform($jsonStr);
 
-        $this->assertTrue(is_array($obj));
+        $this->assertIsArray($obj);
         $this->assertArrayHasKey(0, $obj);
-        $this->assertTrue(is_object($obj[0]));
+        $this->assertIsObject($obj[0]);
         $this->assertEquals($classes[0], $obj[0]);
         $this->assertEquals($classes[1], $obj[1]);
         $this->assertEquals($classes[2], $obj[2]);
     }
 
-    /**
-     *
-     */
-    public function testCollectionToJsonTransform()
+    public function testCollectionToJsonTransform(): void
     {
         $classes[] = new Entity(1);
         $classes[] = new Entity(2);
@@ -76,10 +64,7 @@ class TransformerTest extends BaseTestCase
         $this->assertEquals($jsonStr, $obj);
     }
 
-    /**
-     *
-     */
-    public function testEntityToJsonReverseTransform()
+    public function testEntityToJsonReverseTransform(): void
     {
         $class     = new Entity(1);
         $className = get_class($class);
@@ -96,22 +81,19 @@ class TransformerTest extends BaseTestCase
         $this->assertEquals($class, $obj);
     }
 
-    /**
-     *
-     */
-    public function testEntityToJsonTransform()
+    public function testEntityToJsonTransform(): void
     {
         $jsonStr = '[{"id":1,"name":"Does Not Matter"}]';
         $class   = new Entity(1);
 
         $entityMgrMock = $this->getEntityManager();
-        $transformer   = new EntityToJson($entityMgrMock, 'NS\AceBundle\Tests\Form\Fixtures\Entity');
+        $transformer   = new EntityToJson($entityMgrMock, Entity::class);
         $obj           = $transformer->transform($class);
 
         $this->assertEquals($jsonStr, $obj);
     }
 
-    public function testCollectionToJsonTransformCustomMethod()
+    public function testCollectionToJsonTransformCustomMethod(): void
     {
         $classes[] = new Entity(1);
         $classes[] = new Entity(2);
@@ -132,21 +114,18 @@ class TransformerTest extends BaseTestCase
         $this->assertEquals($jsonStr, $obj);
     }
 
-    public function testEntityToJsonTransformCustomMethod()
+    public function testEntityToJsonTransformCustomMethod(): void
     {
         $jsonStr = '[{"id":1,"name":"It Matters"}]';
         $class   = new Entity(1);
 
         $entityMgrMock = $this->getEntityManager();
-        $transformer   = new EntityToJson($entityMgrMock, 'NS\AceBundle\Tests\Form\Fixtures\Entity', 'someProperty');
+        $transformer   = new EntityToJson($entityMgrMock, Entity::class, 'someProperty');
         $obj           = $transformer->transform($class);
 
         $this->assertEquals($jsonStr, $obj);
     }
 
-    /**
-     *
-     */
     private function getEntityManager()
     {
         return $this->createMock(EntityManagerInterface::class);

@@ -3,19 +3,14 @@
 namespace NS\AceBundle\Test\Filter\Type;
 
 use Symfony\Component\Form\Test\TypeTestCase;
+use Symfony\Component\Form\Form;
+use NS\AceBundle\Filter\Type\DateFilterType;
 
-/**
- * Created by PhpStorm.
- * User: gnat
- * Date: 17/05/16
- * Time: 10:23 AM
- */
 class DateFilterTypeTest extends TypeTestCase
 {
-
-    public function testFormCreation()
+    public function testFormCreation(): void
     {
-        $form = $this->factory->create('NS\AceBundle\Filter\Type\DateFilterType');
-        $this->assertInstanceOf('Symfony\Component\Form\Form',$form);
+        $form = $this->factory->create(DateFilterType::class);
+        $this->assertInstanceOf(Form::class,$form);
     }
 }

@@ -5,21 +5,11 @@ namespace NS\AceBundle\Tests\Form;
 use \NS\AceBundle\Tests\BaseFormTestType;
 use \NS\AceBundle\Form\SliderType;
 
-/**
- * Description of SliderType
- *
- * @author gnat
- */
 class SliderTypeTest extends BaseFormTestType
 {
-    /**
-     *
-     */
-    public function testFormType()
+    public function testFormType(): void
     {
-        $formData = [
-            'slider' => 1,
-        ];
+        $formData = ['slider' => 1,];
 
         $formBuilder = $this->factory->createBuilder();
         $formBuilder->add('slider', SliderType::class);

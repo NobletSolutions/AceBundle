@@ -19,10 +19,11 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 
 class HiddenParentChildExtensionTest extends TypeTestCase
 {
-    public function testNoConfig()
+    public function testNoConfig(): void
     {
         $builder = $this->factory->createBuilder();
         $builder
@@ -35,7 +36,7 @@ class HiddenParentChildExtensionTest extends TypeTestCase
         $this->assertArrayNotHasKey('data-context-config', $view->vars['attr']);
     }
 
-    public function testHasConfig()
+    public function testHasConfig(): void
     {
         $builder = $this->factory->createBuilder();
         $builder
@@ -48,13 +49,10 @@ class HiddenParentChildExtensionTest extends TypeTestCase
         $this->assertArrayHasKey('data-context-config', $view->vars['attr']);
     }
 
-    public function testHiddenIsEmpty()
+    public function testHiddenIsEmpty(): void
     {
-        if(method_exists($this,'expectException')) {
-            $this->expectException('Symfony\Component\OptionsResolver\Exception\InvalidOptionsException');
-        } else {
-            $this->setExpectedException('Symfony\Component\OptionsResolver\Exception\InvalidOptionsException');
-        }        $builder = $this->factory->createBuilder();
+        $this->expectException(InvalidOptionsException::class);
+        $builder = $this->factory->createBuilder();
         $builder
             ->add('text', TextType::class)
             ->add('number', NumberType::class)
@@ -63,13 +61,10 @@ class HiddenParentChildExtensionTest extends TypeTestCase
         $builder->getForm()->createView();
     }
 
-    public function testHiddenIsNotArray()
+    public function testHiddenIsNotArray(): void
     {
-        if(method_exists($this,'expectException')) {
-            $this->expectException('Symfony\Component\OptionsResolver\Exception\InvalidOptionsException');
-        } else {
-            $this->setExpectedException('Symfony\Component\OptionsResolver\Exception\InvalidOptionsException');
-        }        $builder = $this->factory->createBuilder();
+        $this->expectException(InvalidOptionsException::class);
+        $builder = $this->factory->createBuilder();
         $builder
             ->add('text', TextType::class)
             ->add('number', NumberType::class)
@@ -78,14 +73,9 @@ class HiddenParentChildExtensionTest extends TypeTestCase
         $builder->getForm()->createView();
     }
 
-    public function testHiddenHasNoValueForParent()
+    public function testHiddenHasNoValueForParent(): void
     {
-        if(method_exists($this,'expectException')) {
-            $this->expectException('Symfony\Component\OptionsResolver\Exception\InvalidOptionsException');
-        } else {
-            $this->setExpectedException('Symfony\Component\OptionsResolver\Exception\InvalidOptionsException');
-        }
-
+        $this->expectException(InvalidOptionsException::class);
         $builder = $this->factory->createBuilder();
         $builder
             ->add('text', TextType::class)
@@ -95,7 +85,7 @@ class HiddenParentChildExtensionTest extends TypeTestCase
         $builder->getForm()->createView();
     }
 
-    public function testPrototypeOneLevelConfig()
+    public function testPrototypeOneLevelConfig(): void
     {
         $builder = $this->factory->createBuilder();
         $builder->add('stuff',CollectionType::class,[
@@ -110,7 +100,7 @@ class HiddenParentChildExtensionTest extends TypeTestCase
         $this->assertEquals('{"form[stuff][__name__][text]":[{"display":"#form_stuff___name___text_something","values":"value"}],"form[stuff][__name__][number]":[{"display":["form[stuff][__name__][textarea]"],"values":[1]}]}', $view->vars['attr']['data-context-prototypes']);
     }
 
-    public function testPrototypeDeeperLevelConfig()
+    public function testPrototypeDeeperLevelConfig(): void
     {
         $builder = $this->factory->createBuilder();
         $builder->add('deeper',DeeperHiddenPrototypeConfigType::class);
@@ -124,7 +114,7 @@ class HiddenParentChildExtensionTest extends TypeTestCase
     /**
      * @group multipleDeep
      */
-    public function testMultipleDeepConfigs()
+    public function testMultipleDeepConfigs(): void
     {
         $builder = $this->factory->createBuilder();
         $builder->add('deeper',DoubleCollectionDeeperPrototypeType::class);
@@ -145,7 +135,7 @@ class HiddenParentChildExtensionTest extends TypeTestCase
         $this->assertEquals($expected,$view->vars['attr']['data-context-config']);
     }
 
-    public function testChildrenAreHiddenAsWell()
+    public function testChildrenAreHiddenAsWell(): void
     {
         $builder = $this->factory->createBuilder();
         $builder->add('deeper',LevelOneType::class);

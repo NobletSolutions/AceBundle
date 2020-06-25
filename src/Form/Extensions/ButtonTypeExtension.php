@@ -2,27 +2,20 @@
 
 namespace NS\AceBundle\Form\Extensions;
 
-use \Symfony\Component\Form\AbstractTypeExtension;
+use NS\PracticeBundle\Form\FollowUp\CreateType;
+use NS\PracticeBundle\Form\FollowUp\EditType;
+use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
-use \Symfony\Component\Form\FormInterface;
-use \Symfony\Component\Form\FormView;
-use \Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Description of ButtonTypeExtension
- *
- * @author gnat
- */
 class ButtonTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * @return string
-     */
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return ButtonType::class;
+        return [ButtonType::class, EditType::class];
     }
-
     /**
      * @param OptionsResolver $resolver
      */

@@ -1,15 +1,11 @@
 <?php
 
 namespace NS\AceBundle\Tests\Twig;
-use NS\AceBundle\Twig\WidgetExtension;
 
-/**
- * Created by PhpStorm.
- * User: gnat
- * Date: 29/04/16
- * Time: 1:01 PM
- */
-class WidgetExtensionTest extends \PHPUnit_Framework_TestCase
+use NS\AceBundle\Twig\WidgetExtension;
+use PHPUnit\Framework\TestCase;
+
+class WidgetExtensionTest extends TestCase
 {
 //    private $options = array(
 //        'filter_id' => 'filters',
@@ -25,17 +21,17 @@ class WidgetExtensionTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider getOptions
      */
-    public function testGetFilterString($options,$contains)
+    public function testGetFilterString(array $options, $contains): void
     {
         $extension = new WidgetExtension();
-        $output = $extension->getFilterString(array_merge($options,['start_open'=>false]));
+        $output    = $extension->getFilterString(array_merge($options, ['start_open' => false]));
 
-        foreach($contains as $contain) {
+        foreach ($contains as $contain) {
             $this->assertContains($contain, $output);
         }
     }
 
-    public function getOptions()
+    public function getOptions(): array
     {
         $defaults = [
             'filter_id' => 'filters',
@@ -44,7 +40,7 @@ class WidgetExtensionTest extends \PHPUnit_Framework_TestCase
             'target_text' => 'Filters',
         ];
 
-        $second = $defaults;
+        $second              = $defaults;
         $second['open_icon'] = 'fa-cog';
 
         return [
@@ -53,10 +49,10 @@ class WidgetExtensionTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testGetFullScreen()
+    public function testGetFullScreen(): void
     {
         $extension = new WidgetExtension();
-        $this->assertNull($extension->getFullScreenString(['include_expander'=>false]));
-        $this->assertNotEmpty($extension->getFullScreenString(['include_expander'=>true]));
+        $this->assertNull($extension->getFullScreenString(['include_expander' => false]));
+        $this->assertNotEmpty($extension->getFullScreenString(['include_expander' => true]));
     }
 }

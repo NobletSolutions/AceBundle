@@ -5,21 +5,11 @@ namespace NS\AceBundle\Tests\Form;
 use \NS\AceBundle\Tests\BaseFormTestType;
 use \NS\AceBundle\Form\TagType;
 
-/**
- * Description of SwitchType
- *
- * @author gnat
- */
 class TagTypeTest extends BaseFormTestType
 {
-    /**
-     *
-     */
-    public function testFormType()
+    public function testFormType(): void
     {
-        $formData = [
-            'tag' => 1,
-        ];
+        $formData = ['tag' => 1,];
 
         $formBuilder = $this->factory->createBuilder();
         $formBuilder->add('tag', TagType::class);
