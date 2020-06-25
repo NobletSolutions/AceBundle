@@ -3,6 +3,7 @@
 namespace NS\AceBundle\Filter\Type;
 
 use Doctrine\DBAL\Types\Type;
+use Lexik\Bundle\FormFilterBundle\Filter\Condition\ConditionInterface;
 use Lexik\Bundle\FormFilterBundle\Filter\Query\QueryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -44,6 +45,7 @@ class DateFilterType extends AbstractType
                 'widget'   => 'single_text',
                 'compound' => false,
                 'format'   => $this->converter->getFormat(true),
+                'html5'    => false,
                 'apply_filter' => [$this,'filterDate'],
             ])
             ->setAllowedValues('data_extraction_method', ['default'])
@@ -68,10 +70,7 @@ class DateFilterType extends AbstractType
         $view->vars['attr']['placeholder']      = $options['format'];
     }
 
-    /**
-     * @return string
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ParentDateFilterType::class;
     }
@@ -80,7 +79,7 @@ class DateFilterType extends AbstractType
      * @param QueryInterface $filterQuery
      * @param $field
      * @param $values
-     * @return \Lexik\Bundle\FormFilterBundle\Filter\Condition\ConditionInterface
+     * @return ConditionInterface
      */
     public function filterDate(QueryInterface $filterQuery, $field, $values)
     {

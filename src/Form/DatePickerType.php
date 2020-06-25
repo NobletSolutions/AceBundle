@@ -39,6 +39,7 @@ class DatePickerType extends AbstractType
             'widget'   => 'single_text',
             'compound' => false,
             'format'   => $this->converter->getFormat(true),
+            'html5'    => false,
         ]);
     }
 

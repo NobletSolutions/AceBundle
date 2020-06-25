@@ -2,6 +2,7 @@
 
 namespace NS\AceBundle\Filter\Type;
 
+use Lexik\Bundle\FormFilterBundle\Filter\Condition\ConditionInterface;
 use Lexik\Bundle\FormFilterBundle\Filter\Query\QueryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -48,7 +49,7 @@ class DateRangeFilterType extends AbstractType
      * @param QueryInterface $filterQuery
      * @param $field
      * @param $values
-     * @return \Lexik\Bundle\FormFilterBundle\Filter\Condition\ConditionInterface
+     * @return ConditionInterface
      */
     public function filterDateRange(QueryInterface $filterQuery, $field, $values)
     {
