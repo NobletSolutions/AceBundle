@@ -24,7 +24,7 @@
         "ext-json":                 "*"
     },
     "require-dev": {
-        "lexik/form-filter-bundle": "^5.0",
+        "lexik/form-filter-bundle": "^5.0|^6.0",
         "phpunit/phpunit":          "^7.0"
     },
     "suggest": {
