@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gnat
- * Date: 31/05/17
- * Time: 4:27 PM
- */
 
 namespace NS\AceBundle\Form\Extensions;
 
@@ -36,6 +30,11 @@ class InputGroupAddonExtension extends AbstractTypeExtension
         if (isset($options['input-addon-right'])) {
             $view->vars['addon_right'] = $options['input-addon-right'];
         }
+    }
+
+    public static function getExtendedTypes(): iterable
+    {
+        return [FormType::class];
     }
 
     /**
