@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gnat
- * Date: 23/08/16
- * Time: 2:35 PM
- */
 
 namespace NS\AceBundle\Form\Extensions;
 
@@ -35,9 +29,6 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         }
     }
 
-    /**
-     * @inheritDoc
-     */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         /** @var FormInterface $childForm */
@@ -119,22 +110,21 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         $this->prototypes = [];
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getExtendedType()
     {
         return FormType::class;
     }
 
-    /**
-     * @inheritDoc
-     */
+    public static function getExtendedTypes()
+    {
+        return [FormType::class];
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefined(['hidden']);
         $resolver->setAllowedTypes('hidden', 'array');
-        $resolver->setAllowedValues('hidden', function ($config) {
+        $resolver->setAllowedValues('hidden', static function ($config) {
             if (!isset($config['children']) && !isset($config['parent'])) {
                 return false;
             }
