@@ -1,40 +1,42 @@
-<div class="col-sm-9 col-md-9 col-lg-9">
-    {% if app.session and app.session.flashbag %}
-        {% for flashMessage in app.session.flashbag.get('error') %}
-            <div class="alert alert-block alert-danger">
-                <button type="button" class="close" data-dismiss="alert">
-                    <i class="icon-remove"></i>
-                </button>
-                <i class="icon-remove red"></i>
-                {{flashMessage.message}}
-            </div>
-        {% endfor %}
-        {% for flashMessage in app.session.flashbag.get('warning') %}
-            <div class="alert alert-block alert-warning">
-                <button type="button" class="close" data-dismiss="alert">
-                    <i class="icon-remove"></i>
-                </button>
-                <i class="icon-ok green"></i>
-                {{flashMessage.message}}
-            </div>
-        {% endfor %}
-        {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="alert alert-block alert-success">
-                <button type="button" class="close" data-dismiss="alert">
-                    <i class="icon-remove"></i>
-                </button>
-                <i class="icon-ok green"></i>
-                {{flashMessage.message}}
-            </div>
-        {% endfor %}
-        {% for flashMessage in app.session.flashbag.get('message') %}
-            <div class="alert alert-block">
-                <button type="button" class="close" data-dismiss="alert">
-                    <i class="icon-remove"></i>
-                </button>
-                <i class="icon-ok green"></i>
-                {{flashMessage.message}}
-            </div>
-        {% endfor %}
-    {% endif %}
+<div class="row">
+    <div class="col-sm-12 col-md-8 col-md-offset-2">
+        {% if app.session and app.session.flashbag %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="alert alert-block alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    {{ flashMessage.header ? ('<h4>'~flashMessage.header|trans~'</h4>')|raw }}
+                    <strong>{{ flashMessage.title|trans }}</strong> {{ flashMessage.message|trans }}
+                </div>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('warning') %}
+                <div class="alert alert-block alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    {{ flashMessage.header ? ('<h4>'~flashMessage.header|trans~'</h4>')|raw }}
+                    <strong>{{ flashMessage.title|trans }}</strong> {{ flashMessage.message|trans }}
+                </div>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-block alert-success">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    {{ flashMessage.header ? ('<h4>'~flashMessage.header|trans~'</h4>')|raw }}
+                    <strong>{{ flashMessage.title|trans }}</strong> {{ flashMessage.message|trans }}
+                </div>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('message') %}
+                <div class="alert alert-block">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    {{ flashMessage.header ? ('<h4>'~flashMessage.header|trans~'</h4>')|raw }}
+                    <strong>{{ flashMessage.title|trans }}</strong> {{ flashMessage.message|trans }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
 </div>
