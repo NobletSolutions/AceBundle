@@ -3,6 +3,7 @@ VERSION 5  INITIAL SUPPORT FOR SF5
 ==================================
 
    Version 5.0 - Initial support for SF5
+      15/07/2020 07:48  5.0.4  Improved file upload
       06/07/2020 15:38  5.0.3  Tweaked checkbox markup output
       03/07/2020 16:24  5.0.2  Better width on flash message template
       03/07/2020 14:51  5.0.1  Improved Flash message template
