@@ -162,11 +162,12 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element a
     {
         if(el.nsFieldActive !== true)
         {
-            el.nsFieldActive = true;
-            $(el).ace_file_input({
-                no_file:'No File ...',
-                btn_choose:'Choose',
-                btn_change:'Change',
+	    el.nsFieldActive = true;
+            var $el = $(el);
+            $el.ace_file_input({
+                no_file: $el.data('no-file-message') ? $el.data('no-file-message') : 'No File ...',
+                btn_choose: $el.data('choose-message') ? $el.data('choose-message') : 'Choose',
+                btn_change: $el.data('change-message') ? $el.data('change-message') : 'Change',
                 droppable:false,
                 onchange:null,
                 thumbnail:false //| true | large
