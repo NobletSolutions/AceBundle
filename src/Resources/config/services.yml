@@ -12,3 +12,5 @@ services:
   ns_ace.date_format_converter:
     class: NS\AceBundle\Service\DateFormatConverter
 
+  NS\AceBundle\Controller\CalendarController:
+    arguments: [ '@event_dispatcher']
