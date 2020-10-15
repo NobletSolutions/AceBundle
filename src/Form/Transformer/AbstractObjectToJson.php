@@ -2,39 +2,27 @@
 
 namespace NS\AceBundle\Form\Transformer;
 
-use \Doctrine\Common\Persistence\ObjectManager;
-use \Symfony\Component\Form\DataTransformerInterface;
-use \Symfony\Component\PropertyAccess\PropertyAccess;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
-/**
- * Description of AbstractObjectToJson
- *
- * @author gnat
- */
 abstract class AbstractObjectToJson implements DataTransformerInterface
 {
-    /**
-     * @var $entityMgr ObjectManager
-     */
+    /** @var EntityManagerInterface */
     protected $entityMgr;
 
-    /**
-     * @var $class string
-     */
+    /** @var string */
     protected $class;
 
-    /**
-     * @var $propertyMethod string
-     */
+    /** @var string */
     protected $propertyMethod;
 
     /**
-     * AbstractObjectToJson constructor.
-     * @param ObjectManager $entityMgr
+     * @param EntityManagerInterface $entityMgr
      * @param $class
      * @param null $propertyMethod
      */
-    public function __construct(ObjectManager $entityMgr, $class, $propertyMethod = null)
+    public function __construct(EntityManagerInterface $entityMgr, $class, $propertyMethod = null)
     {
         $this->entityMgr = $entityMgr;
         $this->class = $class;
@@ -42,8 +30,7 @@ abstract class AbstractObjectToJson implements DataTransformerInterface
     }
 
     /**
-     *
-     * @return ObjectManager
+     * @return EntityManagerInterface
      */
     public function getEntityManager()
     {
@@ -51,7 +38,6 @@ abstract class AbstractObjectToJson implements DataTransformerInterface
     }
 
     /**
-     *
      * @return string
      */
     public function getClass()
@@ -60,7 +46,6 @@ abstract class AbstractObjectToJson implements DataTransformerInterface
     }
 
     /**
-     *
      * @return string
      */
     public function getPropertyMethod()
