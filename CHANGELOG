@@ -3,6 +3,7 @@ VERSION 5  INITIAL SUPPORT FOR SF5
 ==================================
 
    Version 5.0 - Initial support for SF5
+      27/10/2020 11:18  5.0.9  Tweaked icon handling markup
       16/10/2020 17:00  5.0.8  Fixed deprecated doctrine interface usage
       15/10/2020 15:28  5.0.7  Tweaked CalendarController service tags
       15/10/2020 14:09  5.0.5  controller service
