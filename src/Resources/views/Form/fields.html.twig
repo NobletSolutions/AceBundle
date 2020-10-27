@@ -149,7 +149,7 @@
     {{form_label(form)}}
     {# removing the class allows the input to scale responsively#}
     <div{% if include_input_group %} class="input-group"{% endif %}>
-    {% if icon is defined %}
+    {% if icon is defined and icon is not empty %}
         <span class="input-group-addon">
             <i class="ace-icon {{icon}}"></i>
         </span>
@@ -207,7 +207,7 @@
     {% if label is empty %}
         {% set label = name|humanize %}
     {% endif %}
-    <button {{ block('button_attributes') }}>{%if icon is defined %}<i class="{{icon}}"></i> {%endif%}{{ label|trans({}, translation_domain) }}</button>
+    <button {{ block('button_attributes') }}>{%if icon is defined and icon is not empty %}<i class="{{icon}}"></i> {%endif%}{{ label|trans({}, translation_domain) }}</button>
 {% endblock submit_widget %}
 
 {%block entity_create_widget %}
