@@ -112,7 +112,7 @@ $(document).on('click', 'div.modal button.modal-clear', function (ev) {
         ev.preventDefault();
 });
 
-$(document).on('nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element ajaxComplete shown.ace.widget contextFormUpdate', function (ev) {
+$(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonata.add_element ajaxComplete shown.ace.widget contextFormUpdate', function (ev) {
     bindNsAjaxEvents();
 
     $('.date-picker').each(function (i, el) {
