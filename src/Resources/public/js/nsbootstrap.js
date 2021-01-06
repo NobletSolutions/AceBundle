@@ -69,8 +69,13 @@ function handleAddForm(target) {
     }
 
     var index   = collection.data('index');
-    var newForm = collection.data('prototype').replace(prototype_name, index);
+    var newForm = $(collection.data('prototype').replace(prototype_name, index));
     collection.append(newForm);
+
+    if (collection.data('scroll-to-view', false)) {
+        newForm[0].scrollIntoView();
+    }
+
     collection.data('index', index + 1);
 
     var $form = collection.closest('form');
