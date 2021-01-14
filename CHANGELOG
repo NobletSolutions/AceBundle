@@ -3,6 +3,7 @@ VERSION 5  INITIAL SUPPORT FOR SF5
 ==================================
 
    Version 5.0 - Initial support for SF5
+      14/01/2021 16:22  5.0.12  Added Select2 form types
       27/11/2020 15:07  5.0.11  Listen to shown.bs.modal for things like calendar pickers
       02/11/2020 11:27  5.0.10  Added drag and drop support to file upload field
       27/10/2020 11:18  5.0.9  Tweaked icon handling markup
