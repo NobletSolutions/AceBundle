@@ -59,6 +59,12 @@ services:
     tags:
       - { name: form.type, alias: autocompleter }
 
+  ns_ace.form.type.entityselect2:
+    class: NS\AceBundle\Form\EntitySelect2Type
+    arguments: [ "@router" ]
+    tags:
+      - { name: form.type, alias: select2 }
+
   ns_ace.form.type.tag:
     class: NS\AceBundle\Form\TagType
     tags:

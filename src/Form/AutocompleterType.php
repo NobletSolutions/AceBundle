@@ -17,6 +17,7 @@ use NS\AceBundle\Form\Transformer\CollectionToJson;
 
 /**
  * @author http://loopj.com/jquery-tokeninput/
+ * @deprecated This class has been deprecated in favor of NS\AceBundle\Form\Select2Type with multiple=true
  */
 class AutocompleterType extends AbstractType
 {

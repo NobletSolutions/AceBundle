@@ -142,7 +142,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
             el.nsFieldActive = true;
             var $el          = $(el);
             $el.ns_ace_file_input({
-                                      no_file:    $el.data('no-file-message') ? $el.data('no-file-message') : "Drop file here, or click \'Choose\'",
+                                      no_file: $el.data('no-file-message') ? $el.data('no-file-message') : "Drop file here, or click \'Choose\'",
                                       // no_file: $el.data('no-file-message') ? $el.data('no-file-message') : "Please select a file",
                                       btn_choose: $el.data('choose-message') ? $el.data('choose-message') : 'Choose',
                                       btn_change: $el.data('change-message') ? $el.data('change-message') : 'Change',
@@ -370,6 +370,30 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
             }
         }
         //}
+    });
+    $('.nsSelect2').each(function (i, el) {
+        if (el.nsFieldActive !== true) {
+            el.nsFieldActive = true;
+
+            let url    = $(this).data('url');
+            let config = {debug: true};
+            if (url) {
+                config.ajax = {
+                    url:        url,
+                    delay: $(this).data('ajax-delay') ?? 250,
+                    method:     $(this).data('method').toUpperCase() ?? 'GET',
+                }
+            }
+
+            let initCallback = $(this).data('init-callback');
+
+            if(window[initCallback])
+            {
+                window[initCallback](this, config);
+            }
+
+            $(this).select2(config);
+        }
     });
 });
 
