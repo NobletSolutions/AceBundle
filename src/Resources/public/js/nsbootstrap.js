@@ -392,6 +392,13 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
                 window[initCallback](this, config);
             }
 
+            let modal = el.closest('.modal');
+
+            if(modal.length) //Select2 has issues if it's within a modal
+            {
+                config.dropdownParent = modal;
+            }
+
             $(this).select2(config);
         }
     });
