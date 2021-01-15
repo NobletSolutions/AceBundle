@@ -36,6 +36,8 @@ trait Select2Input
         }
 
         $options['choices'] = $choices;
+
+        return $options;
     }
 
     public function configureOptions(OptionsResolver $resolver)
