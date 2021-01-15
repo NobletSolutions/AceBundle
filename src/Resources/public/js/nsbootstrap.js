@@ -385,7 +385,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
                 }
             }
 
-            let modal = el.closest('.modal');
+            let modal = $(el).closest('.modal');
 
             if(modal.length) //Select2 has issues if it's within a modal
             {
