@@ -2,7 +2,10 @@
 
 namespace NS\AceBundle\Twig;
 
-class AceExtension extends \Twig_Extension
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
+class AceExtension extends AbstractExtension
 {
     /**
      * {@inheritdoc}
@@ -10,7 +13,7 @@ class AceExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('form_horizontal', null, ['node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', 'is_safe' => ['html']])
+            new TwigFunction('form_horizontal', null, ['node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', 'is_safe' => ['html']])
         ];
     }
 
