@@ -3,6 +3,7 @@ VERSION 5  INITIAL SUPPORT FOR SF5
 ==================================
 
    Version 5.0 - Initial support for SF5
+      22/01/2021 14:18  5.0.17  Improvements to entity autocompleter
       21/01/2021 15:11  5.0.16  Removed un-necessary usage of deprecated twig classes and functions"
       15/01/2021 16:59  5.0.15  Fixed modals again
       15/01/2021 16:39  5.0.14  Fixes for select2 in modals
