@@ -1,14 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gnat
- * Date: 22/04/16
- * Time: 11:01 AM
- */
 
 namespace NS\AceBundle\Twig;
 
-class WidgetExtension extends \Twig_Extension
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
+class WidgetExtension extends AbstractExtension
 {
     /**
      * @var array
@@ -28,7 +25,7 @@ class WidgetExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('widget_filter_toolbox', [$this, 'renderFilterToolbox'], ['is_safe'=> ['html']])
+            new TwigFunction('widget_filter_toolbox', [$this, 'renderFilterToolbox'], ['is_safe'=> ['html']])
         ];
     }
 

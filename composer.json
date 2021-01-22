@@ -25,7 +25,8 @@
     },
     "require-dev": {
         "lexik/form-filter-bundle": "^5.0|^6.0",
-        "phpunit/phpunit":          "^7.0"
+        "phpunit/phpunit":          "^7.0",
+        "liip/rmt": "^1.6"
     },
     "suggest": {
         "punkave/symfony2-file-uploader-bundle": "Allows for drag & drop or multiple file upload",

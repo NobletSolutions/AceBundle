@@ -3,13 +3,10 @@
 namespace NS\AceBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-/**
- * Description of BundleExistence
- *
- * @author gnat
- */
-class BundleExistence extends \Twig_Extension
+class BundleExistence extends AbstractExtension
 {
     /**
      * @var ContainerInterface
@@ -31,7 +28,7 @@ class BundleExistence extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('bundleExists', [$this, 'bundleExists']),
+            new TwigFunction('bundleExists', [$this, 'bundleExists']),
         ];
     }
 
