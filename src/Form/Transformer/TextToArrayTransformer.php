@@ -2,13 +2,8 @@
 
 namespace NS\AceBundle\Form\Transformer;
 
-use \Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\DataTransformerInterface;
 
-/**
- * Description of TextToArrayTransformer
- *
- * @author gnat
- */
 class TextToArrayTransformer implements DataTransformerInterface
 {
     /**

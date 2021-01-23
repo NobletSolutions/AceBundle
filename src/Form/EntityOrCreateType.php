@@ -2,19 +2,14 @@
 
 namespace NS\AceBundle\Form;
 
-use \Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use \Symfony\Component\Form\FormBuilderInterface;
-use \Symfony\Component\OptionsResolver\OptionsResolver;
-use \Symfony\Component\Form\FormView;
-use \Symfony\Component\Form\FormInterface;
-use \NS\AceBundle\Form\Transformer\EntityOrCreate;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
+use NS\AceBundle\Form\Transformer\EntityOrCreate;
 
-/**
- * Description of EntityOrCreateType
- *
- * @author gnat
- */
 class EntityOrCreateType extends AbstractType
 {
     /**

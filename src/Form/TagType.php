@@ -2,19 +2,15 @@
 
 namespace NS\AceBundle\Form;
 
-use \Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use \Symfony\Component\Form\FormView;
-use \Symfony\Component\Form\FormInterface;
-use \Symfony\Component\OptionsResolver\OptionsResolver;
-use \Symfony\Component\Form\FormBuilderInterface;
-use \NS\AceBundle\Form\Transformer\TextToArrayTransformer;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormBuilderInterface;
+use NS\AceBundle\Form\Transformer\TextToArrayTransformer;
 
 /**
- * Description of SwitchType
- *
- * @author gnat
- * @author mark
  * @author http://loopj.com/jquery-tokeninput/
  */
 class TagType extends AbstractType
