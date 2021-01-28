@@ -3,6 +3,7 @@ VERSION 5  INITIAL SUPPORT FOR SF5
 ==================================
 
    Version 5.0 - Initial support for SF5
+      28/01/2021 11:12  5.0.20  Fixed select2 query builder
       23/01/2021 15:11  5.0.19  Fixed dependencies
       23/01/2021 15:04  5.0.18  Removed another deprecated twig class"
       22/01/2021 14:18  5.0.17  Improvements to entity autocompleter
