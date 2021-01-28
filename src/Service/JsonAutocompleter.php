@@ -2,22 +2,16 @@
 
 namespace NS\AceBundle\Service;
 
-use \JMS\Serializer\SerializationContext;
-use \JMS\Serializer\SerializerInterface;
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\SerializerInterface;
 use NS\AceBundle\Ajax\Fields;
-use \Symfony\Component\HttpFoundation\Request;
-use \Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Description of JsonAutocompleter
- *
- * @author gnat
- */
+
 class JsonAutocompleter
 {
-    /**
-     * @var SerializerInterface
-     */
+    /** @var SerializerInterface */
     private $serializer;
 
     /**
@@ -25,17 +19,12 @@ class JsonAutocompleter
      */
     private $context;
 
-    /**
-     *
-     * @param SerializerInterface $serializer
-     */
     public function __construct(SerializerInterface $serializer)
     {
         $this->serializer = $serializer;
     }
 
     /**
-     *
      * @return SerializationContext
      */
     public function getContext()
@@ -46,12 +35,11 @@ class JsonAutocompleter
     /**
      *
      * @param SerializationContext $context
-     * @return \NS\AceBundle\Service\JsonAutocompleter
+     * @return void
      */
     public function setContext(SerializationContext $context)
     {
         $this->context = $context;
-        return $this;
     }
 
     /**

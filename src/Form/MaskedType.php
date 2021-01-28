@@ -2,23 +2,16 @@
 
 namespace NS\AceBundle\Form;
 
-use \Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use \Symfony\Component\Form\FormView;
-use \Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-/**
- * Description of KnobType
- *
- * @author mark
- */
 class MaskedType extends AbstractType
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     private $defaults;
 
     /**

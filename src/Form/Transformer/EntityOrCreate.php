@@ -2,17 +2,11 @@
 
 namespace NS\AceBundle\Form\Transformer;
 
-use \Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
-/**
- * Description of EntityOrCreateTransformer
- *
- * @author gnat
- */
 class EntityOrCreate implements DataTransformerInterface
 {
-
     /** @var bool */
     private $expectMultiple;
 
@@ -22,17 +16,11 @@ class EntityOrCreate implements DataTransformerInterface
     /** @var string */
     private $class;
 
-    /**
-     * EntityOrCreate constructor.
-     * @param bool $expectMultiple
-     * @param bool $expectCreateForm
-     * @param string $class
-     */
-    public function __construct($expectMultiple, $expectCreateForm, $class)
+    public function __construct(bool $expectMultiple, bool $expectCreateForm, string $class)
     {
-        $this->expectMultiple = $expectMultiple;
+        $this->expectMultiple   = $expectMultiple;
         $this->expectCreateForm = $expectCreateForm;
-        $this->class = $class;
+        $this->class            = $class;
     }
 
     /**
@@ -48,7 +36,7 @@ class EntityOrCreate implements DataTransformerInterface
                 throw new TransformationFailedException("Unable to reverseTransform as we expected the createFormClicked but it wasn't submitted");
             }
 
-            switch($value['createFormClicked']) {
+            switch ($value['createFormClicked']) {
                 case 'finder':
                     return $this->handleFinder($value);
                 case 'create':
@@ -63,6 +51,7 @@ class EntityOrCreate implements DataTransformerInterface
 
     /**
      * @param array $value
+     *
      * @return array|mixed|null
      */
     private function handleFinder(array $value)
@@ -92,6 +81,7 @@ class EntityOrCreate implements DataTransformerInterface
 
     /**
      * @param array $value
+     *
      * @return array|mixed|null
      */
     private function handleCreate(array $value)
@@ -101,7 +91,7 @@ class EntityOrCreate implements DataTransformerInterface
         }
 
         if (!empty($value['createForm']) && $value['createForm'] instanceof $this->class) {
-            return ($this->expectMultiple) ? [$value['createForm']]: $value['createForm'];
+            return ($this->expectMultiple) ? [$value['createForm']] : $value['createForm'];
         }
 
         return null;

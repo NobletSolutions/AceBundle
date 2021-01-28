@@ -2,11 +2,6 @@
 
 namespace NS\AceBundle\Form\Transformer;
 
-/**
- * Description of EntityToJson
- *
- * @author gnat
- */
 class EntityToJson extends AbstractObjectToJson
 {
     /**

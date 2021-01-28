@@ -2,11 +2,6 @@
 
 namespace NS\AceBundle\Ajax;
 
-/**
- * Description of Fields
- *
- * @author gnat
- */
 class Fields
 {
     private $primaryField;
@@ -45,22 +40,20 @@ class Fields
     /**
      *
      * @param mixed $primaryField
-     * @return \NS\AceBundle\Ajax\Fields
+     * @return void
      */
     public function setPrimaryField($primaryField)
     {
         $this->primaryField = $primaryField;
-        return $this;
     }
 
     /**
      *
      * @param mixed $secondaryField
-     * @return \NS\AceBundle\Ajax\Fields
+     * @return void
      */
     public function setSecondaryField($secondaryField)
     {
         $this->secondaryField = $secondaryField;
-        return $this;
     }
 }

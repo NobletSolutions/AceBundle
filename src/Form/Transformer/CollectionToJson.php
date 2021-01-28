@@ -2,15 +2,10 @@
 
 namespace NS\AceBundle\Form\Transformer;
 
-use \Doctrine\Common\Collections\ArrayCollection;
-use \Doctrine\Common\Collections\Collection;
-use \Symfony\Component\Form\Exception\UnexpectedTypeException;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Form\Exception\UnexpectedTypeException;
 
-/**
- * Description of CollectionToJson
- *
- * @author gnat
- */
 class CollectionToJson extends AbstractObjectToJson
 {
     /**

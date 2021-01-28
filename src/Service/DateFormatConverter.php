@@ -1,18 +1,12 @@
 <?php
 namespace NS\AceBundle\Service;
 
-use \IntlDateFormatter;
+use IntlDateFormatter;
 use Locale;
 
-/**
- * Description of DateFormatConverter
- *
- * @author mark
- */
 class DateFormatConverter
 {
     /**
-     *
      * @param boolean $longyear
      * @return string
      */
