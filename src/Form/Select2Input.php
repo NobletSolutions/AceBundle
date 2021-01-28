@@ -16,7 +16,7 @@ trait Select2Input
     private $router;
 
     protected $params = ['url', 'method', 'allowClear', 'closeOnSelect', 'debug', 'maximumInputLength', 'maximumSelectionLength', 'minimumInputLength', 'minimumResultsForSearch',
-                         'initCallback', 'ajaxDelay', 'tags'];
+                         'initCallback', 'ajaxDelay', 'tags', 'escapeAllMarkup'];
 
     protected function getOptions(FormEvent $event)
     {
@@ -44,6 +44,7 @@ trait Select2Input
     {
         $resolver->setDefined(array_merge($this->params, ['transformer', 'route', 'routeParams', 'config', 'class', 'language'/*, 'property', 'transformer'*/]));
         $resolver->setDefault('minimumInputLength', 2);
+        $resolver->setDefault('escapeAllMarkup', true);
         $resolver->setAllowedTypes('allowClear', ['boolean']);
         $resolver->setAllowedTypes('closeOnSelect', ['boolean']);
         $resolver->setAllowedTypes('debug', ['boolean']);

@@ -399,6 +399,12 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
                 window[initCallback](this, config);
             }
 
+            if($(this).data('escape-all-markup')) {
+                config.escapeMarkup = function (markup) {
+                    return markup;
+                };
+            }
+
             let lang = $(this).data('language-config');
 
             if(lang)
@@ -407,7 +413,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
                 for(const key in lang)
                 {
                     langConfig[key] = function(params) {
-                        return lang[key];
+                        return $('<textarea />').html(lang[key]).val(); //Workaround to unescape html entities
                     }
                 }
 
