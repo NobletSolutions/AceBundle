@@ -399,6 +399,21 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
                 window[initCallback](this, config);
             }
 
+            let lang = $(this).data('language-config');
+
+            if(lang)
+            {
+                const langConfig = {};
+                for(const key in lang)
+                {
+                    langConfig[key] = function(params) {
+                        return lang[key];
+                    }
+                }
+
+                config.language = langConfig;
+            }
+
             $(this).select2(config);
         }
     });

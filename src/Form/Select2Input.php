@@ -42,7 +42,7 @@ trait Select2Input
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(array_merge($this->params, ['transformer', 'route', 'routeParams', 'config', 'class'/*, 'property', 'transformer'*/]));
+        $resolver->setDefined(array_merge($this->params, ['transformer', 'route', 'routeParams', 'config', 'class', 'language'/*, 'property', 'transformer'*/]));
         $resolver->setDefault('minimumInputLength', 2);
         $resolver->setAllowedTypes('allowClear', ['boolean']);
         $resolver->setAllowedTypes('closeOnSelect', ['boolean']);
@@ -51,6 +51,7 @@ trait Select2Input
         $resolver->setAllowedTypes('maximumSelectionLength', ['integer']);
         $resolver->setAllowedTypes('minimumInputLength', ['integer']);
         $resolver->setAllowedTypes('minimumResultsForSearch', ['integer']);
+        $resolver->setAllowedTypes('language', ['array']);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
@@ -76,6 +77,11 @@ trait Select2Input
 
         if (isset($options['url'])) {
             $view->vars['choices'] = [];//Don't pre-populate the dropdown if we're loading results via ajax
+        }
+
+        if(isset($options['language']) && !empty($options['language']))
+        {
+            $view->vars['attr']['data-language-config'] = json_encode($options['language']);
         }
 
         $view->vars['attr']['class'] = isset($view->vars['attr']['class']) ? $view->vars['attr']['class'] . 'nsSelect2' : 'nsSelect2';
