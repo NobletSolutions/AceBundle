@@ -52,7 +52,7 @@ class EntitySelect2Type extends AbstractType
 
             if ($qb) {
                 $alias = $qb->getRootAlias();
-                $qb->andWhere('e.id IN :es2_ids')
+                $qb->andWhere('e.id IN (:es2_ids)')
                    ->setParameter('es2_ids', $data);
             }
         }
