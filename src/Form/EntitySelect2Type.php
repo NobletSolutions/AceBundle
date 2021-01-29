@@ -67,9 +67,17 @@ class EntitySelect2Type extends AbstractType
 
         if ($data) {
             $data = is_iterable($data) ? $data : [$data];
+            /** @var QueryBuilder $qb */
             $qb = $form->getConfig()->getOption('query_builder');
 
+            if(!$qb->getParameter('es2_ids'))
+            {
+                $alias = $qb->getRootAlias();
+                $qb->andWhere("$alias.id IN (:es2_ids)");
+            }
+
             $qb->setParameter('es2_ids', $data);
+
         }
     }
 
