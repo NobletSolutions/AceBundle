@@ -35,37 +35,43 @@ class EntitySelect2Type extends AbstractType
         }
 
         $this->options = $options;
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'preSetData']);
+//        $builder->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'preSetData']);
     }
 
-    public function preSetData(FormEvent $event)
-    {
-        $form = $event->getForm();
+    // This whole thing is looking to be un-needed when backing an EntityType; why was it failing without it before??
+//    public function preSetData(FormEvent $event)
+//    {
+//        $form = $event->getForm();
+//
+//        $data = $event->getData();
+//
+//        if ($data) {
+//            /** @var QueryBuilder $qb */
+//            $qb = $event->getForm()->getConfig()->getOption('query_builder');
+//
+//            if ($qb) {
+//                $alias = $qb->getRootAlias();
+//                if(is_iterable($data))
+//                {
+//                    $qb->andWhere('e.id IN (:es2_ids)')
+//                       ->setParameter('es2_ids', $data);
+//                }
+//                else {
+//                    $qb->andWhere('e.id =:es2_id')
+//                       ->setParameter('es2_id', $data);
+//                }
+//            }
+//        }
+//    }
 
-        $data = $event->getData();
-
-        if ($data) {
-            $data = is_iterable($data) ? $data : [$data];
-
-            /** @var QueryBuilder $qb */
-            $qb = $event->getForm()->getConfig()->getOption('query_builder');
-
-            if ($qb) {
-                $alias = $qb->getRootAlias();
-                $qb->andWhere('e.id IN (:es2_ids)')
-                   ->setParameter('es2_ids', $data);
-            }
-        }
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $this->_configureOptions($resolver);
-
-        $resolver->setDefault('query_builder', function (EntityRepository $er) {
-            return $er->createQueryBuilder('e');
-        });
-    }
+//    public function configureOptions(OptionsResolver $resolver)
+//    {
+//        $this->_configureOptions($resolver);
+//
+//        $resolver->setDefault('query_builder', function (EntityRepository $er) {
+//            return $er->createQueryBuilder('e');
+//        });
+//    }
 
     public function getParent()
     {
