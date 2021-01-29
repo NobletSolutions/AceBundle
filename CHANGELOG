@@ -3,6 +3,7 @@ VERSION 5  INITIAL SUPPORT FOR SF5
 ==================================
 
    Version 5.0 - Initial support for SF5
+      29/01/2021 14:42  5.0.24  Select2 improvements
       29/01/2021 10:14  5.0.23  EntityType listener changes
       28/01/2021 14:15  5.0.22  More entity select improvements
       28/01/2021 12:12  5.0.21  Added support to change translation strings
