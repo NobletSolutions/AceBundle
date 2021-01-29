@@ -375,13 +375,15 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
         if (el.nsFieldActive !== true) {
             el.nsFieldActive = true;
 
-            let url    = $(this).data('url');
+            const $this = $(this);
+
+            let url    = $this.data('url');
             let config = {debug: true};
             if (url) {
                 config.ajax = {
                     url:        url,
-                    delay: $(this).data('ajax-delay') ?? 250,
-                    method:     $(this).data('method').toUpperCase() ?? 'GET',
+                    delay: $this.data('ajax-delay') ?? 250,
+                    method:     $this.data('method').toUpperCase() ?? 'GET',
                 }
             }
 
@@ -392,20 +394,20 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
                 config.dropdownParent = modal;
             }
 
-            let initCallback = $(this).data('init-callback');
+            let initCallback = $this.data('init-callback');
 
             if(window[initCallback])
             {
                 window[initCallback](this, config);
             }
 
-            if($(this).data('escape-all-markup')) {
+            if($this.data('escape-all-markup')) {
                 config.escapeMarkup = function (markup) {
                     return markup;
                 };
             }
 
-            let lang = $(this).data('language-config');
+            let lang = $this.data('language-config');
 
             if(lang)
             {
@@ -420,7 +422,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
                 config.language = langConfig;
             }
 
-            $(this).select2(config);
+            $this.select2(config);
         }
     });
 });
