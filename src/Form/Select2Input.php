@@ -76,6 +76,10 @@ trait Select2Input
             }
         }
 
+        if (isset($options['url'])) {
+            $view->vars['choices'] = [];//Don't pre-populate the dropdown if we're loading results via ajax
+        }
+
         if(isset($options['language']) && !empty($options['language']))
         {
             $view->vars['attr']['data-language-config'] = json_encode($options['language']);
