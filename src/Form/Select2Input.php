@@ -76,8 +76,8 @@ trait Select2Input
             }
         }
 
-        if (isset($options['url'])) {
-            $view->vars['choices'] = [];//Don't pre-populate the dropdown if we're loading results via ajax
+        if (isset($options['url']) && !$view->vars['value']) {
+            $view->vars['choices'] = [];//Don't pre-populate the dropdown if we're loading results via ajax, but leave the existing value if it was added by the presetdata event
         }
 
         if(isset($options['language']) && !empty($options['language']))
