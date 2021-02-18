@@ -3,6 +3,7 @@ VERSION 5  INITIAL SUPPORT FOR SF5
 ==================================
 
    Version 5.0 - Initial support for SF5
+      18/02/2021 12:11  5.0.31  Add append option to form
       18/02/2021 12:03  5.0.30  Added support for appending options to ajax results
       16/02/2021 23:11  5.0.29  Added search result helpers
       04/02/2021 12:13  5.0.28  Font tweaks
