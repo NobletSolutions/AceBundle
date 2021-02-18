@@ -147,18 +147,18 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
             el.nsFieldActive = true;
             var $el          = $(el);
             $el.ns_ace_file_input({
-                                      no_file: $el.data('no-file-message') ? $el.data('no-file-message') : "Drop file here, or click \'Choose\'",
-                                      // no_file: $el.data('no-file-message') ? $el.data('no-file-message') : "Please select a file",
-                                      btn_choose: $el.data('choose-message') ? $el.data('choose-message') : 'Choose',
-                                      btn_change: $el.data('change-message') ? $el.data('change-message') : 'Change',
-                                      droppable:  true,
-                                      onchange:   null,
-                                      thumbnail:  false //| true | large
-                                      //whitelist:'gif|png|jpg|jpeg'
-                                      //blacklist:'exe|php'
-                                      //onchange:''
-                                      //
-                                  });
+                no_file: $el.data('no-file-message') ? $el.data('no-file-message') : "Drop file here, or click \'Choose\'",
+                // no_file: $el.data('no-file-message') ? $el.data('no-file-message') : "Please select a file",
+                btn_choose: $el.data('choose-message') ? $el.data('choose-message') : 'Choose',
+                btn_change: $el.data('change-message') ? $el.data('change-message') : 'Change',
+                droppable:  true,
+                onchange:   null,
+                thumbnail:  false //| true | large
+                //whitelist:'gif|png|jpg|jpeg'
+                //blacklist:'exe|php'
+                //onchange:''
+                //
+            });
         }
     });
 
@@ -174,12 +174,12 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
                     </label>\
                 </div>');
             new PunkAveFileUploader({
-                                        'uploadUrl':                 $(el).data('uploadUrl'),
-                                        'viewUrl':                   $(el).data('uploadUrl'),
-                                        'el':                        $(el),
-                                        'existingFiles':             [],
-                                        'delaySubmitWhileUploading': '.edit-form'
-                                    });
+                'uploadUrl':                 $(el).data('uploadUrl'),
+                'viewUrl':                   $(el).data('uploadUrl'),
+                'el':                        $(el),
+                'existingFiles':             [],
+                'delaySubmitWhileUploading': '.edit-form'
+            });
         }
     });
 
@@ -297,15 +297,15 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
             if (el.nsFieldActive !== true) {
                 el.nsFieldActive = true;
                 $(el).timepicker({
-                                     minuteStep:   1,
-                                     showSeconds:  ($(this).data('showSeconds') === 'true'),
-                                     showMeridian: ($(this).data('showMeridian') === 'true'),
-                                     defaultTime:  false,
-                                     icons:        {
-                                         up:   'fa fa-chevron-up',
-                                         down: 'fa fa-chevron-down'
-                                     }
-                                 }).on('focus', function () {
+                    minuteStep:   1,
+                    showSeconds:  ($(this).data('showSeconds') === 'true'),
+                    showMeridian: ($(this).data('showMeridian') === 'true'),
+                    defaultTime:  false,
+                    icons:        {
+                        up:   'fa fa-chevron-up',
+                        down: 'fa fa-chevron-down'
+                    }
+                }).on('focus', function () {
                     $(el).timepicker('showWidget');
                 }).next().on(ace.click_event, function () {
                     $(this).prev().focus();
@@ -385,28 +385,50 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
             let url    = $this.data('url');
             let config = {debug: true};
             if (url) {
-                config.ajax = {
-                    url:        url,
-                    delay: $this.data('ajax-delay') ?? 250,
-                    method:     $this.data('method').toUpperCase() ?? 'GET',
+                config.ajax           = {
+                    url:            url,
+                    delay:          $this.data('ajax-delay') ?? 250,
+                    method:         $this.data('method').toUpperCase() ?? 'GET',
+                    processResults: (data) => {
+                        const append = $this.data('append');
+
+                        if (append && Array.isArray(append)) {
+                            append.forEach(el => {
+                                if (typeof el === 'string') {
+                                    data.results.push({raw: el})
+                                } else {
+                                    data.results.push({id: el.id, text: el.text});
+                                }
+                            })
+                        }
+
+                        return {results: data.results};
+                    }
+                };
+                config.templateResult = state => {
+                    console.log(state);
+                    if (state.raw) {
+                        return state.raw;
+                    }
+
+                    return state.text;
                 }
             }
 
             let modal = $(el).closest('.modal');
 
-            if(modal.length) //Select2 has issues if it's within a modal
+            if (modal.length) //Select2 has issues if it's within a modal
             {
                 config.dropdownParent = modal;
             }
 
             let initCallback = $this.data('init-callback');
 
-            if(window[initCallback])
-            {
+            if (window[initCallback]) {
                 window[initCallback](this, config);
             }
 
-            if($this.data('escape-all-markup')) {
+            if ($this.data('escape-all-markup')) {
                 config.escapeMarkup = function (markup) {
                     return markup;
                 };
@@ -414,12 +436,10 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
 
             let lang = $this.data('language-config');
 
-            if(lang)
-            {
+            if (lang) {
                 const langConfig = {};
-                for(const key in lang)
-                {
-                    langConfig[key] = function(params) {
+                for (const key in lang) {
+                    langConfig[key] = function (params) {
                         return $('<textarea />').html(lang[key]).val(); //Workaround to unescape html entities
                     }
                 }
