@@ -16,7 +16,7 @@ trait Select2Input
     private $router;
 
     protected $params = ['url', 'method', 'allowClear', 'closeOnSelect', 'debug', 'maximumInputLength', 'maximumSelectionLength', 'minimumInputLength', 'minimumResultsForSearch',
-                         'initCallback', 'ajaxDelay', 'tags', 'escapeAllMarkup'];
+                         'initCallback', 'ajaxDelay', 'tags', 'escapeAllMarkup', 'append'];
 
     protected function getOptions(FormEvent $event)
     {
@@ -65,7 +65,7 @@ trait Select2Input
         foreach ($this->params as $param) {
             if (isset($options[$param]) && $options[$param]) {
                 $pname                             = implode('-', preg_split('/(?=[A-Z])/', $param, -1, PREG_SPLIT_NO_EMPTY));
-                $view->vars['attr']["data-$pname"] = $options[$param];
+                $view->vars['attr']["data-$pname"] = is_array($options[$param]) ? json_encode($options[$param]) : $options[$param];
             }
         }
 
