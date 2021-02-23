@@ -33,7 +33,7 @@
             <link rel="stylesheet" href="{{ asset('/bundles/nsace/dist/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
 
             <!-- NS styles -->
-            <link rel="stylesheet" href="{{ asset('/bundles/nsace/css/ns.css') }}" />
+            <link rel="stylesheet" href="{{ asset('/bundles/nsace/css/ns.css') }}?v=202102231" />
 
             {% block inlinestyles %}
             {% endblock inlinestyles %}
@@ -103,7 +103,7 @@
             <script src="{{asset('/bundles/punkavefileuploader/js/jquery.iframe-transport.js')}}"></script>
             {% endif %}
             <script src="{{asset('/bundles/nsace/js/nsFileUploader.js')}}"></script>
-            <script src="{{asset('/bundles/nsace/js/nsbootstrap.js')}}"></script>
+            <script src="{{asset('/bundles/nsace/js/nsbootstrap.js')}}?v=202102231"></script>
 
             <script type="text/javascript">
                 if ($('#bootstrapHiddenTest').is(':visible') === true) {
