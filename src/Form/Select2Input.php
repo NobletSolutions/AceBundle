@@ -16,7 +16,7 @@ trait Select2Input
     private $router;
 
     protected $params = ['url', 'method', 'allowClear', 'closeOnSelect', 'debug', 'maximumInputLength', 'maximumSelectionLength', 'minimumInputLength', 'minimumResultsForSearch',
-                         'initCallback', 'ajaxDelay', 'tags', 'escapeAllMarkup', 'append'];
+                         'initCallback', 'ajaxDelay', 'tags', 'escapeAllMarkup', 'append', 'placeholder'];
 
     protected function getOptions(FormEvent $event)
     {
@@ -80,8 +80,7 @@ trait Select2Input
             $view->vars['choices'] = [];//Don't pre-populate the dropdown if we're loading results via ajax, but leave the existing value if it was added by the presetdata event
         }
 
-        if(isset($options['language']) && !empty($options['language']))
-        {
+        if (isset($options['language']) && !empty($options['language'])) {
             $view->vars['attr']['data-language-config'] = json_encode($options['language']);
         }
 

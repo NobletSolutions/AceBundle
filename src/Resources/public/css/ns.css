@@ -45,7 +45,8 @@ div.nsUploader input {
 }
 
 div.nsUploader:hover + .ace-file-input label {
-    border-color: #f59942;}
+    border-color: #f59942;
+}
 
 div.uploader div.controls span.uploader-file-name {
     color: #666666;
@@ -188,7 +189,7 @@ label {
     margin-right: 0.5em;
 }
 
-.input-group input[type=checkbox]+label {
+.input-group input[type=checkbox] + label {
     float: left;
 }
 
@@ -246,7 +247,7 @@ label {
 }
 
 .modal.openOnLoad .modal-header button {
-    background: rgba(248,248,248,0.8);
+    background: rgba(248, 248, 248, 0.8);
     margin-bottom: -40px;
     z-index: 100;
     position: relative;
@@ -364,6 +365,11 @@ a.readmore-expander {
 .widget-toolbar > .nav-tabs > li > a {
     margin-top: 0;
 }
+
 .widget-toolbar > .nav-tabs {
     top: 0 !important;
+}
+
+.select2-container--default .select2-selection .select2-selection__clear {
+    right: 32px;
 }
