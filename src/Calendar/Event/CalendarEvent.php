@@ -22,7 +22,7 @@ class CalendarEvent extends Event
 
     private $data;
 
-    public function __construct(DateTime $startDateTime, DateTime $endDateTime, $data)
+    public function __construct(DateTime $startDateTime, DateTime $endDateTime, $data = null)
     {
         $this->startDateTime = $startDateTime;
         $this->endDateTime   = $endDateTime;
