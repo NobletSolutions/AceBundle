@@ -25,11 +25,12 @@ class CalendarController
         try {
             $startDatetime = new DateTime($request->get('start'));
             $endDatetime   = new DateTime($request->get('end'));
+            $data = $request->query->get('options', null);
         } catch (Exception $exception) {
             return new JsonResponse(['message' => 'Invalid date requests'], Response::HTTP_BAD_REQUEST);
         }
 
-        $events = $this->eventDispatcher->dispatch(new CalendarEvent($startDatetime, $endDatetime), CalendarEvent::CONFIGURE)->getEvents();
+        $events = $this->eventDispatcher->dispatch(new CalendarEvent($startDatetime, $endDatetime, $data), CalendarEvent::CONFIGURE)->getEvents();
 
         return new JsonResponse($events);
     }

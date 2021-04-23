@@ -20,11 +20,14 @@ class CalendarEvent extends Event
     /** @var EventEntity[] */
     private $events;
 
-    public function __construct(DateTime $startDateTime, DateTime $endDateTime)
+    private $data;
+
+    public function __construct(DateTime $startDateTime, DateTime $endDateTime, $data)
     {
         $this->startDateTime = $startDateTime;
-        $this->endDateTime = $endDateTime;
-        $this->events = new ArrayCollection();
+        $this->endDateTime   = $endDateTime;
+        $this->events        = new ArrayCollection();
+        $this->data          = $data;
     }
 
     public function getStartDateTime(): DateTime
@@ -55,4 +58,11 @@ class CalendarEvent extends Event
         }
     }
 
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
 }
