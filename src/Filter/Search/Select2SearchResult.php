@@ -6,16 +6,24 @@ class Select2SearchResult implements Select2SearchResultInterface
 {
     private $id;
     private $text;
+    private ?array $extra = null;
 
     public function __construct($id, $text)
     {
-        $this->id   = $id;
+        $args     = func_get_args();
+        $this->id = $id;
 
         if ($text === null) {
-	    throw new  \InvalidArgumentException('Unable to build search result with blank text for id: '.$id);
+            throw new  \InvalidArgumentException('Unable to build search result with blank text for id: ' . $id);
         }
 
         $this->text = $text;
+        $extra      = array_splice($args, 2);
+
+
+        if (!empty($extra)) {
+            $this->extra = $extra;
+        }
     }
 
     public function getId()
@@ -28,11 +36,22 @@ class Select2SearchResult implements Select2SearchResultInterface
         return $this->text;
     }
 
+    public function getExtra(): ?array
+    {
+        return $this->extra;
+    }
+
     public function jsonSerialize(): array
     {
-        return [
+        $out = [
             'id'   => $this->id,
             'text' => $this->text,
         ];
+
+        if ($this->extra) {
+            $out['extra'] = $this->extra;
+        }
+
+        return $out;
     }
 }
