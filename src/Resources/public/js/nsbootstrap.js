@@ -214,7 +214,6 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
                     queryUrl  = $el.data('autocompleteurl') + delim + 'secondary-field=' + $tgt.val();
 
                     $tgt.change(function () {
-                        console.log($el.attr('id') + ' UPDATING VALUE: ' + $tgt.val() + ' vs ' + $(this).val());
                         $el.tokenInput('setOptions', {'url': $el.data('autocompleteurl') + delim + 'secondary-field=' + $(this).val()});
                     });
                 }
@@ -406,7 +405,6 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
                     }
                 };
                 config.templateResult = state => {
-                    console.log(state);
                     if (state.raw) {
                         return state.raw;
                     }
@@ -446,6 +444,19 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
 
                 config.language = langConfig;
             }
+            $this.on('select2:open', function(ev) {
+                const tags = $this.data('tags');
+                const $container = $('.select2-container');
+
+                if(tags)
+                {
+                    $container.addClass('tagged');
+                }
+                else
+                {
+                    $container.removeClass('tagged');
+                }
+            });
 
             $this.select2(config);
         }
@@ -792,7 +803,6 @@ var bindNsAjaxEvents = function () {
             })
             .off('drop')
             .on('drop', function (e) {
-                console.log(this, e);
                 e.preventDefault();
                 e.stopPropagation();
 
@@ -801,7 +811,6 @@ var bindNsAjaxEvents = function () {
                 var dt        = e.originalEvent.dataTransfer;
                 var file_list = dt.files;
                 if (!self.multi && file_list.length > 1) {//single file upload, but dragged multiple files
-                    console.log('multi?');
                     var tmpfiles = [];
                     tmpfiles.push(file_list[0]);
                     file_list = tmpfiles;//keep only first file
@@ -809,11 +818,9 @@ var bindNsAjaxEvents = function () {
 
 
                 file_list = processFiles.call(self, file_list, true);//true means files have been selected, not dropped
-                console.log(file_list);
                 if (file_list === false) return false;
 
                 let input = this.querySelector('input');
-                console.log(input);
                 input.files = file_list;
 
                 self.$element.data('ace_input_method', 'drop');
@@ -828,7 +835,6 @@ var bindNsAjaxEvents = function () {
 
 
     var handle_on_change = function () {
-        console.log('handle on change');
         var file_list = this.element.files || [this.element.value];/** make it an array */
 
         file_list = processFiles.call(this, file_list, false);//false means files have been selected, not dropped
