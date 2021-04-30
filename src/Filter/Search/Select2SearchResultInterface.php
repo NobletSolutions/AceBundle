@@ -8,4 +8,5 @@ interface Select2SearchResultInterface extends JsonSerializable
 {
     public function getId();
     public function getText(): string;
+    public function getExtra(): ?array;
 }

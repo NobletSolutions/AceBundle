@@ -4,9 +4,9 @@ namespace NS\AceBundle\Filter\Search;
 
 class Select2SearchResult implements Select2SearchResultInterface
 {
-    private $id;
-    private $text;
-    private ?array $extra = null;
+    protected $id;
+    protected $text;
+    protected ?array $extra = null;
 
     public function __construct($id, $text)
     {
