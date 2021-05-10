@@ -3,6 +3,7 @@ VERSION 5  INITIAL SUPPORT FOR SF5
 ==================================
 
    Version 5.0 - Initial support for SF5
+      10/05/2021 19:03  5.0.40  Added globalModals block
       30/04/2021 11:17  5.0.39  More select2 improvements
       30/04/2021 10:08  5.0.38  Select2 changes
       29/04/2021 15:13  5.0.37  Added extra field support to Select2SearchResult
