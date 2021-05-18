@@ -133,6 +133,10 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
     color: #ffffff;
 }
 
+div.token-input-dropdown {
+    z-index: 5000 !important;
+}
+
 .widget-toolbar .dataTables_paginate .pagination {
     vertical-align: middle
 }
