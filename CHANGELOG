@@ -3,6 +3,7 @@ VERSION 5  INITIAL SUPPORT FOR SF5
 ==================================
 
    Version 5.0 - Initial support for SF5
+      18/05/2021 18:22  5.0.41  Improved autocomplete modal displaying
       10/05/2021 19:03  5.0.40  Added globalModals block
       30/04/2021 11:17  5.0.39  More select2 improvements
       30/04/2021 10:08  5.0.38  Select2 changes
