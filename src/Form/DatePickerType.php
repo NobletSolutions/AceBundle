@@ -39,7 +39,7 @@ class DatePickerType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if (isset($view->vars['attr']['class'])) {
-            $view->vars['attr']['class'] .= 'form-control date-picker';
+            $view->vars['attr']['class'] .= ' form-control date-picker';
         } else {
             $view->vars['attr']['class'] = 'form-control date-picker';
         }

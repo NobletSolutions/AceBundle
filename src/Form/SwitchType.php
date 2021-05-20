@@ -26,7 +26,7 @@ class SwitchType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if (isset($view->vars['attr']['class'])) {
-            $view->vars['attr']['class'] .= 'ace ace-switch ace-switch-' . $options['switch_type'];
+            $view->vars['attr']['class'] .= ' ace ace-switch ace-switch-' . $options['switch_type'];
         } else {
             $view->vars['attr']['class'] = 'ace ace-switch ace-switch-' . $options['switch_type'];
         }

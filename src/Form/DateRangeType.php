@@ -39,7 +39,7 @@ class DateRangeType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if (isset($view->vars['attr']['class'])) {
-            $view->vars['attr']['class'] .= 'form-control date-range';
+            $view->vars['attr']['class'] .= ' form-control date-range';
         } else {
             $view->vars['attr']['class'] = 'form-control date-range';
         }
