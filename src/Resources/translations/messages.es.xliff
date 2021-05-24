@@ -56,6 +56,19 @@
         <target state="new">records</target>
         <jms:reference-file line="144">views/Form/fields.html.twig</jms:reference-file>
       </trans-unit>
+      <trans-unit id="f6043dcd0c957bcfbe3928e6e2d32c96d669afb8" resname="Enter a search term">
+        <source>Enter a search term</source>
+        <target>Ingrese un término de búsqueda</target>
+      </trans-unit>
+      <trans-unit id="0c7f0514190efbec789128e43138a2781e0c53f1" resname="No results">
+        <source>No results</source>
+        <target>No hay resultados</target>
+      </trans-unit>
+      <trans-unit id="710d866dced9d47c7a923b61a57b2a1a9aa49fcc" resname="Searchingm">
+        <source>Searching</source>
+        <target>Buscando</target>
+      </trans-unit>
+
     </body>
   </file>
 </xliff>

@@ -3,17 +3,20 @@
 namespace NS\AceBundle\Form;
 
 use Doctrine\ORM\EntityManagerInterface;
+use JMS\TranslationBundle\Model\Message;
+use JMS\TranslationBundle\Translation\TranslationContainerInterface;
+use NS\AceBundle\Form\Transformer\CollectionToJson;
+use NS\AceBundle\Form\Transformer\EntityToJson;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
-use NS\AceBundle\Form\Transformer\EntityToJson;
-use NS\AceBundle\Form\Transformer\CollectionToJson;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Description of SwitchType
@@ -22,31 +25,25 @@ use NS\AceBundle\Form\Transformer\CollectionToJson;
  * @author mark
  * @author http://loopj.com/jquery-tokeninput/
  */
-class AutocompleterType extends AbstractType
+class AutocompleterType extends AbstractType implements TranslationContainerInterface
 {
-    /**
-     *  @var $router RouterInterface
-     */
-    private $router;
-
-    /**
-     *  @var $entityMgr EntityManagerInterface
-     */
+    /** @var $entityMgr EntityManagerInterface */
     private $entityMgr;
 
-    /**
-     * @param EntityManagerInterface $entityMgr
-     * @param RouterInterface $router
-     */
-    public function __construct(EntityManagerInterface $entityMgr, RouterInterface $router = null)
+    /** @var TranslatorInterface  */
+    private $translator;
+
+
+    /** @var RouterInterface|null */
+    private $router;
+
+    public function __construct(EntityManagerInterface $entityMgr, TranslatorInterface $translator, RouterInterface $router = null)
     {
-        $this->entityMgr = $entityMgr;
-        $this->router    = $router;
+        $this->entityMgr  = $entityMgr;
+        $this->translator = $translator;
+        $this->router     = $router;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if (isset($options['class'])) {
@@ -64,9 +61,6 @@ class AutocompleterType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefined(['route', 'autocompleteUrl', 'class', 'property', 'icon', 'secondary-field', 'resultsFormatter', 'tokenFormatter', 'transformer', 'tokenValue', 'allowFreeTagging', 'caching']);
@@ -76,12 +70,12 @@ class AutocompleterType extends AbstractType
             'queryParam'    => 'q',
             'minChars'      => 2,
             'prePopulate'   => null,
-            'hintText'      => 'Enter a search term',
-            'noResultsText' => 'No results',
-            'searchingText' => 'Searching',
+            'hintText'      => $this->translator->trans('Enter a search term'),
+            'noResultsText' => $this->translator->trans('No results'),
+            'searchingText' => $this->translator->trans('Searching'),
             'multiple'      => false,
             'attr'          => ['class' => 'nsAutocompleter'],
-            'caching'       => true
+            'caching'       => true,
         ]);
 
         $resolver->setNormalizer('multiple', function (Options $options, $multiple) {
@@ -99,7 +93,7 @@ class AutocompleterType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $ar   = ['method', 'queryParam', 'minChars', 'prePopulate', 'hintText','noResultsText', 'searchingText', 'allowFreeTagging', 'caching'];
+        $ar   = ['method', 'queryParam', 'minChars', 'prePopulate', 'hintText', 'noResultsText', 'searchingText', 'allowFreeTagging', 'caching'];
         $opts = array_intersect_key($options, array_flip($ar));
 
         $opts['tokenLimit'] = $options['multiple'] ? null : 1;
@@ -139,5 +133,14 @@ class AutocompleterType extends AbstractType
     public function getParent()
     {
         return TextType::class;
+    }
+
+    public static function getTranslationMessages()
+    {
+        return [
+            new Message('autocompleter.hintText', 'Enter a search term'),
+            new Message('autocompleter.noResultsText', 'No results'),
+            new Message('autocompleter.searchingText', 'Searching'),
+        ];
     }
 }
