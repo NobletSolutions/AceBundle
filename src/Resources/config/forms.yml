@@ -60,7 +60,7 @@ services:
 
   ns_ace.form.type.autocompleter:
     class: NS\AceBundle\Form\AutocompleterType
-    arguments: [ "@doctrine.orm.entity_manager", "@router" ]
+    arguments: [ "@doctrine.orm.entity_manager", "@translator", "@router" ]
     tags:
       - { name: form.type, alias: autocompleter }
 
