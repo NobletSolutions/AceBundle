@@ -1,9 +1,9 @@
 {% block form_errors %}
     {% if errors|length > 0 %}
         {% for error in errors %}
-        <div class="help-block col-xs-12 col-sm-reset inline has-error">
-             {{ error.message }}
-        </div>
+            <div class="help-block col-xs-12 col-sm-reset inline has-error">
+                {{ error.message }}
+            </div>
         {% endfor %}
     {% endif %}
 {% endblock form_errors %}
@@ -34,28 +34,31 @@
 {%- endblock form_widget_simple %}
 
 {% block form_row %}
-<div class="form-group{% if not form.vars.valid %} has-error{% endif %}">
-    {{form_label(form)}}
-    {{form_widget(form)}}
-    {{form_errors(form)}}
-</div>
-{% endblock form_row %}
-
-{% block form_horizontal %}
-<div class="form-group{% if not form.vars.valid %} has-error{% endif %}">
-    {{form_label(form, null, {'label_attr':{'class':'col-sm-3 control-label'}}) }}
-    <div class="col-sm-9">
+    <div class="form-group{% if not form.vars.valid %} has-error{% endif %}">
+        {{form_label(form)}}
         {{form_widget(form)}}
         {{form_errors(form)}}
     </div>
-</div>
+{% endblock form_row %}
+
+{% block form_horizontal %}
+    <div class="form-group{% if not form.vars.valid %} has-error{% endif %}">
+        {{form_label(form, null, {'label_attr':{'class':'col-sm-3 control-label'}}) }}
+        <div class="col-sm-9">
+            {{form_widget(form)}}
+            {{form_errors(form)}}
+        </div>
+    </div>
 {% endblock form_horizontal %}
 
 {%block switch_row %}
-<div class="form_group">
-    {{ form_label(form) }}
-    {{ form_widget(form) }}
-</div>
+    <div class="form_group{% if not form.vars.valid %} has-error{% endif %}">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {% if not form.vars.valid %}<br />
+            {{ form_errors(form) }}
+        {% endif %}
+    </div>
 {%endblock %}
 
 {% block switch_label %}
@@ -80,25 +83,25 @@
 {%endblock %}
 
 {%block slider_row %}
-<div id="slider-range" class="ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all" aria-disabled="false" style="height: 200px;">
-    <div class="ui-slider-range ui-widget-header ui-corner-all" style="bottom: 17%; height: 70%;"></div>
-    <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="bottom: 17%;"></a>
-    <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="bottom: 87%;">
-        <div class="tooltip right in" style="left: 16px; top: -6px; display: none;">
-            <div class="tooltip-arrow"></div>
-            <div class="tooltip-inner">87</div>
-        </div>
-    </a>
-</div>
+    <div id="slider-range" class="ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all" aria-disabled="false" style="height: 200px;">
+        <div class="ui-slider-range ui-widget-header ui-corner-all" style="bottom: 17%; height: 70%;"></div>
+        <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="bottom: 17%;"></a>
+        <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="bottom: 87%;">
+            <div class="tooltip right in" style="left: 16px; top: -6px; display: none;">
+                <div class="tooltip-arrow"></div>
+                <div class="tooltip-inner">87</div>
+            </div>
+        </a>
+    </div>
 {%endblock %}
 
 {%block acedatepicker_widget %}
-<div class="input-group">
-    <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}/>
-    <span class="input-group-addon">
+    <div class="input-group">
+        <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}/>
+        <span class="input-group-addon">
         <i class="fa fa-calendar bigger-110"></i>
     </span>
-</div>
+    </div>
 {%endblock %}
 
 {%block acedaterange_widget %}
@@ -136,63 +139,63 @@
 {% endblock %}
 
 {% block fileupload_row %}
-<div class="form-group">
-    {{form_label(form)}}
-    <div {{ block('widget_attributes') }}>
-        <div class="nsUploader"></div>
+    <div class="form-group">
+        {{form_label(form)}}
+        <div {{ block('widget_attributes') }}>
+            <div class="nsUploader"></div>
+        </div>
     </div>
-</div>
 {% endblock %}
 
 {% block autocompleter_row %}
-<div class="form-group">
-    {{form_label(form)}}
-    {# removing the class allows the input to scale responsively#}
-    <div{% if include_input_group %} class="input-group"{% endif %}>
-    {% if icon is defined and icon is not empty %}
-        <span class="input-group-addon">
+    <div class="form-group">
+        {{form_label(form)}}
+        {# removing the class allows the input to scale responsively#}
+        <div{% if include_input_group %} class="input-group"{% endif %}>
+            {% if icon is defined and icon is not empty %}
+                <span class="input-group-addon">
             <i class="ace-icon {{icon}}"></i>
         </span>
-    {% endif %}
-        <input type="text" {{ block('widget_attributes') }} {% if value is defined %} value="{{ value }}"{% endif %}/>
+            {% endif %}
+            <input type="text" {{ block('widget_attributes') }} {% if value is defined %} value="{{ value }}"{% endif %}/>
+        </div>
     </div>
-</div>
 {% endblock %}
 
 {% block tag_row %}
-<div class="form-group">
-    {{form_label(form)}}
-    <div class="input-group">
-        <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}/>
+    <div class="form-group">
+        {{form_label(form)}}
+        <div class="input-group">
+            <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}/>
+        </div>
     </div>
-</div>
 {% endblock %}
 
 {% block spinner_row %}
-<div class="form-group">
-    {{form_label(form)}}
-    <div class="input-group">
-        <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}"/>
+    <div class="form-group">
+        {{form_label(form)}}
+        <div class="input-group">
+            <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}"/>
+        </div>
     </div>
-</div>
 {% endblock %}
 
 {% block knob_row %}
-<div class="form-group">
-    {{form_label(form)}}
-    <div class="input-group">
-        <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}"/>
+    <div class="form-group">
+        {{form_label(form)}}
+        <div class="input-group">
+            <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}"/>
+        </div>
     </div>
-</div>
 {% endblock %}
 
 {% block masked_row %}
-<div class="form-group">
-    {{form_label(form)}}
-    <div class="input-group">
-        <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}"/>
+    <div class="form-group">
+        {{form_label(form)}}
+        <div class="input-group">
+            <input type="text" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}" {% endif %}"/>
+        </div>
     </div>
-</div>
 {% endblock %}
 
 {%- block button_row -%}
@@ -211,49 +214,49 @@
 {% endblock submit_widget %}
 
 {%block entity_create_widget %}
-<div class="input-group entity-create">
+    <div class="input-group entity-create">
     <span class="input-group-addon">
         <i class="ace-icon fa fa-search"></i>
     </span>
-    {{form_widget(form.finder)}}
-    {% if include_button %}
-    <span class="input-group-btn">
+        {{form_widget(form.finder)}}
+        {% if include_button %}
+            <span class="input-group-btn">
         <button id="modal_trigger_{{form.finder.vars.id}}" type="button" class="btn btn-sm btn-success" data-input="{{form.finder.vars.id}}" data-toggle="modal" data-target="#modal_{{form.finder.vars.id}}">
             <span class="ace-icon fa fa-plus icon-on-right bigger-110"></span>
             <span class="entity-modal-status"> Add</span>
         </button>
     </span>
-    {% endif %}
-</div>
-{% if include_form %}
-<div id="modal_{{form.finder.vars.id}}" class="modal fade entity-modal" data-input="{{form.finder.vars.id}}">
-    <div class="modal-dialog{%if modal_size is defined %} {{modal_size}}{% endif %}">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Create New {{ form.vars.name|humanize }}</h4>
-            </div>
-            <div class="modal-body">
-                {{ form_widget(form.createForm) }}
-                {{ form_widget(form.createFormClicked) }}
-            </div>
-            <div class="modal-footer">
-                <span>This {{ form.vars.name|humanize }} will be saved when you submit the original form. </span>
-                <button id="{{form.createFormClicked.vars.id}}_clear" class="btn btn-default btn-sm modal-clear" data-dismiss="modal">Clear/Close</button>
-                <button id="{{form.createFormClicked.vars.id}}_save" class="btn btn-success btn-sm" data-dismiss="modal">Apply changes</button>
-                <script type="text/javascript">
-                    var {{ form.createFormClicked.vars.id }}_var = document.getElementById('{{ form.createFormClicked.vars.id }}');
-                    document.getElementById('{{form.createFormClicked.vars.id}}_clear').onclick = function() {
-                        {{ form.createFormClicked.vars.id }}_var.value = 'finder';
-                    };
-                    document.getElementById('{{form.createFormClicked.vars.id}}_save').onclick = function() {
-                        {{ form.createFormClicked.vars.id }}_var.value = 'create';
-                    };
-                </script>
+        {% endif %}
+    </div>
+    {% if include_form %}
+        <div id="modal_{{form.finder.vars.id}}" class="modal fade entity-modal" data-input="{{form.finder.vars.id}}">
+            <div class="modal-dialog{%if modal_size is defined %} {{modal_size}}{% endif %}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Create New {{ form.vars.name|humanize }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_widget(form.createForm) }}
+                        {{ form_widget(form.createFormClicked) }}
+                    </div>
+                    <div class="modal-footer">
+                        <span>This {{ form.vars.name|humanize }} will be saved when you submit the original form. </span>
+                        <button id="{{form.createFormClicked.vars.id}}_clear" class="btn btn-default btn-sm modal-clear" data-dismiss="modal">Clear/Close</button>
+                        <button id="{{form.createFormClicked.vars.id}}_save" class="btn btn-success btn-sm" data-dismiss="modal">Apply changes</button>
+                        <script type="text/javascript">
+                            var {{ form.createFormClicked.vars.id }}_var = document.getElementById('{{ form.createFormClicked.vars.id }}');
+                            document.getElementById('{{form.createFormClicked.vars.id}}_clear').onclick = function() {
+                                {{ form.createFormClicked.vars.id }}_var.value = 'finder';
+                            };
+                            document.getElementById('{{form.createFormClicked.vars.id}}_save').onclick = function() {
+                                {{ form.createFormClicked.vars.id }}_var.value = 'create';
+                            };
+                        </script>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-{% endif %}
+    {% endif %}
 {% endblock %}
 
 {% block checkbox_label %}{% endblock %}
@@ -265,9 +268,9 @@
         {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ (form.vars.required ? 'required ' : '')}) %}
 
         <label id="{{ id }}_hiddenLabel" for={{ id }} {%- for attrname, attrvalue in label_attr -%}{{- " " -}}{{- attrname }}="{{ attrvalue }}"{%- endfor -%}>
-        {% set attr = attr|merge({'class':'ace'}) %}
-        <input {{ block('widget_attributes') }} type="radio" {% if checked %}checked{%endif%}{% if value is defined %} value="{{ value }}"{% endif %} />
-        <span class="lbl">
+            {% set attr = attr|merge({'class':'ace'}) %}
+            <input {{ block('widget_attributes') }} type="radio" {% if checked %}checked{%endif%}{% if value is defined %} value="{{ value }}"{% endif %} />
+            <span class="lbl">
                 {% if label is not same as(false) -%}
                     {% if label is empty -%}
                         {%- if label_format is not empty -%}
@@ -288,7 +291,7 @@
         <label id="{{ id }}_hiddenLabel" for={{ id }} {%- for attrname, attrvalue in label_attr -%}
         {{- " " -}}
         {{- attrname }}="{{ attrvalue }}"
-        {%- endfor -%}>
+                {%- endfor -%}>
             {% if attr.class is not defined %}
                 {% set attr = attr|merge({'class':'ace'}) %}
             {% endif %}
