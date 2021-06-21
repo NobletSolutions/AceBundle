@@ -3,6 +3,7 @@ VERSION 5  INITIAL SUPPORT FOR SF5
 ==================================
 
    Version 5.0 - Initial support for SF5
+      21/06/2021 16:48  5.0.45  Actually register the form extension
       17/06/2021 15:47  5.0.44  Added Label Tooltip Form Extension
       15/06/2021 13:52  5.0.43  Added error messages to switch fields
       20/05/2021 16:17  5.0.42  Added spaces to classes when we're appending
