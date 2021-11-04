@@ -28,9 +28,23 @@ class Select2Type extends AbstractType
 
     public function preSubmit(FormEvent $event)
     {
-        $form = $event->getForm();
+        $data   = $event->getData();
+        $form   = $event->getForm();
+        $config = $form->getConfig();
 
-        $form->getParent()->add($form->getName(), Select2Type::class, $this->getOptions($event));
+        if ($config->getOption('url')) {
+            $name   = $form->getName();
+            $parent = $form->getParent();
+
+            if (!in_array($data, $form->getConfig()->getOption('choices'))) {
+                $parent->add($name, __CLASS__, $this->getOptions($event));
+
+                $newForm = $parent->get($name);
+                $newData = $newForm->getData();
+
+                $newForm->submit($data);
+            }
+        }
     }
 
     public function getParent()
