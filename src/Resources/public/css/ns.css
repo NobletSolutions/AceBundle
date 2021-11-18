@@ -377,3 +377,23 @@ a.readmore-expander {
 .select2-container--default .select2-selection .select2-selection__clear {
     right: 32px;
 }
+
+span.button-label {
+    display: inline-block;
+    border: 1px solid #404040;
+    align-items: stretch;
+    background: #ffffff;
+}
+
+span.button-label > span.label
+{
+    display: inline-block;
+    height: 100%;
+    background: #ffffff;
+    margin-right: -0.2rem;
+}
+
+span.button-label > span.label + .btn {
+    border-left: 1px solid #404040;
+}
+
