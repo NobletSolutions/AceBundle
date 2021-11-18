@@ -3,6 +3,7 @@ VERSION 5  INITIAL SUPPORT FOR SF5
 ==================================
 
    Version 5.0 - Initial support for SF5
+      18/11/2021 15:57  5.0.47  Added button label style
       04/11/2021 13:18  5.0.46  Fixed bug in Select2Type
       21/06/2021 16:48  5.0.45  Actually register the form extension
       17/06/2021 15:47  5.0.44  Added Label Tooltip Form Extension
