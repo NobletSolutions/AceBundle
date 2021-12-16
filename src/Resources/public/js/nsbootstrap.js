@@ -68,8 +68,13 @@ function handleAddForm(target) {
         prototype_name = new RegExp('__name__', 'g');
     }
 
-    var index   = collection.data('index');
-    var newForm = $(collection.data('prototype').replace(prototype_name, index));
+    var index     = collection.data('index');
+    var prototype = collection.data('prototype');
+    if (!prototype) {
+        console.debug('No prototype defined on element data-collection=' + target.data('collectionholder') + ']');
+        return;
+    }
+    var newForm = $(prototype.replace(prototype_name, index));
     collection.append(newForm);
 
     if (collection.data('scroll-to-view', false)) {
