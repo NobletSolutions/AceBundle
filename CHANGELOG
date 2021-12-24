@@ -3,6 +3,7 @@ VERSION 5  INITIAL SUPPORT FOR SF5
 ==================================
 
    Version 5.0 - Initial support for SF5
+      24/12/2021 11:21  5.0.49  Bug fix in select2Type
       16/12/2021 13:01  5.0.48  Added DatePicker form options
       18/11/2021 15:57  5.0.47  Added button label style
       04/11/2021 13:18  5.0.46  Fixed bug in Select2Type
