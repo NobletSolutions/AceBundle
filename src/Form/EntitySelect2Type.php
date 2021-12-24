@@ -42,19 +42,22 @@ class EntitySelect2Type extends AbstractType
     // Only pre-populate the existing field, not the entire entity list
     public function preSetData(FormEvent $event)
     {
-        $form = $event->getForm();
+        $form   = $event->getForm();
+        $data   = $event->getData();
+        $config = $form->getConfig();
 
-        $data = $event->getData();
+        if ($config->getOption('url') || $config->getOption('route')) {
 
-        if ($data) {
-            /** @var QueryBuilder $qb */
-            $qb   = $event->getForm()->getConfig()->getOption('query_builder');
-            $data = is_iterable($data) ? $data : [$data];
+            if ($data) {
+                /** @var QueryBuilder $qb */
+                $qb   = $event->getForm()->getConfig()->getOption('query_builder');
+                $data = is_iterable($data) ? $data : [$data];
 
-            if ($qb) {
-                $alias = $qb->getRootAlias();
-                $qb->andWhere("$alias.id IN (:es2_ids)")
-                   ->setParameter('es2_ids', $data);
+                if ($qb) {
+                    $alias = $qb->getRootAlias();
+                    $qb->where("$alias.id IN (:es2_ids)")
+                       ->setParameter('es2_ids', $data);
+                }
             }
         }
     }
@@ -62,22 +65,26 @@ class EntitySelect2Type extends AbstractType
     //Overwrite the querybuilder so the submitted selection is a valid choice.  Persistence code must ensure the user is allowed to select this option (same as the old autocompleter)
     public function preSubmit(FormEvent $event)
     {
-        $data = $event->getData();
-        $form = $event->getForm();
+        $data   = $event->getData();
+        $form   = $event->getForm();
+        $config = $form->getConfig();
 
-        if ($data) {
-            $data = is_iterable($data) ? $data : [$data];
-            /** @var QueryBuilder $qb */
-            $qb = $form->getConfig()->getOption('query_builder');
+        if ($config->getOption('url') || $config->getOption('route')) {
 
-            if(!$qb->getParameter('es2_ids'))
-            {
-                $alias = $qb->getRootAlias();
-                $qb->andWhere("$alias.id IN (:es2_ids)");
+            if ($data) {
+                $data = is_iterable($data) ? $data : [$data];
+                /** @var QueryBuilder $qb */
+                $qb = $form->getConfig()->getOption('query_builder');
+
+                if (!$qb->getParameter('es2_ids')) {
+                    $alias = $qb->getRootAlias();
+                    $qb->where("$alias.id IN (:es2_ids)");
+                }
+
+                $existing = $qb->getParameter('es2_ids') ? $qb->getParameter('es2_ids')->getValue() : [];
+
+                $qb->setParameter('es2_ids', array_merge($data, $existing));
             }
-
-            $qb->setParameter('es2_ids', $data);
-
         }
     }
 

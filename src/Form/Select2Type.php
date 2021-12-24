@@ -32,7 +32,7 @@ class Select2Type extends AbstractType
         $form   = $event->getForm();
         $config = $form->getConfig();
 
-        if ($config->getOption('url')) {
+        if ($config->getOption('url') || $config->getOption('route')) {
             $name   = $form->getName();
             $parent = $form->getParent();
 
