@@ -95,7 +95,7 @@ class DatePickerType extends AbstractType
 
         foreach ($this->dataAttributes as $attribute) {
             if (isset($options[$attribute])) {
-                $view->vars['attr']['data-'.$attribute] = $attribute;
+                $view->vars['attr']['data-date-'.$attribute] = $attribute;
             }
         }
     }
