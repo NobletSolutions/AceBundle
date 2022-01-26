@@ -1,5 +1,4 @@
-(function($)
-{
+(function ($) {
     /**
      *
      * @param element string #The container to search for forms within.  Accepts either a DOM element or JQuery selector. Defaults to document.
@@ -11,42 +10,37 @@
      * @param onSuccessEvent string Event to throw when a form field is shown or hidden
      * @constructor
      */
-    $.ContextualForm = function(element, globalConfig, autoinit, events, onSuccessEvent)
-    {
-        autoinit = typeof(autoinit) !== 'undefined' ? autoinit: true;
-        events   = typeof(events) !== 'undefined' ? events : 'nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element ajaxComplete shown.ace.widget';
-        this.onSuccessEvent = typeof(onSuccessEvent) !== 'undefined' ? onSuccessEvent : 'contextFormUpdate';
-        this.activityMap = {}; //We need to store a mapping of what fields are currently active and "visible"; storing this info right on the field is problematic because it may or may not be an actual <input> element
-        this.toBeProcessed = {};
-        this.isFirstRun = true;
-        this.collectionref = 1;
-        this.allTargets = $(); //Straight list of every child element for rapid access
-        this.elementList = [];
+    $.ContextualForm = function (element, globalConfig, autoinit, events, onSuccessEvent) {
+        autoinit            = typeof (autoinit) !== 'undefined' ? autoinit : true;
+        events              = typeof (events) !== 'undefined' ? events : 'nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element ajaxComplete shown.ace.widget';
+        this.onSuccessEvent = typeof (onSuccessEvent) !== 'undefined' ? onSuccessEvent : 'contextFormUpdate';
+        this.activityMap    = {}; //We need to store a mapping of what fields are currently active and "visible"; storing this info right on the field is problematic because it may or may not be an actual <input> element
+        this.toBeProcessed  = {};
+        this.isFirstRun     = true;
+        this.collectionref  = 1;
+        this.allTargets     = $(); //Straight list of every child element for rapid access
+        this.elementList    = [];
+        this.foundWrappers  = $();
 
         var defaultConfig = {
-            'event': 'input',
-            'ignoreClass': 'ignore'
+            'event': 'input', 'ignoreClass': 'ignore'
         };
 
         //Just use the document if we don't pass an element
-        if(element === undefined)
-        {
+        if (element === undefined) {
             element = document;
         }
 
         this.globalConfig = $.extend(defaultConfig, globalConfig); //Merge the default and provided configs
-        this.element   = (element instanceof $) ? element: $(element); //Convert the element arg to a JQuery object if it isn't one
-        this.forms     = null;
+        this.element      = (element instanceof $) ? element : $(element); //Convert the element arg to a JQuery object if it isn't one
+        this.forms        = null;
 
-        if(autoinit)
-        {
+        if (autoinit) {
             var cf = this;
             cf.Init();
 
-            if(events)
-            {
-                $(document).on(events, function()
-                {
+            if (events) {
+                $(document).on(events, function () {
                     cf.Init();
                 });
             }
@@ -58,58 +52,49 @@
          * Init the contextual form plugin
          * @constructor
          */
-        Init: function()
-        {
-            var cform   = this; //#JustJavascriptScopeThings
+        Init: function () {
+            var cform        = this; //#JustJavascriptScopeThings
             cform.isFirstRun = true;
-            cform.forms = cform.element.find('form[data-context-config]').addBack('form[data-context-config]'); //Find any forms that have a config
+            cform.forms      = cform.element.find('form[data-context-config]').addBack('form[data-context-config]'); //Find any forms that have a config
 
             //Parse the config for each form and add it to the DOM element
-            cform.forms.each(function()
-            {
+            cform.forms.each(function () {
                 //Make sure this isn't a reference because we need to modify the copy
-                var conf = $(this).data('context-config');
-                var prototypes = $(this).data('context-prototypes');
-                this.contextConfig = $.extend(true, {}, conf);
+                var conf             = $(this).data('context-config');
+                var prototypes       = $(this).data('context-prototypes');
+                this.contextConfig   = $.extend(true, {}, conf);
                 this.prototypeConfig = $.extend(true, {}, prototypes);
-                this.ContextualForm = cform; // Give the form element a reference back to this ContextualForm object
+                this.ContextualForm  = cform; // Give the form element a reference back to this ContextualForm object
             });
 
             cform.AddListeners();
             $('.ctxtc').hide();//Hide everything by default and then selectively show what we need
 
-            $.each(cform.elementList, function(key, el)
-            {
+            $.each(cform.elementList, function (key, el) {
                 cform.Go(el.field, el.conf);
             });
 
             cform.isFirstRun = false;
         },
 
-        AddConfigFromPrototype: function(form, index, replace)
-        {
-            replace = replace !== undefined ? replace : '__name__';
+        AddConfigFromPrototype: function (form, index, replace) {
+            replace   = replace !== undefined ? replace : '__name__';
             var $form = form;
-            form = $form[0];
+            form      = $form[0];
 
-            if(form.prototypeConfig)
-            {
-                $.each(form.prototypeConfig, function(key, values)
-                {
+            if (form.prototypeConfig) {
+                $.each(form.prototypeConfig, function (key, values) {
                     var name = key.replace(replace, index);
-                    if(!$form.data('context-config')[name])
-                    {
+                    if (!$form.data('context-config')[name]) {
                         $form.data('context-config')[name] = [];
-                        $.each(values, function(key, val)
-                        {
+                        $.each(values, function (key, val) {
                             var display = Array.isArray(val.display) ? val.display.slice() : [val.display];
-                            var values = Array.isArray(val.values) ? val.values.slice() : [val.values];
-                            $.each(display, function(k, v)
-                            {
+                            var values  = Array.isArray(val.values) ? val.values.slice() : [val.values];
+                            $.each(display, function (k, v) {
                                 display[k] = v.replace(replace, index);
                             });
 
-                            $form.data('context-config')[name].push({'display':display, 'values':values});
+                            $form.data('context-config')[name].push({'display': display, 'values': values});
                         });
                     }
                 });
@@ -120,22 +105,20 @@
          * Loop through the form configs, find which fields we need to add handlers to, and start the process
          *
          */
-        AddListeners: function()
-        {
+        AddListeners: function () {
             var cform = this;
 
             //Get the config back from the DOM element
-            cform.forms.each(function()
-            {
+            cform.forms.each(function () {
                 var $form  = $(this); //This is the <form> element in this context
                 var config = this.contextConfig;
 
                 //Grab each element from the config and add the event listeners for it
-                $.each(config, function(index, value){
+                $.each(config, function (index, value) {
                     data = cform.ProcessFormConfig($form, index, value); //'this' refers to the current config item, because loop
 
                     if (data && data.length === 2) {
-                        cform.elementList.push({'field':data[0], 'conf':data[1]});
+                        cform.elementList.push({'field': data[0], 'conf': data[1]});
                     }
                 });
             });
@@ -148,29 +131,25 @@
          * @param field String #The name of the field to process the config for
          * @param config Object #The config (JSON) for this field
          */
-        ProcessFormConfig: function($form, field, config)
-        {
-            var cform = this;
+        ProcessFormConfig: function ($form, field, config) {
+            var cform  = this;
             //Get the actual form field element
-            var $field = $($form[0].querySelectorAll('[name="'+field+'"]'));
-            $field = $field.add($($form[0].querySelectorAll('[name="'+field+'[]"]')));
+            var $field = $($form[0].querySelectorAll('[name="' + field + '"]'));
+            $field     = $field.add($($form[0].querySelectorAll('[name="' + field + '[]"]')));
 
             if ($field.length === 0) {
                 return;
             }
 
             //Determine if we're looking at a single field (text input, select, or boolean checkbox, or multiple elements (expanded checkboxes)
-            if($field.length > 1 || $field.attr('name').indexOf('[]') >= 0)
-            {
+            if ($field.length > 1 || $field.attr('name').indexOf('[]') >= 0) {
                 cform.collectionref++;
 
                 $field.attr('data-iscollection', true);
                 $field.data('iscollection', true);
                 $field.attr('data-collectionref', cform.collectionref);
                 $field.data('collectionref', cform.collectionref);
-            }
-            else
-            {
+            } else {
                 $field.data('iscollection', false);
                 $field.removeAttr('iscollection');
             }
@@ -180,15 +159,12 @@
             //We're doing all of this before the event handler so it only happens once on init.
 
             //Loop through the config, convert the parameters to actual JQuery objects, and update the config
-            $.each(config, function(index, conf)
-            {
+            $.each(config, function (index, conf) {
                 var targets = [];
-                if(conf.display instanceof Array) {
-                    $.each(conf.display, function(i, dis)
-                    {
+                if (conf.display instanceof Array) {
+                    $.each(conf.display, function (i, dis) {
                         var $sel = cform.DisplayConfToSelector($form, dis);
-                        if($sel.length)
-                        {
+                        if ($sel.length) {
                             $sel.data('visibleParents', []);
                             targets.push($sel);
                             cform.allTargets = cform.allTargets.add($sel);
@@ -197,23 +173,22 @@
                     });
                 } else {
                     var $sel = cform.DisplayConfToSelector($form, conf.display);
-                    if($sel.length)
-                    {
+                    if ($sel.length) {
                         $sel.data('visibleParents', []);
-                        targets = [$sel];
+                        targets          = [$sel];
                         cform.allTargets = cform.allTargets.add($sel);
                         $sel.addClass('ctxtc');
                     }
                 }
 
                 //Make this always an array for ease of comparison
-                if(!(conf.values instanceof Array)) {
+                if (!(conf.values instanceof Array)) {
                     conf.values = [conf.values];
                 }
 
                 //It's HTML, so deep down these were always strings, anyway. Make it so.
                 var arr = [];
-                $.each(conf.values, function(i, v) {
+                $.each(conf.values, function (i, v) {
                     arr.push(String(v));
                 });
 
@@ -233,19 +208,17 @@
          * @param $field Object #The form field.  JQuery object.
          * @param config
          */
-        AddListener: function($field, config)
-        {
+        AddListener: function ($field, config) {
             var cform = this;
 
-            var event = $field.is('[type=checkbox], [type=radio], select') ? 'change':cform.globalConfig.event; //Sadly, chrome only supports oninput on text fields
+            var event = $field.is('[type=checkbox], [type=radio], select') ? 'change' : cform.globalConfig.event; //Sadly, chrome only supports oninput on text fields
 
-            $field.off(event+'.cf'); //Init() could have been called more than once; remove any previous handlers so we don't get doubles
+            $field.off(event + '.cf'); //Init() could have been called more than once; remove any previous handlers so we don't get doubles
 
-            $field.on(event+'.cf', function($event, param1)
-            {
-                if(!param1)
-                {
+            $field.on(event + '.cf', function ($event, param1) {
+                if (!param1) {
                     cform.activityMap[$field.attr('id')] = true;//param1 is only true if this came from a trigger() call; we only want to update the activityMap after the user actually changes a field
+                    cform.resetState();
                 }
 
                 cform.Go($(this), config, $event)
@@ -259,16 +232,13 @@
          * @param dis String #The name or ID of the element we want to toggle
          * @returns {*}
          */
-        DisplayConfToSelector: function($form, dis)
-        {
-            if(dis.indexOf('#') > -1) //If we passed an id selector, just use that ID.
+        DisplayConfToSelector: function ($form, dis) {
+            if (dis.indexOf('#') > -1) //If we passed an id selector, just use that ID.
             {
                 return $(dis);
-            }
-            else
-            {
-                var $els = $($form[0].querySelector('[name="'+dis+'"]'));
-                $els = $els.add($($form[0].querySelector('[name="'+dis+'[]"]')));
+            } else {
+                var $els = $($form[0].querySelector('[name="' + dis + '"]'));
+                $els     = $els.add($($form[0].querySelector('[name="' + dis + '[]"]')));
 
                 return this.FindWrapper($form, $els); //Otherwise, find the field by name.
             }
@@ -282,13 +252,12 @@
          * @param $el Object #Form field we're toggling
          * @returns {*}
          */
-        FindWrapper: function($form, $el)
-        {
+        FindWrapper: function ($form, $el) {
             //Find the parent element to toggle, if appropriate
             var $f = this.FindWrapperForFieldType($form, $el);
 
             //If that gave us something, return it.  Otherwise, merge the form field and its label into a single collection we can toggle at once
-            var $wrapper = $f ? $f : $el.add($form.find($('label[for='+$el.attr('id')+']')));
+            var $wrapper = $f ? $f : $el.add($form.find($('label[for=' + $el.attr('id') + ']')));
             $wrapper.data('fieldId', $el.attr('id')); //we need a quick way to get the actual form field ID from the wrapper element if needed
             return $wrapper;
         },
@@ -300,23 +269,19 @@
          * @param $field Object #The current field
          * @returns {boolean}
          */
-        FindWrapperForFieldType: function($form, $field)
-        {
+        FindWrapperForFieldType: function ($form, $field) {
             var ret = false;
 
-            if(!ret && $field.is('input[type=checkbox]'))
-            {
+            if (!ret && $field.is('input[type=checkbox]')) {
                 ret = this.FindWrapperForCheckbox($form, $field);
             }
 
-            if(!ret && $field.is('input[type=radio]'))
-            {
+            if (!ret && $field.is('input[type=radio]')) {
                 ret = this.FindWrapperForRadioButton($form, $field);
             }
 
-            if(!ret && $field.is('input, select, textarea'))
-            {
-                ret =  this.FindWrapperForInput($form, $field);
+            if (!ret && $field.is('input, select, textarea')) {
+                ret = this.FindWrapperForInput($form, $field);
             }
 
             return ret;
@@ -329,8 +294,7 @@
          * @param $field Object #The current field
          * @returns {*}
          */
-        FindWrapperForInput: function($form, $field)
-        {
+        FindWrapperForInput: function ($form, $field) {
             var $parent = $field.closest('.form-group').not(this.GetIgnoreSelector());
 
             if ($parent.length) {
@@ -353,17 +317,16 @@
          * @param $field Object #The current field
          * @returns {*}
          */
-        FindWrapperForCheckbox: function($form, $field)
-        {
+        FindWrapperForCheckbox: function ($form, $field) {
             var $group = $field.closest('.form-group').not(this.GetIgnoreSelector());
 
-            if($group.length) {
+            if ($group.length) {
                 return $group;
             }
 
             var $parent = $field.closest('.checkbox').not(this.GetIgnoreSelector());
 
-            if($parent.length) {
+            if ($parent.length) {
                 return $parent;
             }
 
@@ -377,19 +340,16 @@
          * @param $field Object #The current field
          * @returns {*}
          */
-        FindWrapperForRadioButton: function($form, $field)
-        {
+        FindWrapperForRadioButton: function ($form, $field) {
             var $group = $field.closest('.form-group').not(this.GetIgnoreSelector());
 
-            if($group.length)
-            {
+            if ($group.length) {
                 return $group;
             }
 
             var $parent = $field.closest('.radio').not(this.GetIgnoreSelector());
 
-            if($parent.length)
-            {
+            if ($parent.length) {
                 return $parent;
             }
 
@@ -401,9 +361,8 @@
          *
          * @returns {string}
          */
-        GetIgnoreSelector: function()
-        {
-            return '.'+this.globalConfig.ignoreClass;
+        GetIgnoreSelector: function () {
+            return '.' + this.globalConfig.ignoreClass;
         },
 
         /**
@@ -413,45 +372,32 @@
          * @param match Array #The values we want to match the field against
          * @returns {boolean}
          */
-        MatchFieldValue: function($field, match)
-        {
+        MatchFieldValue: function ($field, match) {
             var vals = [];
             var $fields;
-            if($field.is('[type=checkbox]') || $field.is('[type=radio]'))
-            {
+            if ($field.is('[type=checkbox]') || $field.is('[type=radio]')) {
                 //If the field is an expanded collection
-                if($field.data('iscollection'))
-                {
-                    $fields = $('[data-collectionref='+$field.data('collectionref')+']').filter(':checked');
-                    $fields.each(function ()
-                    {
+                if ($field.data('iscollection')) {
+                    $fields = $('[data-collectionref=' + $field.data('collectionref') + ']').filter(':checked');
+                    $fields.each(function () {
                         vals.push(String($(this).val()));
                     });
                 }
                 //if the field is a boolean
-                else
-                {
+                else {
                     //This will get the true/false state of the boolean field, and we can match it against the true/false value in the config.  Also convert it to string, because all the conf values we're matching against will be strings
-                    if($field.is(':checked'))
-                    {
+                    if ($field.is(':checked')) {
                         vals.push(true, 1, "true", "1");
-                    }
-                    else
-                    {
+                    } else {
                         vals.push(false, 0, "false", "0");
                     }
                 }
-            }
-            else if($field.is('select[multiple]'))
-            {
+            } else if ($field.is('select[multiple]')) {
                 $fields = $field.find('option:selected');
-                $fields.each(function()
-                {
+                $fields.each(function () {
                     vals.push(String($(this).val()));
                 });
-            }
-            else
-            {
+            } else {
                 vals.push(String($field.val()));
             }
 
@@ -460,26 +406,27 @@
             return intersect.length > 0;
         },
 
-        TriggerChangeEvent: function($field)
-        {
+        TriggerChangeEvent: function ($field) {
             var $fInput;
 
-            if($field.is('input, select, textarea'))
-            {
+            if ($field.is('input, select, textarea')) {
                 $fInput = $field;
-            }
-            else
-            {
+            } else {
                 $fInput = $field.find('input, select, textarea');
             }
 
-            var event = $fInput.is('[type=checkbox], [type=radio], select') ? 'change':this.globalConfig.event; //Sadly, chrome only supports oninput on text fields
+            var event = $fInput.is('[type=checkbox], [type=radio], select') ? 'change' : this.globalConfig.event; //Sadly, chrome only supports oninput on text fields
             $fInput.trigger(event, ['fromShow']); //Pass a parameter so we can tell whether the event was fired from a trigger() call or user input
         },
 
-        TriggerSuccessEvent: function()
-        {
+        TriggerSuccessEvent: function () {
             $(document).trigger(this.onSuccessEvent);
+        },
+
+        resetState: function () {
+            $.each(this.elementList, function (key, el) {
+                el.field[0].gone = false;
+            });
         },
 
         /**
@@ -488,30 +435,28 @@
          * @param $field Object #The form field having the event
          * @param config Object #The config for this form field
          */
-        Go: function($field, config)
-        {
-            var cform = this;
-            var show  = [];
-            var id    = $field.attr('id');
-
-            if(cform.isFirstRun && !cform.toBeProcessed[id])
-            {
+        Go: function ($field, config) {
+            if ($field[0].gone) {
                 return;
             }
-            else if(cform.activityMap[id] === undefined)
-            {
+            $field[0].gone = true;
+            var cform      = this;
+            var show       = [];
+            var id         = $field.attr('id');
+
+            if (cform.isFirstRun && !cform.toBeProcessed[id]) {
+                return;
+            } else if (cform.activityMap[id] === undefined) {
                 cform.activityMap[id] = true;
             }
 
             //There are potentially multiple configs for this field, for different sets of child fields dependent on different form values.
-            $.each(config, function(index, conf)
-            {
+            $.each(config, function (index, conf) {
                 //Loop through each "child" field that is controlled by this "parent" field, in this config
-                $.each(conf.display, function(index, $disField)
-                {
+                $.each(conf.display, function (index, $disField) {
                     var dId = $disField.data('fieldId');
 
-                    if($disField.is(':visible')) //Every time an event is triggered for a field, we hide it, and then determine if it should still be shown.
+                    if ($disField.is(':visible')) //Every time an event is triggered for a field, we hide it, and then determine if it should still be shown.
                     {
                         $disField.hide();
                     }
@@ -522,14 +467,12 @@
                     $disField.data('visibleParents').splice(id, 1);
 
                     //If the parent field value matches the value in the config, display the child fields
-                    if((cform.activityMap[id] || $disField.data('visibleParents').length) && cform.MatchFieldValue($field, conf.values))
-                    {
+                    if ((cform.activityMap[id] || $disField.data('visibleParents').length) && cform.MatchFieldValue($field, conf.values)) {
                         show.push($disField);
-                        if(cform.activityMap[id])
-                        {
+                        if (cform.activityMap[id]) {
                             cform.activityMap[dId] = true;//If we get here, this field is supposed to be visible, so update the activity map
-                            var vparents = $disField.data('visibleParents');
-                            vparents[id] = true;
+                            var vparents           = $disField.data('visibleParents');
+                            vparents[id]           = true;
                             $disField.data('visibleParents', vparents);
                         }
                     }
@@ -539,8 +482,7 @@
             });
 
             //We do this after the loop, because if we do it within, the disField.hide() call could hide a field we just showed in the previous loop
-            $.each(show, function(index, $disField)
-            {
+            $.each(show, function (index, $disField) {
                 $disField.show();
 
                 cform.TriggerSuccessEvent();
@@ -556,10 +498,9 @@
  *
  * @param arrays
  */
-var ns_array_intersect = function(arrays)
-{
-    return arrays.shift().filter(function(v) {
-        return arrays.every(function(a) {
+var ns_array_intersect = function (arrays) {
+    return arrays.shift().filter(function (v) {
+        return arrays.every(function (a) {
             return a.indexOf(v) !== -1;
         });
     });
