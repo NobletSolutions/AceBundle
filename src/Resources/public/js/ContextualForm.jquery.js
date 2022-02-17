@@ -519,10 +519,13 @@
                     cform.activityMap[dId] = false;
 
                     // delete $disField.data('visibleParents')[id];
-                    $disField.data('visibleParents').splice(id, 1);
+                    let visibleParents = $disField.data('visibleParents');
+                    if (visibleParents) {
+                        visibleParents.splice(id, 1);
+                    }
 
                     //If the parent field value matches the value in the config, display the child fields
-                    if((cform.activityMap[id] || $disField.data('visibleParents').length) && cform.MatchFieldValue($field, conf.values))
+                    if((cform.activityMap[id] || visibleParents.length) && cform.MatchFieldValue($field, conf.values))
                     {
                         show.push($disField);
                         if(cform.activityMap[id])
