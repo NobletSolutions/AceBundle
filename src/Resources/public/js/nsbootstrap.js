@@ -389,10 +389,11 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
             let url    = $this.data('url');
             let config = {debug: true};
             if (url) {
-                config.ajax           = {
+                let method = $this.data('method');
+                config.ajax = {
                     url:            url,
                     delay:          $this.data('ajax-delay') ?? 250,
-                    method:         $this.data('method').toUpperCase() ?? 'GET',
+                    method:         method ? method.toUpperCase() : 'GET',
                     processResults: (data) => {
                         const append = $this.data('append');
 

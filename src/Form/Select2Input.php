@@ -84,6 +84,6 @@ trait Select2Input
             $view->vars['attr']['data-language-config'] = json_encode($options['language']);
         }
 
-        $view->vars['attr']['class'] = isset($view->vars['attr']['class']) ? $view->vars['attr']['class'] . 'nsSelect2' : 'nsSelect2';
+        $view->vars['attr']['class'] = isset($view->vars['attr']['class']) ? $view->vars['attr']['class'] . ' nsSelect2' : 'nsSelect2';
     }
 }
