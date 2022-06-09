@@ -270,6 +270,11 @@ class EventEntity implements \JsonSerializable
         $this->otherFields[$name] = $value;
     }
 
+    public function getField($name)
+    {
+        return $this->otherFields[$name] ?? null;
+    }
+
     /**
      * @param string $name
      */
@@ -281,5 +286,15 @@ class EventEntity implements \JsonSerializable
 
         unset($this->otherFields[$name]);
     }
+
+    /**
+     * @return array
+     */
+    public function getOtherFields()
+    {
+        return $this->otherFields ?? [];
+    }
+
+
 
 }
