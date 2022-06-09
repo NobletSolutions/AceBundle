@@ -3,6 +3,7 @@ VERSION 5  INITIAL SUPPORT FOR SF5
 ==================================
 
    Version 5.0 - Initial support for SF5
+      09/06/2022 10:46  5.0.55  Added missing getters to EventEntity
       01/04/2022 11:04  5.0.54  Fixed Select2Type bugs
       17/02/2022 14:32  5.0.53  Fixed js crashing bug
       31/01/2022 10:26  5.0.52  Revert previous patch due to unforseen issues
