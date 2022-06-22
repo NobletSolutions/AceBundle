@@ -532,8 +532,10 @@
                         {
                             cform.activityMap[dId] = true;//If we get here, this field is supposed to be visible, so update the activity map
                             var vparents = $disField.data('visibleParents');
-                            vparents[id] = true;
-                            $disField.data('visibleParents', vparents);
+                            if (vparents) {
+                                vparents[id] = true;
+                                $disField.data('visibleParents', vparents);
+                            }
                         }
                     }
 
