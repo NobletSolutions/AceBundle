@@ -55,8 +55,7 @@ class EntitySelect2Type extends AbstractType
 
                 if ($qb) {
                     $alias = $qb->getRootAlias();
-                    $qb->where("$alias.id IN (:es2_ids)")
-                       ->setParameter('es2_ids', $data);
+                    $qb->andWhere("$alias.id IN (:es2_ids)")->setParameter('es2_ids', $data);
                 }
             }
         }
@@ -78,7 +77,7 @@ class EntitySelect2Type extends AbstractType
 
                 if (!$qb->getParameter('es2_ids')) {
                     $alias = $qb->getRootAlias();
-                    $qb->where("$alias.id IN (:es2_ids)");
+                    $qb->andWhere("$alias.id IN (:es2_ids)");
                 }
 
                 $existing = $qb->getParameter('es2_ids') ? $qb->getParameter('es2_ids')->getValue() : [];
