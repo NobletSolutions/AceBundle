@@ -3,6 +3,7 @@ VERSION 5  INITIAL SUPPORT FOR SF5
 ==================================
 
    Version 5.0 - Initial support for SF5
+      24/08/2022 11:30  5.0.63  Typehint changes
       12/08/2022 10:39  5.0.62  Reverted asset update
       11/08/2022 17:02  5.0.61  Fixed bad asset reversion
       11/08/2022 13:23  5.0.60  Fixed CSS targetting navbar padding
