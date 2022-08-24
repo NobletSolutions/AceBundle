@@ -263,7 +263,7 @@ class EventEntity implements \JsonSerializable
 
     /**
      * @param string $name
-     * @param string $value
+     * @param mixed $value
      */
     public function addField($name, $value)
     {
