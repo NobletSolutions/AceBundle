@@ -36,7 +36,7 @@ class EntitySelect2Type extends AbstractType
 
         $this->options = $options;
         $builder->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'preSetData']);
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'preSubmit']);
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'preSubmit'], 30);
     }
 
     // Only pre-populate the existing field, not the entire entity list
