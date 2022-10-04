@@ -3,6 +3,7 @@ VERSION 5  INITIAL SUPPORT FOR SF5
 ==================================
 
    Version 5.0 - Initial support for SF5
+      04/10/2022 12:23  5.0.65  Form improvements
       01/09/2022 12:23  5.0.64  Bugfix in entityselect2type
       24/08/2022 11:30  5.0.63  Typehint changes
       12/08/2022 10:39  5.0.62  Reverted asset update
