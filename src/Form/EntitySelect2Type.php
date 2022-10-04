@@ -8,9 +8,12 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Exception\InvalidArgumentException;
+use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -91,8 +94,26 @@ class EntitySelect2Type extends AbstractType
     {
         $this->_configureOptions($resolver);
 
-        $resolver->setDefault('query_builder', function (EntityRepository $er) {
-            return $er->createQueryBuilder('e');
+        $queryBuilderNormalizer = function (Options $options, $queryBuilder) {
+            if (\is_callable($queryBuilder)) {
+                $queryBuilder = $queryBuilder($options['em']->getRepository($options['class']), $options);
+
+                if (!$queryBuilder instanceof QueryBuilder) {
+                    throw new UnexpectedTypeException($queryBuilder, QueryBuilder::class);
+                }
+            }
+
+            return $queryBuilder;
+        };
+
+        $resolver->setNormalizer('query_builder', $queryBuilderNormalizer);
+
+        $resolver->setDefault('query_builder', function (EntityRepository $er, Options $options) {
+            if (!empty($options['url']) || !empty($options['route'])) {
+                return $er->createQueryBuilder('e')->where("e.id IN (:es2_ids)")->setParameter('es2_ids', []);
+            }
+
+            throw new InvalidArgumentException("One of the options 'url', 'route', or 'query_builder' must be provided.");
         });
     }
 
