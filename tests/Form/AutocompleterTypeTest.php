@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use NS\AceBundle\Form\AutocompleterType;
 use NS\AceBundle\Tests\BaseFormTestType;
 use NS\AceBundle\Tests\Form\Fixtures\Entity;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
@@ -13,16 +14,15 @@ use Symfony\Component\Routing\RouterInterface;
 
 class AutocompleterTypeTest extends BaseFormTestType
 {
-    /** @var EntityManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $entityMgr;
+    /** @var EntityManagerInterface|MockObject */
+    private EntityManagerInterface $entityMgr;
 
-    /** @var  RouterInterface */
-    private $router;
+    /** @var RouterInterface|MockObject */
+    private RouterInterface $router;
 
     protected function setUp(): void
     {
-        $this->router = $this->createMock(RouterInterface::class);
-
+        $this->router    = $this->createMock(RouterInterface::class);
         $this->entityMgr = $this->createMock(EntityManagerInterface::class);
 
         parent::setUp();
@@ -32,12 +32,12 @@ class AutocompleterTypeTest extends BaseFormTestType
     {
         $type = new AutocompleterType($this->entityMgr, $this->router);
 
-        return [new PreloadedExtension([$type],[])];
+        return [new PreloadedExtension([$type], [])];
     }
 
     public function testFormTypeEntityToJson(): void
     {
-        $entity    = new Entity(1);
+        $entity    = new Entity(1, 'name');
         $formData  = ['auto' => '1'];
         $routeName = 'routename';
         $this->router->expects($this->once())
@@ -53,10 +53,10 @@ class AutocompleterTypeTest extends BaseFormTestType
         $form = $this->factory
             ->createBuilder()
             ->add('auto', AutocompleterType::class, [
-                'route'  => $routeName,
-                'class'  => Entity::class,
+                'route'      => $routeName,
+                'class'      => Entity::class,
                 'data_class' => Entity::class,
-                'method' => 'GET'])
+                'method'     => 'GET'])
             ->getForm();
 
         $view = $form->createView();
@@ -77,26 +77,25 @@ class AutocompleterTypeTest extends BaseFormTestType
      */
     public function testFormTypeCollectionToJson(): void
     {
-        $entities  = [new Entity(1), new Entity(2)];
+        $entities = [new Entity(1), new Entity(2)];
 
-        $this->entityMgr
-            ->expects($this->at(0))
-            ->method('getReference')
-            ->with(Entity::class,1)
-            ->willReturn($entities[0]);
+        $this->entityMgr->method('getReference')->willReturnCallback(static function (string $class, $id) use ($entities) {
+            foreach ($entities as $entity) {
+                if ((int)$id === $entity->getId()) {
+                    return $entity;
+                }
+            }
 
-        $this->entityMgr
-            ->expects($this->at(1))
-            ->method('getReference')
-            ->with(Entity::class,2)
-            ->willReturn($entities[1]);
+            self::fail('Unexpected call');
+        });
 
         $form = $this->factory
             ->createBuilder()
             ->add('auto', AutocompleterType::class, [
                 'autocompleteUrl' => 'routename',
                 'class'           => Entity::class,
-                'multiple'        => true])
+                'multiple'        => true,
+            ])
             ->getForm();
 
         $form->submit(['auto' => '1,2']);
@@ -116,11 +115,11 @@ class AutocompleterTypeTest extends BaseFormTestType
      */
     public function testFormTypeCustomTransformer(): void
     {
-        $entities = [new Entity(1), new Entity(2)];
+        $entities = [new Entity(1, 'name'), new Entity(2, 'name')];
 
         $formData  = ['auto' => '1,2'];
         $routeName = 'routename';
-        $jsonStr     = sprintf("%d,%d", $entities[0]->getId(), $entities[1]->getId());
+        $jsonStr   = sprintf("%d,%d", $entities[0]->getId(), $entities[1]->getId());
 
         $customTransformer = $this->createMock(DataTransformerInterface::class);
         $customTransformer
@@ -152,10 +151,10 @@ class AutocompleterTypeTest extends BaseFormTestType
 
     public function testFormWithDataCustomProperty(): void
     {
-        $entity     = new Entity(1);
+        $entity     = new Entity(1, 'name');
         $properties = [
             'property' => 'someProperty',
-            'class' => Entity::class,
+            'class'    => Entity::class,
         ];
 
         $form = $this->factory
@@ -166,7 +165,7 @@ class AutocompleterTypeTest extends BaseFormTestType
         $viewData = $form->getViewData();
         $this->assertNull($viewData);
         $form->setData(['auto' => $entity]);
-        $view = $form->createView();
+        $view     = $form->createView();
         $viewData = $form->getViewData();
         $this->assertNotNull($viewData);
 
@@ -175,7 +174,7 @@ class AutocompleterTypeTest extends BaseFormTestType
 
     public function testFormWithDataToString(): void
     {
-        $entity    = new Entity(1);
+        $entity = new Entity(1, 'name');
 
         $form = $this->factory
             ->createBuilder()
@@ -185,7 +184,7 @@ class AutocompleterTypeTest extends BaseFormTestType
         $viewData = $form->getViewData();
         $this->assertNull($viewData);
         $form->setData(['auto' => $entity]);
-        $view     = $form->createView();
+        $view = $form->createView();
         $this->assertEquals('[{"id":1,"name":"Does Not Matter"}]', $view['auto']->vars['value']);
     }
 
@@ -208,6 +207,6 @@ class AutocompleterTypeTest extends BaseFormTestType
     public function testMultipleWithDataClassIsException(): void
     {
         $this->expectException(InvalidOptionsException::class);
-        $this->factory->create(AutocompleterType::class,null,['multiple'=>true,'data_class'=>Entity::class]);
+        $this->factory->create(AutocompleterType::class, null, ['multiple' => true, 'data_class' => Entity::class]);
     }
 }

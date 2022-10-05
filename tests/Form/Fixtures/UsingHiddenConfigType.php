@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gnat
- * Date: 16/03/18
- * Time: 11:02 AM
- */
 
 namespace NS\AceBundle\Tests\Form\Fixtures;
 
@@ -18,7 +12,7 @@ use Symfony\Component\Form\FormView;
 
 class UsingHiddenConfigType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('text', TextType::class, ['hidden' => ['children' => ['#something' => 'value']]])

@@ -15,23 +15,24 @@
         }
     ],
     "require": {
-        "php":                      ">=7.2",
-        "symfony/framework-bundle": "^4.0|^5.0",
-        "symfony/form":             "^4.0|^5.0",
-        "symfony/security-core":    "^4.0|^5.0",
+        "php":                      "8.1.*",
+        "ext-json":                 "*",
+        "symfony/doctrine-bridge":  "^6.0",
+        "symfony/framework-bundle": "^6.0",
+        "symfony/form":             "^6.0",
+        "symfony/security-core":    "^6.0",
+        "symfony/routing":          "^6.0",
         "twig/twig":                "^2.0|^3.0",
-        "knplabs/knp-menu-bundle":  "^2.0|^3.0",
-        "doctrine/orm":             "^2.5|^2.6",
-        "ext-json":                 "*"
+        "knplabs/knp-menu-bundle":  "^3.0",
+        "doctrine/orm":             "^2.5|^2.6"
     },
     "require-dev": {
-        "lexik/form-filter-bundle": "^5.0|^6.0",
-        "phpunit/phpunit":          "^7.0",
-        "liip/rmt": "^1.6"
+        "lexik/form-filter-bundle": "^7.0",
+        "phpunit/phpunit":          "^9.0",
+        "liip/rmt":                 "^1.6"
     },
     "suggest": {
         "punkave/symfony2-file-uploader-bundle": "Allows for drag & drop or multiple file upload",
-        "jms/translation-bundle":    "Handle xliff translations",
         "craue/formflow-bundle": "Provides multi-step forms for which we have a theme",
         "lexik/form-filter-bundle": "Form filtering"
     },
@@ -43,7 +44,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "5.0.x-dev"
+            "dev-master": "6.0.x-dev"
         }
     }
 }

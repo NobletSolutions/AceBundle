@@ -15,10 +15,7 @@ use NS\AceBundle\Form\Transformer\TextToArrayTransformer;
  */
 class TagType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'caseInsensitive' => true,
@@ -28,11 +25,7 @@ class TagType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if (isset($options['source'])) {
             sort($options['source']);
@@ -45,20 +38,14 @@ class TagType extends AbstractType
         $view->vars['attr']['data-autocomplete-on-comma'] = $options['autocompleteOnComma'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['arrayOutput']) {
             $builder->addViewTransformer(new TextToArrayTransformer());
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return TextType::class;
     }

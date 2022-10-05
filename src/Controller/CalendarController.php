@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace NS\AceBundle\Controller;
 
@@ -12,8 +12,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class CalendarController
 {
-    /** @var EventDispatcherInterface */
-    private $eventDispatcher;
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(EventDispatcherInterface $eventDispatcher)
     {

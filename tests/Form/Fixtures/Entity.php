@@ -2,73 +2,45 @@
 
 namespace NS\AceBundle\Tests\Form\Fixtures;
 
-/**
- * Description of Entity
- *
- * @author gnat
- */
 class Entity
 {
-    /** @var int|null */
-    private $id;
+    private $id = null;
 
-    /** @var string */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @param integer $id
-     */
     public function __construct($id = null)
     {
-        if ($id !== NULL) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
 
-    /**
-     * @return integer
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @param integer $id
-     */
-    public function setId($id)
+    public function setId($id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return 'Does Not Matter';
     }
 
-    /**
-     * @return string
-     */
-    public function getSomeProperty()
+    public function getSomeProperty(): string
     {
         return 'It Matters';
     }

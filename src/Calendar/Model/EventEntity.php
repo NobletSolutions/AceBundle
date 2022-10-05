@@ -1,75 +1,42 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gnat
- * Date: 18/09/17
- * Time: 10:16 AM
- */
 
 namespace NS\AceBundle\Calendar\Model;
 
+use DateTime;
+
 class EventEntity implements \JsonSerializable
 {
-    /**
-     * @var mixed Unique identifier of this event (optional).
-     */
-    protected $id;
+    /** Title/label of the calendar event. */
+    protected string $title;
 
-    /**
-     * @var string Title/label of the calendar event.
-     */
-    protected $title;
+    protected DateTime $startDatetime;
 
-    /**
-     * @var string URL Relative to current path.
-     */
-    protected $url;
+    protected ?DateTime $endDatetime;
 
-    /**
-     * @var string HTML color code for the bg color of the event label.
-     */
-    protected $bgColor;
+    /** Is this an all day event? */
+    protected bool $allDay = false;
 
-    /**
-     * @var string HTML color code for the foregorund color of the event label.
-     */
-    protected $fgColor;
+    /** Unique identifier of this event (optional). */
+    protected ?string $id = null;
 
-    /**
-     * @var string css class for the event label
-     */
-    protected $cssClass;
+    /** Relative to current path. */
+    protected ?string $url = null;
 
-    /**
-     * @var \DateTime DateTime object of the event start date/time.
-     */
-    protected $startDatetime;
+    /** HTML color code for the bg color of the event label. */
+    protected ?string $bgColor = null;
 
-    /**
-     * @var \DateTime DateTime object of the event end date/time.
-     */
-    protected $endDatetime;
+    /** HTML color code for the foreground color of the event label. */
+    protected ?string $fgColor = null;
 
-    /**
-     * @var boolean Is this an all day event?
-     */
-    protected $allDay = false;
+    /** CSS class for the event label */
+    protected ?string $cssClass = null;
 
-    /**
-     * @var array Non-standard fields
-     */
-    protected $otherFields = array();
+    /** Non-standard fields */
+    protected array $otherFields = [];
 
-    /**
-     * EventEntity constructor.
-     * @param $title
-     * @param \DateTime $startDatetime
-     * @param \DateTime|null $endDatetime
-     * @param bool $allDay
-     */
-    public function __construct($title, \DateTime $startDatetime, \DateTime $endDatetime = null, $allDay = false)
+    public function __construct(string $title, DateTime $startDatetime, ?DateTime $endDatetime = null, bool $allDay = false)
     {
-        $this->title = $title;
+        $this->title         = $title;
         $this->startDatetime = $startDatetime;
         $this->setAllDay($allDay);
 
@@ -80,12 +47,7 @@ class EventEntity implements \JsonSerializable
         $this->endDatetime = $endDatetime;
     }
 
-    /**
-     * Convert calendar event details to an array
-     *
-     * @return array $event
-     */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         $event = [];
 
@@ -102,7 +64,7 @@ class EventEntity implements \JsonSerializable
 
         if ($this->bgColor !== null) {
             $event['backgroundColor'] = $this->bgColor;
-            $event['borderColor'] = $this->bgColor;
+            $event['borderColor']     = $this->bgColor;
         }
 
         if ($this->fgColor !== null) {
@@ -126,159 +88,113 @@ class EventEntity implements \JsonSerializable
         return $event;
     }
 
-    /**
-     * @param $id
-     */
-    public function setId($id)
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @param $title
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param $url
-     */
-    public function setUrl($url)
+    public function setUrl(?string $url): void
     {
         $this->url = $url;
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): ?string
     {
         return $this->url;
     }
 
-    /**
-     * @param $color
-     */
-    public function setBgColor($color)
+    public function setBgColor(?string $color): void
     {
         $this->bgColor = $color;
     }
 
-    /**
-     * @return string
-     */
-    public function getBgColor()
+    public function getBgColor(): ?string
     {
         return $this->bgColor;
     }
 
-    /**
-     * @param $color
-     */
-    public function setFgColor($color)
+    public function setFgColor(?string $color): void
     {
         $this->fgColor = $color;
     }
 
-    /**
-     * @return string
-     */
-    public function getFgColor()
+    public function getFgColor(): ?string
     {
         return $this->fgColor;
     }
 
-    /**
-     * @param $class
-     */
-    public function setCssClass($class)
+    public function setCssClass(?string $class): void
     {
         $this->cssClass = $class;
     }
 
-    /**
-     * @return string
-     */
-    public function getCssClass()
+    public function getCssClass(): ?string
     {
         return $this->cssClass;
     }
 
-    /**
-     * @param \DateTime $start
-     */
-    public function setStartDatetime(\DateTime $start)
+    public function setStartDatetime(DateTime $start): void
     {
         $this->startDatetime = $start;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getStartDatetime()
+    public function getStartDatetime(): DateTime
     {
         return $this->startDatetime;
     }
 
-    /**
-     * @param \DateTime $end
-     */
-    public function setEndDatetime(\DateTime $end)
+    public function setEndDatetime(?DateTime $end): void
     {
         $this->endDatetime = $end;
     }
 
-    public function getEndDatetime()
+    public function getEndDatetime(): ?DateTime
     {
         return $this->endDatetime;
     }
 
-    public function setAllDay($allDay = false)
+    public function setAllDay(bool $allDay): void
     {
-        $this->allDay = (boolean) $allDay;
+        $this->allDay = $allDay;
     }
 
-    public function getAllDay()
+    public function getAllDay(): bool
     {
         return $this->allDay;
     }
 
     /**
-     * @param string $name
      * @param mixed $value
      */
-    public function addField($name, $value)
+    public function addField(string $name, $value): void
     {
         $this->otherFields[$name] = $value;
     }
 
-    public function getField($name)
+    /**
+     * @return mixed|null
+     */
+    public function getField(string $name)
     {
         return $this->otherFields[$name] ?? null;
     }
 
-    /**
-     * @param string $name
-     */
-    public function removeField($name)
+    public function removeField(string $name): void
     {
         if (!array_key_exists($name, $this->otherFields)) {
             return;
@@ -287,14 +203,8 @@ class EventEntity implements \JsonSerializable
         unset($this->otherFields[$name]);
     }
 
-    /**
-     * @return array
-     */
-    public function getOtherFields()
+    public function getOtherFields(): array
     {
         return $this->otherFields ?? [];
     }
-
-
-
 }

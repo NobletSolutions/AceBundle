@@ -11,18 +11,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DateTimePickerType extends AbstractType
 {
-    /** @var DateFormatConverter */
-    protected $converter;
+    protected DateFormatConverter $converter;
 
     public function __construct(DateFormatConverter $converter = null)
     {
         $this->converter = ($converter) ?:new DateFormatConverter();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'date_widget' => 'single_text',
@@ -33,28 +29,18 @@ class DateTimePickerType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['attr']['data-date-format'] = strtolower($options['date_format']);
         $view->vars['attr']['placeholder']      = $options['date_format'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return DateTimeType::class;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'acedatetime';
     }

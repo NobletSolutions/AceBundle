@@ -10,18 +10,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InputGroupAddonExtension extends AbstractTypeExtension
 {
-    /**
-     * @inheritDoc
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(['input-addon-left','input-addon-right']);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if (isset($options['input-addon-left'])) {
             $view->vars['addon_left'] = $options['input-addon-left'];
@@ -37,10 +31,7 @@ class InputGroupAddonExtension extends AbstractTypeExtension
         return [FormType::class];
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getExtendedType()
+    public function getExtendedType(): string
     {
         return FormType::class;
     }

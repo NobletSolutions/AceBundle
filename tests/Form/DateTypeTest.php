@@ -11,12 +11,7 @@ use Symfony\Component\Form\PreloadedExtension;
 
 class DateTypeTest extends BaseFormTestType
 {
-    /**
-     * @dataProvider getDatePickerData
-     *
-     * @param $formData
-     * @param $format
-     */
+    /** @dataProvider getDatePickerData */
     public function testDatePickerType(array $formData, string $format): void
     {
         $this->assertArrayHasKey('date', $formData);
@@ -33,12 +28,7 @@ class DateTypeTest extends BaseFormTestType
         $this->commonTest($form, $formData);
     }
 
-    /**
-     * @dataProvider getDateTimePickerData
-     *
-     * @param array    $formData
-     * @param DateTime $date
-     */
+    /** @dataProvider getDateTimePickerData */
     public function testDateTimePickerType(array $formData, DateTime $date): void
     {
         $this->assertArrayHasKey('datepicker', $formData);
@@ -65,14 +55,14 @@ class DateTypeTest extends BaseFormTestType
 
         return [
             [
-                'formData'  => ['date' => '12/07/2014'],
-                'format'    => $this->converter->getFormat(true)],
+                'formData' => ['date' => '12/07/2014'],
+                'format'   => $this->converter->getFormat(true)],
             [
-                'formData'  => ['date' => '01/01/2014'],
-                'format'    => $this->converter->getFormat(true)],
+                'formData' => ['date' => '01/01/2014'],
+                'format'   => $this->converter->getFormat(true)],
             [
-                'formData'  => ['date' => '07/07/2014'],
-                'format'    => $this->converter->getFormat(true)],
+                'formData' => ['date' => '07/07/2014'],
+                'format'   => $this->converter->getFormat(true)],
         ];
     }
 
@@ -80,22 +70,21 @@ class DateTypeTest extends BaseFormTestType
     {
         return [
             [
-                'formData'  => ['datepicker' => ['date' => '07/07/2014', 'time' => '12:10']],
-                'date'      => new DateTime('2014-07-07 12:10'),
+                'formData' => ['datepicker' => ['date' => '07/07/2014', 'time' => '12:10']],
+                'date'     => new DateTime('2014-07-07 12:10'),
             ],
             [
-                'formData'  => ['datepicker' => ['date' => '01/01/2014', 'time' => '12:10']],
-                'date'      => new DateTime('2014-01-01 12:10'),
+                'formData' => ['datepicker' => ['date' => '01/01/2014', 'time' => '12:10']],
+                'date'     => new DateTime('2014-01-01 12:10'),
             ],
             [
-                'formData'  => ['datepicker' => ['date' => '12/07/2014', 'time' => '12:10']],
-                'date'      => new DateTime('2014-12-07 12:10'),
+                'formData' => ['datepicker' => ['date' => '12/07/2014', 'time' => '12:10']],
+                'date'     => new DateTime('2014-12-07 12:10'),
             ],
         ];
     }
 
-    /** @var DateFormatConverter */
-    private $converter;
+    private ?DateFormatConverter $converter = null;
 
     public function setUp(): void
     {
@@ -110,8 +99,8 @@ class DateTypeTest extends BaseFormTestType
         }
 
         $picker = new DateTimePickerType($this->converter);
-        $type = new DatePickerType();
+        $type   = new DatePickerType();
 
-        return [new PreloadedExtension([$type,$picker], [])];
+        return [new PreloadedExtension([$type, $picker], [])];
     }
 }

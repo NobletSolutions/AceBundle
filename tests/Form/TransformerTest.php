@@ -6,18 +6,25 @@ use Doctrine\ORM\EntityManagerInterface;
 use \NS\AceBundle\Form\Transformer\CollectionToJson;
 use \NS\AceBundle\Form\Transformer\EntityToJson;
 use \NS\AceBundle\Tests\Form\Fixtures\Entity;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class TransformerTest extends TestCase
 {
+    /** @var EntityManagerInterface|MockObject */
+    private EntityManagerInterface $entityManager;
+
+    protected function setUp(): void
+    {
+        $this->entityManager = $this->createMock(EntityManagerInterface::class);
+    }
+
     public function testCollectionToJsonReverseTransform(): void
     {
-        $classes[] = new Entity(1);
-        $classes[] = new Entity(2);
-        $classes[] = new Entity(3);
+        $classes[] = new Entity(1, 'name');
+        $classes[] = new Entity(2, 'name');
+        $classes[] = new Entity(3, 'name');
         $className = get_class($classes[0]);
-
-        $entityMgrMock = $this->getEntityManager();
 
         $map = [
             [$className, '1', $classes[0]],
@@ -26,13 +33,13 @@ class TransformerTest extends TestCase
         ];
 
         // Configure the stub.
-        $entityMgrMock
+        $this->entityManager
             ->expects($this->any())
             ->method('getReference')
             ->willReturnMap($map);
 
         $jsonStr     = sprintf("%d,%d,%d", $classes[0]->getId(), $classes[1]->getId(), $classes[2]->getId());
-        $transformer = new CollectionToJson($entityMgrMock, $className);
+        $transformer = new CollectionToJson($this->entityManager, $className);
         $obj         = $transformer->reverseTransform($jsonStr);
 
         $this->assertIsArray($obj);
@@ -45,12 +52,10 @@ class TransformerTest extends TestCase
 
     public function testCollectionToJsonTransform(): void
     {
-        $classes[] = new Entity(1);
-        $classes[] = new Entity(2);
-        $classes[] = new Entity(3);
+        $classes[] = new Entity(1, 'name');
+        $classes[] = new Entity(2, 'name');
+        $classes[] = new Entity(3, 'name');
         $className = get_class($classes[0]);
-
-        $entityMgrMock = $this->getEntityManager();
 
         $jsonStr = json_encode([
             ['id' => $classes[0]->getId(), 'name' => 'Does Not Matter'],
@@ -58,7 +63,7 @@ class TransformerTest extends TestCase
             ['id' => $classes[2]->getId(), 'name' => 'Does Not Matter'],
         ]);
 
-        $transformer = new CollectionToJson($entityMgrMock, $className);
+        $transformer = new CollectionToJson($this->entityManager, $className);
         $obj         = $transformer->transform($classes);
 
         $this->assertEquals($jsonStr, $obj);
@@ -66,16 +71,15 @@ class TransformerTest extends TestCase
 
     public function testEntityToJsonReverseTransform(): void
     {
-        $class     = new Entity(1);
+        $class     = new Entity(1, 'name');
         $className = get_class($class);
 
-        $entityMgrMock = $this->getEntityManager();
-        $entityMgrMock->expects($this->once())
+        $this->entityManager->expects($this->once())
             ->method('getReference')
             ->with($className, 1)
             ->willReturn($class);
 
-        $transformer = new EntityToJson($entityMgrMock, $className);
+        $transformer = new EntityToJson($this->entityManager, $className);
         $obj         = $transformer->reverseTransform($class->getId());
 
         $this->assertEquals($class, $obj);
@@ -83,24 +87,20 @@ class TransformerTest extends TestCase
 
     public function testEntityToJsonTransform(): void
     {
-        $jsonStr = '[{"id":1,"name":"Does Not Matter"}]';
-        $class   = new Entity(1);
-
-        $entityMgrMock = $this->getEntityManager();
-        $transformer   = new EntityToJson($entityMgrMock, Entity::class);
-        $obj           = $transformer->transform($class);
+        $jsonStr     = '[{"id":1,"name":"Does Not Matter"}]';
+        $class       = new Entity(1, 'name');
+        $transformer = new EntityToJson($this->entityManager, Entity::class);
+        $obj         = $transformer->transform($class);
 
         $this->assertEquals($jsonStr, $obj);
     }
 
     public function testCollectionToJsonTransformCustomMethod(): void
     {
-        $classes[] = new Entity(1);
-        $classes[] = new Entity(2);
-        $classes[] = new Entity(3);
+        $classes[] = new Entity(1, 'name');
+        $classes[] = new Entity(2, 'name');
+        $classes[] = new Entity(3, 'name');
         $className = get_class($classes[0]);
-
-        $entityMgrMock = $this->getEntityManager();
 
         $jsonStr = json_encode([
             ['id' => $classes[0]->getId(), 'name' => 'It Matters'],
@@ -108,7 +108,7 @@ class TransformerTest extends TestCase
             ['id' => $classes[2]->getId(), 'name' => 'It Matters'],
         ]);
 
-        $transformer = new CollectionToJson($entityMgrMock, $className, 'someProperty');
+        $transformer = new CollectionToJson($this->entityManager, $className, 'someProperty');
         $obj         = $transformer->transform($classes);
 
         $this->assertEquals($jsonStr, $obj);
@@ -117,17 +117,11 @@ class TransformerTest extends TestCase
     public function testEntityToJsonTransformCustomMethod(): void
     {
         $jsonStr = '[{"id":1,"name":"It Matters"}]';
-        $class   = new Entity(1);
+        $class   = new Entity(1, 'name');
 
-        $entityMgrMock = $this->getEntityManager();
-        $transformer   = new EntityToJson($entityMgrMock, Entity::class, 'someProperty');
-        $obj           = $transformer->transform($class);
+        $transformer = new EntityToJson($this->entityManager, Entity::class, 'someProperty');
+        $obj         = $transformer->transform($class);
 
         $this->assertEquals($jsonStr, $obj);
-    }
-
-    private function getEntityManager()
-    {
-        return $this->createMock(EntityManagerInterface::class);
     }
 }

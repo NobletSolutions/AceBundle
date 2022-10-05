@@ -13,10 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SpinnerType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'min' => 0,
@@ -29,11 +26,7 @@ class SpinnerType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $opts = [];
 
@@ -52,10 +45,7 @@ class SpinnerType extends AbstractType
         $view->vars['attr']['data-options'] = json_encode($opts);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return TextType::class;
     }

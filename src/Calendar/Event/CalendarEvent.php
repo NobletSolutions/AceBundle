@@ -1,25 +1,26 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace NS\AceBundle\Calendar\Event;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use NS\AceBundle\Calendar\Model\EventEntity;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class CalendarEvent extends Event
 {
-    public const CONFIGURE = 'calendar.load_events';
+    public const
+        CONFIGURE = 'calendar.load_events';
 
-    /** @var DateTime */
-    private $startDateTime;
+    private DateTime $startDateTime;
 
-    /** @var DateTime */
-    private $endDateTime;
+    private DateTime $endDateTime;
 
-    /** @var EventEntity[] */
-    private $events;
+    /** @var Collection<integer, EventEntity> */
+    private Collection $events;
 
+    /** @var mixed|null */
     private $data;
 
     public function __construct(DateTime $startDateTime, DateTime $endDateTime, $data = null)
@@ -48,9 +49,6 @@ class CalendarEvent extends Event
         return $this->events->toArray();
     }
 
-    /**
-     * @param EventEntity $event
-     */
     public function addEvent(EventEntity $event): void
     {
         if (!$this->events->contains($event)) {

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace NS\AceBundle\Form;
-
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -21,12 +19,12 @@ class Select2Type extends AbstractType
         $this->router = $router;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'preSubmit']);
     }
 
-    public function preSubmit(FormEvent $event)
+    public function preSubmit(FormEvent $event): void
     {
         $data   = $event->getData();
         $form   = $event->getForm();
@@ -36,7 +34,7 @@ class Select2Type extends AbstractType
             $name   = $form->getName();
             $parent = $form->getParent();
 
-            if (!in_array($data, $form->getConfig()->getOption('choices'))) {
+            if ($parent && !in_array($data, $form->getConfig()->getOption('choices'), true)) {
                 $parent->add($name, __CLASS__, $this->getOptions($event));
 
                 $newForm = $parent->get($name);
@@ -47,7 +45,7 @@ class Select2Type extends AbstractType
         }
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

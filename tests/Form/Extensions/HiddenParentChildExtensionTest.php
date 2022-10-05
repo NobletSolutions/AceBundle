@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gnat
- * Date: 15/08/17
- * Time: 12:32 PM
- */
 
 namespace NS\AceBundle\Tests\Form\Extensions;
 

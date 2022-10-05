@@ -1,23 +1,13 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: gnat
- * Date: 21/02/17
- * Time: 10:42 AM
- */
+<?php declare(strict_types=1);
 
 namespace NS\AceBundle\DependencyInjection\Compiler;
-
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class KnpCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @inheritDoc
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if ($container->getParameter('ns_ace.use_knp_menu')) {
             if ($container->hasParameter('knp_menu.renderer.twig.options')) {

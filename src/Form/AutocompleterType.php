@@ -21,25 +21,20 @@ use NS\AceBundle\Form\Transformer\CollectionToJson;
  */
 class AutocompleterType extends AbstractType
 {
-    /** @var RouterInterface */
-    private $router;
+    private ?RouterInterface $router;
 
-    /** @var EntityManagerInterface */
-    private $entityMgr;
+    private EntityManagerInterface $entityMgr;
 
-    public function __construct(EntityManagerInterface $entityMgr, RouterInterface $router = null)
+    public function __construct(EntityManagerInterface $entityMgr, ?RouterInterface $router = null)
     {
         $this->entityMgr = $entityMgr;
         $this->router    = $router;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if (isset($options['class'])) {
-            $property = (isset($options['property'])) ? $options['property'] : null;
+            $property = $options['property'] ?? null;
 
             if (!isset($options['transformer'])) {
                 if ($options['multiple'] === true) {
@@ -53,10 +48,7 @@ class AutocompleterType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(['route', 'autocompleteUrl', 'class', 'property', 'icon', 'secondary-field', 'resultsFormatter', 'tokenFormatter', 'transformer', 'tokenValue', 'allowFreeTagging', 'caching']);
 
@@ -83,11 +75,7 @@ class AutocompleterType extends AbstractType
         });
     }
 
-    /**
-     * {@inheritdoc}
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $ar   = ['method', 'queryParam', 'minChars', 'prePopulate', 'hintText','noResultsText', 'searchingText', 'allowFreeTagging', 'caching'];
         $opts = array_intersect_key($options, array_flip($ar));
@@ -124,10 +112,7 @@ class AutocompleterType extends AbstractType
         $view->vars['include_input_group'] = $options['include_input_group'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return TextType::class;
     }

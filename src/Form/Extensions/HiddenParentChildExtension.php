@@ -10,13 +10,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class HiddenParentChildExtension extends AbstractTypeExtension
 {
-    /** @var array */
-    private $config = [];
+    private array $config = [];
 
-    /** @var array */
-    private $prototypes = [];
+    private array $prototypes = [];
 
-    private function collectChildViews(FormView $view, FormInterface $form, array &$display)
+    private function collectChildViews(FormView $view, FormInterface $form, array &$display): void
     {
         foreach ($view->children as $subViewName => $subChildView) {
             if (!$form[$subViewName]->getConfig()->hasOption('hidden')) {
@@ -29,7 +27,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         }
     }
 
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         /** @var FormInterface $childForm */
         foreach ($form as $name => $childForm) {
@@ -110,7 +108,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         $this->prototypes = [];
     }
 
-    public function getExtendedType()
+    public function getExtendedType(): string
     {
         return FormType::class;
     }
@@ -120,7 +118,7 @@ class HiddenParentChildExtension extends AbstractTypeExtension
         return [FormType::class];
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(['hidden']);
         $resolver->setAllowedTypes('hidden', 'array');

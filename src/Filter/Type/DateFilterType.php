@@ -2,7 +2,7 @@
 
 namespace NS\AceBundle\Filter\Type;
 
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Lexik\Bundle\FormFilterBundle\Filter\Condition\ConditionInterface;
 use Lexik\Bundle\FormFilterBundle\Filter\Query\QueryInterface;
 use Symfony\Component\Form\AbstractType;
@@ -14,44 +14,29 @@ use Lexik\Bundle\FormFilterBundle\Filter\Form\Type\DateFilterType as ParentDateF
 
 class DateFilterType extends AbstractType
 {
-    /**
-     * @var DateFormatConverter
-     */
-    protected $converter;
+    protected DateFormatConverter $converter;
 
-    /**
-     *
-     * @param DateFormatConverter $converter
-     */
     public function __construct(DateFormatConverter $converter = null)
     {
-        $this->converter = ($converter) ?:new DateFormatConverter();
+        $this->converter = ($converter) ?: new DateFormatConverter();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefaults([
                 'required'               => false,
                 'data_extraction_method' => 'default',
-                'widget'   => 'single_text',
-                'compound' => false,
-                'format'   => $this->converter->getFormat(true),
-                'html5'    => false,
-                'apply_filter' => [$this,'filterDate'],
+                'widget'                 => 'single_text',
+                'compound'               => false,
+                'format'                 => $this->converter->getFormat(true),
+                'html5'                  => false,
+                'apply_filter'           => [$this, 'filterDate'],
             ])
-            ->setAllowedValues('data_extraction_method', ['default'])
-        ;
+            ->setAllowedValues('data_extraction_method', ['default']);
     }
 
-    /**
-     * {@inheritdoc}
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if (isset($view->vars['attr']['class'])) {
             $view->vars['attr']['class'] .= 'form-control date-picker';
@@ -70,20 +55,16 @@ class DateFilterType extends AbstractType
         return ParentDateFilterType::class;
     }
 
-    /**
-     * @param QueryInterface $filterQuery
-     * @param $field
-     * @param $values
-     * @return ConditionInterface
-     */
-    public function filterDate(QueryInterface $filterQuery, $field, $values)
+    public function filterDate(QueryInterface $filterQuery, string $field, ?array $values): ?ConditionInterface
     {
         $value = $values['value'];
         if (!empty($value)) {
             $paramName = sprintf('p_%s', str_replace('.', '_', $field));
-            $expr = $filterQuery->getExpressionBuilder();
+            $expr      = $filterQuery->getExpressionBuilder();
 
-            return $filterQuery->createCondition($expr->expr()->eq($field, ':' . $paramName), [$paramName => [$values['value'], Type::DATE]]);
+            return $filterQuery->createCondition($expr->expr()->eq($field, ':' . $paramName), [$paramName => [$values['value'], Types::DATE_MUTABLE]]);
         }
+
+        return null;
     }
 }

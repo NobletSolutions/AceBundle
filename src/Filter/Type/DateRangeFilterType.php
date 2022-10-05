@@ -10,10 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DateRangeFilterType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('left_date', DateFilterType::class, $options['left_date_options']);
         $builder->add('right_date', DateFilterType::class, $options['right_date_options']);
@@ -24,10 +21,7 @@ class DateRangeFilterType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefaults([
@@ -40,13 +34,7 @@ class DateRangeFilterType extends AbstractType
             ->setAllowedValues('data_extraction_method', ['value_keys']);
     }
 
-    /**
-     * @param QueryInterface $filterQuery
-     * @param $field
-     * @param $values
-     * @return ConditionInterface
-     */
-    public function filterDateRange(QueryInterface $filterQuery, $field, $values)
+    public function filterDateRange(QueryInterface $filterQuery, string $field, ?array $values): ?ConditionInterface
     {
         $value  = $values['value'];
 
@@ -54,5 +42,7 @@ class DateRangeFilterType extends AbstractType
             $expr = $filterQuery->getExpressionBuilder();
             return $filterQuery->createCondition($expr->dateInRange($field, $value['left_date'][0], $value['right_date'][0]));
         }
+
+        return null;
     }
 }

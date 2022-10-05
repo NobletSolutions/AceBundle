@@ -1,8 +1,6 @@
 <?php
 
-
 namespace NS\AceBundle\Form;
-
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -28,13 +26,10 @@ class EntitySelect2Type extends AbstractType
         $this->router = $router;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if (isset($options['class'])) {
-            if (!isset($options['transformer'])) {
-            } elseif ($options['transformer'] !== false) {
-                $builder->addViewTransformer($options['transformer']);
-            }
+        if (isset($options['class']) && $options['transformer'] !== false) {
+            $builder->addViewTransformer($options['transformer']);
         }
 
         $this->options = $options;
@@ -43,7 +38,7 @@ class EntitySelect2Type extends AbstractType
     }
 
     // Only pre-populate the existing field, not the entire entity list
-    public function preSetData(FormEvent $event)
+    public function preSetData(FormEvent $event): void
     {
         $form   = $event->getForm();
         $data   = $event->getData();
@@ -65,7 +60,7 @@ class EntitySelect2Type extends AbstractType
     }
 
     //Overwrite the querybuilder so the submitted selection is a valid choice.  Persistence code must ensure the user is allowed to select this option (same as the old autocompleter)
-    public function preSubmit(FormEvent $event)
+    public function preSubmit(FormEvent $event): void
     {
         $data   = $event->getData();
         $form   = $event->getForm();
@@ -90,7 +85,7 @@ class EntitySelect2Type extends AbstractType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $this->_configureOptions($resolver);
 
@@ -117,7 +112,7 @@ class EntitySelect2Type extends AbstractType
         });
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return EntityType::class;
     }

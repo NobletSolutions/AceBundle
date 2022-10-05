@@ -1,8 +1,6 @@
 <?php
 
-
 namespace NS\AceBundle\Form;
-
 
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormInterface;
@@ -12,20 +10,32 @@ use Symfony\Component\Routing\RouterInterface;
 
 trait Select2Input
 {
-    /** @var RouterInterface */
-    private $router;
+    protected RouterInterface $router;
 
-    protected $params = ['url', 'method', 'allowClear', 'closeOnSelect', 'debug', 'maximumInputLength', 'maximumSelectionLength', 'minimumInputLength', 'minimumResultsForSearch',
-                         'initCallback', 'ajaxDelay', 'tags', 'escapeAllMarkup', 'append', 'placeholder'];
+    protected array $params = [
+        'url',
+        'method',
+        'allowClear',
+        'closeOnSelect',
+        'debug',
+        'maximumInputLength',
+        'maximumSelectionLength',
+        'minimumInputLength',
+        'minimumResultsForSearch',
+        'initCallback',
+        'ajaxDelay',
+        'tags',
+        'escapeAllMarkup',
+        'append',
+        'placeholder',
+    ];
 
-    protected function getOptions(FormEvent $event)
+    protected function getOptions(FormEvent $event): array
     {
-        $form = $event->getForm();
-        $data = $event->getData();
-
-        $options = $form->getConfig()->getOptions();
-
         $choices = [];
+        $form    = $event->getForm();
+        $data    = $event->getData();
+        $options = $form->getConfig()->getOptions();
 
         if (is_array($data)) {
             foreach ($data as $choice) {
@@ -40,7 +50,7 @@ trait Select2Input
         return $options;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(array_merge($this->params, ['transformer', 'route', 'routeParams', 'config', 'class', 'language'/*, 'property', 'transformer'*/]));
         $resolver->setDefault('minimumInputLength', 2);
@@ -55,7 +65,7 @@ trait Select2Input
         $resolver->setAllowedTypes('language', ['array']);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if (isset($options['route'])) {
             $url            = $this->router->generate($options['route'], $options['routeParams'] ?? []);

@@ -10,20 +10,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SwitchType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['switch_type' => 1, 'hide_label' => false]);
         $resolver->setAllowedValues('switch_type', range(1, 7));
     }
 
-    /**
-     * {@inheritdoc}
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if (isset($view->vars['attr']['class'])) {
             $view->vars['attr']['class'] .= ' ace ace-switch ace-switch-' . $options['switch_type'];
@@ -34,10 +27,7 @@ class SwitchType extends AbstractType
         $view->vars['hidelabel'] = $options['hide_label'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return CheckboxType::class;
     }

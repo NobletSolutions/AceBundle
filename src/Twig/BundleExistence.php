@@ -8,46 +8,22 @@ use Twig\TwigFunction;
 
 class BundleExistence extends AbstractExtension
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
+    protected ContainerInterface $container;
 
-    /**
-     *
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('bundleExists', [$this, 'bundleExists']),
         ];
     }
 
-    /**
-     *
-     * @param string $bundle
-     * @return boolean
-     */
-    public function bundleExists($bundle)
+    public function bundleExists(string $bundle): bool
     {
         return array_key_exists($bundle, $this->container->getParameter('kernel.bundles'));
-    }
-
-    /**
-     *
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'ns_ace_bundle_existence';
     }
 }

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gnat
- * Date: 14/05/18
- * Time: 2:07 PM
- */
 
 namespace NS\AceBundle\Tests\Form\Fixtures;
 
@@ -15,10 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class LevelTwoConfigType extends AbstractType
 {
-    /**
-     * @inheritDoc
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('l2Field1', ChoiceType::class,['choices' => ['c1'=>'c1','c2'=>'c2'],'placeholder'=>'place'])

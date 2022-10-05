@@ -13,8 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class KnobType extends AbstractType
 {
-    /** @var array */
-    private $defaults = [
+    private array $defaults = [
         'min'             => false,
         'max'             => false,
         'width'           => 80,
@@ -29,30 +28,19 @@ class KnobType extends AbstractType
         'attr'            => ['class'=>'input-small nsKnob'],
     ];
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults($this->defaults);
     }
 
-    /**
-     * {@inheritdoc}
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         foreach ($this->defaults as $opt => $val) {
             $view->vars['attr']['data-' . $opt] = $options[$opt];
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return TextType::class;
     }

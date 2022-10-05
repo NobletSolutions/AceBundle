@@ -11,15 +11,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DatePickerType extends AbstractType
 {
-    /** @var DateFormatConverter */
-    protected $converter;
+    protected DateFormatConverter $converter;
 
     public function __construct(DateFormatConverter $converter = null)
     {
         $this->converter = ($converter) ?:new DateFormatConverter();
     }
 
-    private $dataAttributes = [
+    private array $dataAttributes = [
         'end-date', //infinity
         'start-date', //-infinity
         'week-start', //0 (Sunday)
@@ -61,9 +60,6 @@ class DatePickerType extends AbstractType
         //'templates',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -76,10 +72,6 @@ class DatePickerType extends AbstractType
         $resolver->setDefined($this->dataAttributes);
     }
 
-    /**
-     * {@inheritdoc}
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if (isset($view->vars['attr']['class'])) {
@@ -100,17 +92,11 @@ class DatePickerType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent(): string
     {
         return DateType::class;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getBlockPrefix(): string
     {
         return 'acedatepicker';

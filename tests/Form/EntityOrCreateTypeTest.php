@@ -8,28 +8,25 @@ use NS\AceBundle\Form\EntityOrCreateType;
 use NS\AceBundle\Tests\BaseFormTestType;
 use NS\AceBundle\Tests\Form\Fixtures\Entity;
 use NS\AceBundle\Tests\Form\Fixtures\EntityType;
+use PHPUnit\Framework\MockObject\MockObject;
+use RuntimeException;
 use Symfony\Component\Form\PreloadedExtension;
 
-/**
- * Description of EntityOrCreateTypeTest
- *
- * @author gnat
- */
 class EntityOrCreateTypeTest extends BaseFormTestType
 {
-    /** @var EntityManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $entityMgr;
+    /** @var EntityManagerInterface|MockObject */
+    private EntityManagerInterface $entityMgr;
 
     public function testFormType(): void
     {
-        $entity          = new Entity(1);
+        $entity = new Entity(1, 'name');
         $this->entityMgr->expects($this->once())
             ->method('getReference')
             ->willReturn($entity);
 
         $className = Entity::class;
-        $formData = [
-            'entity' => ['finder' => 1,'createFormClicked'=>'finder'],
+        $formData  = [
+            'entity' => ['finder' => 1, 'createFormClicked' => 'finder'],
         ];
 
         $formOptions = [
@@ -58,16 +55,16 @@ class EntityOrCreateTypeTest extends BaseFormTestType
         $className = Entity::class;
         $formData  = [
             'entity' => [
-                'finder' => '',
-                'createFormClicked'=> 'create',
-                'createForm' => ['id' => 2, 'name' => 'Other Name'],],
+                'finder'            => '',
+                'createFormClicked' => 'create',
+                'createForm'        => ['id' => 2, 'name' => 'Other Name'],],
         ];
 
         $formProperties = [
             'type'  => EntityType::class,
             'class' => $className,
         ];
-        
+
         $form = $this->factory->createBuilder()
             ->add('entity', EntityOrCreateType::class, $formProperties)
             ->getForm();
@@ -94,29 +91,30 @@ class EntityOrCreateTypeTest extends BaseFormTestType
 
         $this->entityMgr
             ->method('getReference')
-            ->willReturnCallback(static function ($class, int $id) use ($firstEntity, $secondEntity) {
+            ->willReturnCallback(static function ($class, $id) use ($firstEntity, $secondEntity) {
                 if ($class === Entity::class) {
-                    if ($id === $firstEntity->getId()) {
+                    if ((int)$id === $firstEntity->getId()) {
                         return $firstEntity;
                     }
-                    if ($id === $secondEntity->getId()) {
+
+                    if ((int)$id === $secondEntity->getId()) {
                         return $secondEntity;
                     }
                 }
 
-                throw new \RuntimeException("Class:$class, $id");
+                throw new RuntimeException("Class:$class, $id");
             });
 
         $formData = [
             'entity' => [
-                'finder' => '1,2',
-                'createFormClicked'=>'finder',
-                ],
+                'finder'            => '1,2',
+                'createFormClicked' => 'finder',
+            ],
         ];
 
         $formOptions = [
-            'type'  => EntityType::class,
-            'class' => Entity::class,
+            'type'           => EntityType::class,
+            'class'          => Entity::class,
             'entity_options' => ['multiple' => true],
         ];
 
@@ -142,15 +140,15 @@ class EntityOrCreateTypeTest extends BaseFormTestType
 
         $formData = [
             'entity' => [
-                'finder' => '',
-                'createForm' => ['id' => 'theId', 'name' => 'theName'],
+                'finder'            => '',
+                'createForm'        => ['id' => 'theId', 'name' => 'theName'],
                 'createFormClicked' => 'create',
             ],
         ];
 
         $formOptions = [
-            'type'  => EntityType::class,
-            'class' => Entity::class,
+            'type'           => EntityType::class,
+            'class'          => Entity::class,
             'entity_options' => ['multiple' => true],
         ];
 
@@ -171,7 +169,7 @@ class EntityOrCreateTypeTest extends BaseFormTestType
     public function getExtensions(): array
     {
         $this->entityMgr = $this->createMock(EntityManagerInterface::class);
-        $type = new AutocompleterType($this->entityMgr);
+        $type            = new AutocompleterType($this->entityMgr);
 
         return [new PreloadedExtension([$type], [])];
     }
