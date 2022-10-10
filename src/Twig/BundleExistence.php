@@ -8,11 +8,11 @@ use Twig\TwigFunction;
 
 class BundleExistence extends AbstractExtension
 {
-    protected ContainerInterface $container;
+    private array $kernelBundles;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(array $kernelBundles)
     {
-        $this->container = $container;
+        $this->kernelBundles = $kernelBundles;
     }
 
     public function getFunctions(): array
@@ -24,6 +24,6 @@ class BundleExistence extends AbstractExtension
 
     public function bundleExists(string $bundle): bool
     {
-        return array_key_exists($bundle, $this->container->getParameter('kernel.bundles'));
+        return array_key_exists($bundle, $this->kernelBundles);
     }
 }

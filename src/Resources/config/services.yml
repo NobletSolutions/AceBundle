@@ -16,3 +16,5 @@ services:
     tags:
       - name: controller.service_arguments
 
+  NS\AceBundle\Twig\BundleExistence:
+    arguments: ['%kernel.bundles%']
