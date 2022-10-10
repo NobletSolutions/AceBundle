@@ -3,6 +3,7 @@ VERSION 6  SF6 AND PHP8.1
 =========================
 
    Version 6.0 - SF6 and PHP8.1
+      10/10/2022 09:15  6.0.1  Fixed issue with BundleExistence
       06/10/2022 21:39  6.0.0  initial release
 
 VERSION 5  INITIAL SUPPORT FOR SF5
