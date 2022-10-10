@@ -28,11 +28,10 @@ class EntitySelect2Type extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if (isset($options['class']) && $options['transformer'] !== false) {
+        if (isset($options['class'],$options['transformer']) && $options['transformer'] !== false) {
             $builder->addViewTransformer($options['transformer']);
         }
 
-        $this->options = $options;
         $builder->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'preSetData']);
         $builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'preSubmit'], 30);
     }
