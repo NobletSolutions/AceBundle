@@ -77,7 +77,7 @@ function handleAddForm(target) {
     var newForm = $(prototype.replace(prototype_name, index));
     collection.append(newForm);
 
-    if (collection.data('scroll-to-view', false)) {
+    if (collection.data('scroll-to-view')) {
         newForm[0].scrollIntoView();
     }
 
