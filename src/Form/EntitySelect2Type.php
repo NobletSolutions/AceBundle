@@ -23,6 +23,8 @@ class EntitySelect2Type extends AbstractType
         configureOptions as _configureOptions;
     }
 
+    private $options;
+
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
@@ -30,11 +32,8 @@ class EntitySelect2Type extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if (isset($options['class'])) {
-            if (!isset($options['transformer'])) {
-            } elseif ($options['transformer'] !== false) {
-                $builder->addViewTransformer($options['transformer']);
-            }
+        if (isset($options['class'],$options['transformer']) && $options['transformer'] !== false) {
+            $builder->addViewTransformer($options['transformer']);
         }
 
         $this->options = $options;
