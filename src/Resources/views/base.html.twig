@@ -195,18 +195,29 @@
             {% endblock %}
 
             <div class="main-content">
-                {% block breadcrumbs %}{% endblock %}
-                <div class="page-content">
+                <div class="breadcrumbs breadcrumbs-fixed" id="breadcrumbs">
                     {% if block('pagetitle') is defined %}
-                        {% if block('pageheader') is not defined %}
-                            <div class="page-header">
-                                {% block pageactions %}{% endblock %}
+                        <div class="page-header clearfix">
+                            <div class="header-content">
+                            {% block page_title_text %}
                                 <h1>{{ block('pagetitle') }} {% if block('pagedescription') is defined %}<small><i class="fa fa-double-angle-right"></i> {{ block('pagedescription') }}</small>{% endif %}</h1>
+                            {% endblock %}
                             </div>
-                        {% else %}
-                            {{ block('pageheader') }}
-                        {% endif %}
+                            <div class="header-actions">
+                                <div class="header-search">
+                                    {% block breadcrumbs %}{% endblock %}
+                                </div>
+                                <div class="header-page-actions">
+                                {% block pageactions %}{% endblock %}
+                                </div>
+                            </div>
+                            <div class="header-quickinfo">
+                            {% block quickinfo %}{% endblock %}
+                            </div>
+                        </div>
                     {% endif %}
+                </div>
+                <div class="page-content">
 
                     <div class="row">
                         <div class="col-xs-12">
