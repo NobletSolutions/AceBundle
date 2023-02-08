@@ -15,13 +15,6 @@
     {
         autoinit = typeof(autoinit) !== 'undefined' ? autoinit: true;
         events   = typeof(events) !== 'undefined' ? events : 'nsFormUpdate shown.bs.tab shown.bs.collapse sonata.add_element ajaxComplete shown.ace.widget';
-        this.onSuccessEvent = typeof(onSuccessEvent) !== 'undefined' ? onSuccessEvent : 'contextFormUpdate';
-        this.activityMap = {}; //We need to store a mapping of what fields are currently active and "visible"; storing this info right on the field is problematic because it may or may not be an actual <input> element
-        this.toBeProcessed = {};
-        this.isFirstRun = true;
-        this.collectionref = 1;
-        this.allTargets = $(); //Straight list of every child element for rapid access
-        this.elementList = [];
 
         var defaultConfig = {
             'event': 'input',
@@ -60,6 +53,14 @@
          */
         Init: function()
         {
+            this.onSuccessEvent = typeof(onSuccessEvent) !== 'undefined' ? onSuccessEvent : 'contextFormUpdate';
+            this.activityMap = {}; //We need to store a mapping of what fields are currently active and "visible"; storing this info right on the field is problematic because it may or may not be an actual <input> element
+            this.toBeProcessed = {};
+            this.isFirstRun = true;
+            this.collectionref = 1;
+            this.allTargets = $(); //Straight list of every child element for rapid access
+            this.elementList = [];
+
             var cform   = this; //#JustJavascriptScopeThings
             cform.isFirstRun = true;
             cform.forms = cform.element.find('form[data-context-config]').addBack('form[data-context-config]'); //Find any forms that have a config
