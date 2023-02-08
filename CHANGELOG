@@ -3,6 +3,7 @@ VERSION 6  SF6 AND PHP8.1
 =========================
 
    Version 6.0 - SF6 and PHP8.1
+      08/02/2023 14:35  6.0.4  Fixed issue with dynamic forms and context hidden form fields
       13/12/2022 13:06  6.0.3  Fixed JS bug
       10/10/2022 09:48  6.0.2  Fixed access before check
       10/10/2022 09:15  6.0.1  Fixed issue with BundleExistence
