@@ -76,7 +76,7 @@ function handleAddForm(target) {
     }
     var newForm = $(prototype.replace(prototype_name, index));
 
-    if (collection.data('insert-position')) {
+    if (collection.data('insert-position') === 'prepend') {
         collection.prepend(newForm);
     } else {
         collection.append(newForm);
