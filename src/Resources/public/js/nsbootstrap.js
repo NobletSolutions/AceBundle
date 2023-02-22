@@ -75,7 +75,12 @@ function handleAddForm(target) {
         return;
     }
     var newForm = $(prototype.replace(prototype_name, index));
-    collection.append(newForm);
+
+    if (collection.data('insert-position')) {
+        collection.prepend(newForm);
+    } else {
+        collection.append(newForm);
+    }
 
     if (collection.data('scroll-to-view')) {
         newForm[0].scrollIntoView();
