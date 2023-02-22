@@ -138,10 +138,9 @@ class HiddenParentChildExtensionTest extends TypeTestCase
         $view = $form->createView();
         $expected = '{"form[deeper][field2][l2Field1]":[{"display":["form[deeper][field2][l2Field2]"],"values":["c2"]}],"form[deeper][field1]":[{"display":["form[deeper][field2]","form[deeper][field2][l2Field1]","form[deeper][field2][l2Field3]","form[deeper][field2][l2Field3][id]","form[deeper][field2][l2Field3][name]"],"values":["one"]}]}';
         $this->assertEquals($expected, $view->vars['attr']['data-context-config']);
-
     }
 
-    protected function getExtensions()
+    protected function getExtensions(): array
     {
         $hiddenParent = new HiddenParentChildExtension();
         return [new PreloadedExtension([], [$hiddenParent->getExtendedType() => [$hiddenParent]])];
