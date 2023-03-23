@@ -3,6 +3,7 @@ VERSION 7  ALLOW FOR FIXED HEADERS
 ==================================
 
    Version 7.0 - Allow for fixed headers
+      23/03/2023 11:11  7.0.4  Added templateResult support for Select2
       22/02/2023 17:15  7.0.3  Added CollectionType nsAddForm handling
       22/02/2023 16:01  7.0.2  Added insert-position support for nsAddForm
       16/02/2023 15:54  7.0.1  Added save button block
