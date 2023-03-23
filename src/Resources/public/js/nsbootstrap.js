@@ -415,7 +415,8 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
                         return {results: data.results};
                     }
                 };
-                config.templateResult = state => {
+                const templateResult = $this.data('nstemplateresult');
+                config.templateResult = typeof window[templateResult] === 'function' ? window[templateResult] : state => {
                     if (state.raw) {
                         return state.raw;
                     }
