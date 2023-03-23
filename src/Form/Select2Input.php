@@ -55,6 +55,7 @@ trait Select2Input
         $resolver->setDefined(array_merge($this->params, ['transformer', 'route', 'routeParams', 'config', 'class', 'language'/*, 'property', 'transformer'*/]));
         $resolver->setDefault('minimumInputLength', 2);
         $resolver->setDefault('escapeAllMarkup', true);
+        $resolver->setDefault('templateResult', null);
         $resolver->setAllowedTypes('allowClear', ['boolean']);
         $resolver->setAllowedTypes('closeOnSelect', ['boolean']);
         $resolver->setAllowedTypes('debug', ['boolean']);
@@ -63,6 +64,7 @@ trait Select2Input
         $resolver->setAllowedTypes('minimumInputLength', ['integer']);
         $resolver->setAllowedTypes('minimumResultsForSearch', ['integer']);
         $resolver->setAllowedTypes('language', ['array']);
+        $resolver->setAllowedTypes('templateResult', ['string', 'null']);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
@@ -70,6 +72,10 @@ trait Select2Input
         if (isset($options['route'])) {
             $url            = $this->router->generate($options['route'], $options['routeParams'] ?? []);
             $options['url'] = $url;
+        }
+
+        if (isset($options['templateResult'])) {
+            $view->vars['attr']["data-nstemplateresult"] = $options['templateResult'];
         }
 
         foreach ($this->params as $param) {
