@@ -20,6 +20,11 @@ class Select2SearchResult implements Select2SearchResultInterface
         }
 
         $this->text = $text;
+        $this->populateExtras($args);
+    }
+
+    protected function populateExtras($args): void
+    {
         $extra      = array_splice($args, 2);
 
         if (!empty($extra)) {
