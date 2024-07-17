@@ -348,6 +348,12 @@
                     {%- endif -%}
                     {{ label|trans({}, translation_domain) }}
                 {%- endif -%}
+                {% if label_tooltip_title is defined %}
+                    <i class="fa {{ label_tooltip_icon }}"
+                       title="{{ label_tooltip_title }}"
+                       style="padding-left: 6px; padding-right: 6px; position: relative; top: 2px; font-size: {{ label_tooltip_textSize }}"></i>
+                {% endif %}
+
             </span>
         </label>
     </div>
