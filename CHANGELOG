@@ -3,6 +3,7 @@ VERSION 7  ALLOW FOR FIXED HEADERS
 ==================================
 
    Version 7.0 - Allow for fixed headers
+      18/07/2024 07:40  7.0.6  Minor tweaks
       22/02/2023 17:15  7.0.3  Added CollectionType nsAddForm handling
       22/02/2023 16:01  7.0.2  Added insert-position support for nsAddForm
       16/02/2023 15:54  7.0.1  Added save button block
