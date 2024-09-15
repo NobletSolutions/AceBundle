@@ -3,14 +3,14 @@
 namespace NS\AceBundle\Filter\Type;
 
 use Doctrine\DBAL\Types\Types;
-use Lexik\Bundle\FormFilterBundle\Filter\Condition\ConditionInterface;
-use Lexik\Bundle\FormFilterBundle\Filter\Query\QueryInterface;
+use Spiriit\Bundle\FormFilterBundle\Filter\Condition\ConditionInterface;
+use Spiriit\Bundle\FormFilterBundle\Filter\Query\QueryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use NS\AceBundle\Service\DateFormatConverter;
-use Lexik\Bundle\FormFilterBundle\Filter\Form\Type\DateFilterType as ParentDateFilterType;
+use Spiriit\Bundle\FormFilterBundle\Filter\Form\Type\DateFilterType as ParentDateFilterType;
 
 class DateFilterType extends AbstractType
 {

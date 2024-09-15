@@ -1,6 +1,6 @@
 <?php
 
-namespace NS\AceBundle\Test\Filter\Type;
+namespace NS\AceBundle\Tests\Filter\Type;
 
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Form\Form;

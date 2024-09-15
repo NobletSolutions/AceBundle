@@ -10,7 +10,7 @@ class EntityToJson extends AbstractObjectToJson
      * @param  object|null $entity
      * @return string
      */
-    public function transform($entity)
+    public function transform($entity): mixed
     {
         if ($entity === null) {
             return null;
@@ -29,7 +29,7 @@ class EntityToJson extends AbstractObjectToJson
      * @param  string|null $id
      * @return object
      */
-    public function reverseTransform($id)
+    public function reverseTransform($id): mixed
     {
         if ($id === null || empty($id)) {
             return null;

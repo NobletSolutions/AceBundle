@@ -11,23 +11,23 @@ class CollectionToJson extends AbstractObjectToJson
     /**
      * Transforms an object (issue) to a json {id: integer, string: string }
      *
-     * @param  Collection|array|null $entities
-     * @return string
+     * @param  Collection|array|null $value
+     * @return string|false|null
      * @throws UnexpectedTypeException
      */
-    public function transform($entities)
+    public function transform($value): string|null|false
     {
-        if (null === $entities || empty($entities)) {
+        if (empty($value)) {
             return "";
         }
 
-        if (!$entities instanceof Collection && !is_array($entities)) {
-            throw new UnexpectedTypeException($entities, 'PersistentCollection or ArrayCollection');
+        if (!$value instanceof Collection && !is_array($value)) {
+            throw new UnexpectedTypeException($value, 'PersistentCollection or ArrayCollection');
         }
 
         $idsArray = [];
         // check for interface...
-        foreach ($entities as $entity) {
+        foreach ($value as $entity) {
             if ($entity !== null) {
                 $idsArray[] = ['id' => $entity->getId(), 'name' => $this->getProperty($entity)];
             }
@@ -43,21 +43,21 @@ class CollectionToJson extends AbstractObjectToJson
     /**
      * Transforms an json string to an entity
      *
-     * @param  string|null $ids
+     * @param  string|null $value
      * @return array
      * @throws UnexpectedTypeException
      */
-    public function reverseTransform($ids)
+    public function reverseTransform($value): array
     {
-        if ('' === $ids || null === $ids || empty($ids)) {
+        if (empty($value)) {
             return [];
         }
 
-        if (!is_string($ids)) {
-            throw new UnexpectedTypeException($ids, 'string');
+        if (!is_string($value)) {
+            throw new UnexpectedTypeException($value, 'string');
         }
 
-        $idsArray = explode(',', $ids);
+        $idsArray = explode(',', $value);
 
         if (empty($idsArray)) {
             return [];

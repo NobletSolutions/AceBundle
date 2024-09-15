@@ -7,14 +7,11 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class EntityOrCreate implements DataTransformerInterface
 {
-    /** @var bool */
-    private $expectMultiple;
+    private bool $expectMultiple;
 
-    /** @var bool */
-    private $expectCreateForm;
+    private bool $expectCreateForm;
 
-    /** @var string */
-    private $class;
+    private string $class;
 
     public function __construct(bool $expectMultiple, bool $expectCreateForm, string $class)
     {
@@ -23,38 +20,24 @@ class EntityOrCreate implements DataTransformerInterface
         $this->class            = $class;
     }
 
-    /**
-     * This takes the submitted values and determines which to submit
-     *
-     * @param array $value
-     * {@inheritdoc}
-     */
-    public function reverseTransform($value)
+    public function reverseTransform($value): ?array
     {
         if ($this->expectCreateForm) {
             if (!isset($value['createFormClicked'])) {
                 throw new TransformationFailedException("Unable to reverseTransform as we expected the createFormClicked but it wasn't submitted");
             }
 
-            switch ($value['createFormClicked']) {
-                case 'finder':
-                    return $this->handleFinder($value);
-                case 'create':
-                    return $this->handleCreate($value);
-                default:
-                    throw new TransformationFailedException("CreateFormClicked invalid");
-            }
+            return match ($value['createFormClicked']) {
+                'finder' => $this->handleFinder($value),
+                'create' => $this->handleCreate($value),
+                default => throw new TransformationFailedException("CreateFormClicked invalid"),
+            };
         }
 
         return $this->handleFinder($value);
     }
 
-    /**
-     * @param array $value
-     *
-     * @return array|mixed|null
-     */
-    private function handleFinder(array $value)
+    private function handleFinder(array $value): ?array
     {
         if (!isset($value['finder'])) {
             throw new TransformationFailedException("Missing 'finder' array key");
@@ -79,12 +62,7 @@ class EntityOrCreate implements DataTransformerInterface
         return null;
     }
 
-    /**
-     * @param array $value
-     *
-     * @return array|mixed|null
-     */
-    private function handleCreate(array $value)
+    private function handleCreate(array $value): ?array
     {
         if (!isset($value['createForm'])) {
             throw new TransformationFailedException("Missing 'createForm' array key");
@@ -97,15 +75,12 @@ class EntityOrCreate implements DataTransformerInterface
         return null;
     }
 
-    /**
-     *
-     * @param mixed $value
-     * {@inheritdoc}
-     */
-    public function transform($value)
+    public function transform(mixed $value): mixed
     {
         if ($value === null) {
             return $value;
         }
+
+        return null;
     }
 }
