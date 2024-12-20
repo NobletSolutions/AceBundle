@@ -17,43 +17,43 @@
 
             <!-- page specific plugin styles -->
             <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
-            <link rel="stylesheet" href="{{ asset('/bundles/nsace/components/chosen/chosen.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('/bundles/nsace/components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('/bundles/nsace/components/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('/bundles/nsace/components/bootstrap-daterangepicker/daterangepicker.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('/bundles/nsace/components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('/bundles/nsace/components/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('/bundles/nsace/components/jquery.tokeninput/dist/jquery.tokeninput.css') }}" />
-            <link rel="stylesheet" href="{{ asset('/bundles/nsace/components/select2/dist/css/select2.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/components/chosen/chosen.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/components/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/components/bootstrap-daterangepicker/daterangepicker.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/components/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/components/jquery.tokeninput/dist/jquery.tokeninput.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/components/select2/dist/css/select2.min.css') }}" />
 
             <!-- text fonts -->
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:700,400,300" />
 
             <!-- ace styles -->
-            <link rel="stylesheet" href="{{ asset('/bundles/nsace/dist/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/dist/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
 
             <!-- NS styles -->
-            <link rel="stylesheet" href="{{ asset('/bundles/nsace/css/ns.css') }}?v=202102231" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/css/ns.css') }}?v=202102231" />
 
             {% block inlinestyles %}
             {% endblock inlinestyles %}
 
             <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
             <!--[if lte IE 8]>
-            <script src="{{ asset('/bundles/nsace/components/html5shiv/dist/html5shiv.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/respond/dest/respond.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/html5shiv/dist/html5shiv.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/respond/dest/respond.min.js') }}"></script>
             <![endif]-->
         {% endblock %}
 
         {% block javascripts %}
             <!-- ace settings handler -->
-            <script src="{{ asset('/bundles/nsace/dist/js/ace-extra.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/dist/js/ace-extra.min.js') }}"></script>
 
             {% block jqueryScripts %}
                 <!--[if !IE]> -->
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
                 <script>
-                    window.jQuery || document.write('<script src="{{ asset('/bundles/nsace/js/jquery.min.js') }}"><\/script>');
+                    window.jQuery || document.write('<script src="{{ asset('bundles/nsace/js/jquery.min.js') }}"><\/script>');
                 </script>
                 <!-- <![endif]-->
 
@@ -62,54 +62,54 @@
                 <![endif]-->
             {% endblock %}
 
-            {% set jqm = asset('/bundles/nsace/components/_mod/jquery.mobile.custom/jquery.mobile.custom.min.js') %}
+            {% set jqm = asset('bundles/nsace/components/_mod/jquery.mobile.custom/jquery.mobile.custom.min.js') %}
             <script type="text/javascript">
                 if('ontouchstart' in document.documentElement) document.write('<script src="{{ jqm }}"><\/script>');//+"<"+"/script>");
             </script>
 
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
             <script>
-                $.fn.modal || document.write('<script src="{{ asset('/bundles/nsace/js/bootstrap.min.js') }}"><\/script>');
+                $.fn.modal || document.write('<script src="{{ asset('bundles/nsace/js/bootstrap.min.js') }}"><\/script>');
             </script>
             <!-- page specific plugin scripts -->
 
             <!--[if lte IE 8]>
-            <script src="{{ asset('/bundles/nsace/components/ExplorerCanvas/excanvas.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/ExplorerCanvas/excanvas.min.js') }}"></script>
             <![endif]-->
-            <script src="{{ asset('/bundles/nsace/components/_mod/jquery-ui.custom/jquery-ui.custom.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/jqueryui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/chosen/chosen.jquery.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/fuelux/js/spinbox.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/moment/moment.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/bootstrap-daterangepicker/daterangepicker.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/jquery-knob/dist/jquery.knob.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/autosize/dist/autosize.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/jquery-inputlimiter/jquery.inputlimiter.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/jquery.maskedinput/dist/jquery.maskedinput.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/jquery.tokeninput/dist/jquery.tokeninput.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/_mod/bootstrap-tag/bootstrap-tag.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/components/select2/dist/js/select2.full.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/_mod/jquery-ui.custom/jquery-ui.custom.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/jqueryui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/chosen/chosen.jquery.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/fuelux/js/spinbox.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/moment/moment.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/bootstrap-daterangepicker/daterangepicker.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/jquery-knob/dist/jquery.knob.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/autosize/dist/autosize.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/jquery-inputlimiter/jquery.inputlimiter.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/jquery.maskedinput/dist/jquery.maskedinput.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/jquery.tokeninput/dist/jquery.tokeninput.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/_mod/bootstrap-tag/bootstrap-tag.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/select2/dist/js/select2.full.js') }}"></script>
 
             <!-- ace scripts -->
-            <script src="{{ asset('/bundles/nsace/dist/js/ace-elements.min.js') }}"></script>
-            <script src="{{ asset('/bundles/nsace/dist/js/ace.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/dist/js/ace-elements.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/dist/js/ace.min.js') }}"></script>
 
             {% if bundleExists('PunkAveFileUploaderBundle') %}
-            <script src="{{asset('/bundles/punkavefileuploader/js/jquery.fileupload.js')}}"></script>
-            <script src="{{asset('/bundles/punkavefileuploader/js/jquery.iframe-transport.js')}}"></script>
+            <script src="{{asset('bundles/punkavefileuploader/js/jquery.fileupload.js')}}"></script>
+            <script src="{{asset('bundles/punkavefileuploader/js/jquery.iframe-transport.js')}}"></script>
             {% endif %}
-            <script src="{{asset('/bundles/nsace/js/nsFileUploader.js')}}"></script>
-            <script src="{{asset('/bundles/nsace/js/nsbootstrap.js')}}?v=202102231"></script>
+            <script src="{{asset('bundles/nsace/js/nsFileUploader.js')}}"></script>
+            <script src="{{asset('bundles/nsace/js/nsbootstrap.js')}}?v=20230222"></script>
 
             <script type="text/javascript">
                 if ($('#bootstrapHiddenTest').is(':visible') === true) {
-                    $('<link href="{{ asset('/bundles/nsace/css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" />').appendTo('head');
-                    $('<link href="{{ asset('/bundles/nsace/css/font-awesome.min.css') }}" rel="stylesheet" />').appendTo('head');
-                    $('<link href="{{ asset('/bundles/nsace/css/jquery-ui.css') }}" rel="stylesheet" />').appendTo('head');
+                    $('<link href="{{ asset('bundles/nsace/css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" />').appendTo('head');
+                    $('<link href="{{ asset('bundles/nsace/css/font-awesome.min.css') }}" rel="stylesheet" />').appendTo('head');
+                    $('<link href="{{ asset('bundles/nsace/css/jquery-ui.css') }}" rel="stylesheet" />').appendTo('head');
                 }
             </script>
 
