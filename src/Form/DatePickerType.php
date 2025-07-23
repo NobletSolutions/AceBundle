@@ -13,7 +13,7 @@ class DatePickerType extends AbstractType
 {
     protected DateFormatConverter $converter;
 
-    public function __construct(DateFormatConverter $converter = null)
+    public function __construct(?DateFormatConverter $converter = null)
     {
         $this->converter = ($converter) ?:new DateFormatConverter();
     }
