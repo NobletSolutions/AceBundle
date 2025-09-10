@@ -91,12 +91,16 @@ class HiddenParentChildExtension extends AbstractTypeExtension
             return;
         }
 
+        //Some forms with custom implementation may write data-context-config directly; merge any existing configs with what's been generated here
         if (!empty($this->config)) {
-            $view->vars['attr'] = isset($view->vars['attr']) ? array_merge($view->vars['attr'], ['data-context-config' => json_encode($this->config)]) : ['data-context-config' => json_encode($this->config)];
+            $view->vars['context_config'] = array_merge($view->vars['context_config'] ?? [], (array)$this->config);
+            $view->vars['attr']           = array_merge($view->vars['attr'] ?? [], ['data-context-config' => json_encode($view->vars['context_config'])]);
         }
 
         if (!empty($this->prototypes)) {
-            $view->vars['attr'] = isset($view->vars['attr']) ? array_merge($view->vars['attr'], ['data-context-prototypes' => json_encode($this->prototypes)]) : ['data-context-prototypes' => json_encode($this->prototypes)];
+            $view->vars['context_config_prototypes'] = array_merge($view->vars['context_config_prototypes'] ?? [], (array)$this->prototypes);
+            $view->vars['attr']                      = array_merge($view->vars['attr'] ?? [], ['data-context-prototypes' => json_encode($view->vars['context_config_prototypes'])]);
+
             if (empty($this->config)) {
                 $view->vars['attr'] = array_merge($view->vars['attr'], ['data-context-config' => '[]']);
             }
