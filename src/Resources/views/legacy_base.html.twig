@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|default('en') }}">
+    <head>
+	<meta charset="utf-8" />
+        {% block meta %}
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+            <!--	<meta name="description" content="{ {page.description} }" />-->
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {% endblock %}
+
+        <title>{% block windowtitle %}{% block sitetitle %}{% endblock %} {% block pagetitle %}{% endblock %}{% endblock %}</title>
+
+        {% block stylesheets %}
+            <!-- bootstrap & fontawesome -->
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+            {% block fontawesome %}
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            {% endblock %}
+
+            <!-- page specific plugin styles -->
+            <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/components/chosen/chosen.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/components/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/components/bootstrap-daterangepicker/daterangepicker.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/components/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/components/jquery.tokeninput/dist/jquery.tokeninput.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/components/select2/dist/css/select2.min.css') }}" />
+
+            <!-- text fonts -->
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:700,400,300" />
+
+            <!-- ace styles -->
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/dist/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
+
+            <!-- NS styles -->
+            <link rel="stylesheet" href="{{ asset('bundles/nsace/css/ns.css') }}?v=202102231" />
+
+            {% block inlinestyles %}
+            {% endblock inlinestyles %}
+
+            <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+            <!--[if lte IE 8]>
+            <script src="{{ asset('bundles/nsace/components/html5shiv/dist/html5shiv.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/respond/dest/respond.min.js') }}"></script>
+            <![endif]-->
+        {% endblock %}
+
+        {% block javascripts %}
+            <!-- ace settings handler -->
+            <script src="{{ asset('bundles/nsace/dist/js/ace-extra.min.js') }}"></script>
+
+            {% block jqueryScripts %}
+                <!--[if !IE]> -->
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+                <script>
+                    window.jQuery || document.write('<script src="{{ asset('bundles/nsace/js/jquery.min.js') }}"><\/script>');
+                </script>
+                <!-- <![endif]-->
+
+                <!--[if IE]>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+                <![endif]-->
+            {% endblock %}
+
+            {% set jqm = asset('bundles/nsace/components/_mod/jquery.mobile.custom/jquery.mobile.custom.min.js') %}
+            <script type="text/javascript">
+                if('ontouchstart' in document.documentElement) document.write('<script src="{{ jqm }}"><\/script>');//+"<"+"/script>");
+            </script>
+
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+            <script>
+                $.fn.modal || document.write('<script src="{{ asset('bundles/nsace/js/bootstrap.min.js') }}"><\/script>');
+            </script>
+            <!-- page specific plugin scripts -->
+
+            <!--[if lte IE 8]>
+            <script src="{{ asset('bundles/nsace/components/ExplorerCanvas/excanvas.min.js') }}"></script>
+            <![endif]-->
+            <script src="{{ asset('bundles/nsace/components/_mod/jquery-ui.custom/jquery-ui.custom.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/jqueryui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/chosen/chosen.jquery.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/fuelux/js/spinbox.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/moment/moment.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/bootstrap-daterangepicker/daterangepicker.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/jquery-knob/dist/jquery.knob.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/autosize/dist/autosize.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/jquery-inputlimiter/jquery.inputlimiter.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/jquery.maskedinput/dist/jquery.maskedinput.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/jquery.tokeninput/dist/jquery.tokeninput.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/_mod/bootstrap-tag/bootstrap-tag.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/components/select2/dist/js/select2.full.js') }}"></script>
+
+            <!-- ace scripts -->
+            <script src="{{ asset('bundles/nsace/dist/js/ace-elements.min.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/dist/js/ace.min.js') }}"></script>
+
+            {% if bundleExists('PunkAveFileUploaderBundle') %}
+            <script src="{{asset('bundles/punkavefileuploader/js/jquery.fileupload.js')}}"></script>
+            <script src="{{asset('bundles/punkavefileuploader/js/jquery.iframe-transport.js')}}"></script>
+            {% endif %}
+            <script src="{{asset('bundles/nsace/js/nsFileUploader.js')}}"></script>
+            <script src="{{asset('bundles/nsace/js/nsbootstrap.js')}}?v=20230222"></script>
+
+            <script type="text/javascript">
+                if ($('#bootstrapHiddenTest').is(':visible') === true) {
+                    $('<link href="{{ asset('bundles/nsace/css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" />').appendTo('head');
+                    $('<link href="{{ asset('bundles/nsace/css/font-awesome.min.css') }}" rel="stylesheet" />').appendTo('head');
+                    $('<link href="{{ asset('bundles/nsace/css/jquery-ui.css') }}" rel="stylesheet" />').appendTo('head');
+                }
+            </script>
+
+            <!-- inline scripts related to this page -->
+            {% block inlinescripts %}
+            {% endblock %}
+        {% endblock %}
+</head>
+<body class="{% block body_class %}no-skin{% endblock %}">
+<div id="bootstrapHiddenTest" class="hidden"></div>
+    {% block topbar %}
+        <div class="navbar navbar-default {% block navbar_class %}{% endblock %}" id="navbar">
+         <script type="text/javascript">
+            try{ace.settings.check('navbar' , 'fixed');}catch(e){}
+         </script>
+
+          <div class="navbar-container" id="navbar-container">
+              <button id="menu-toggler" class="navbar-toggle menu-toggler pull-left" data-target="#sidebar" type="button">
+                <span class="sr-only">Toggle sidebar</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+              {% block sitebrand %}
+                <div class="navbar-header pull-left">
+                  <a href="{{path('homepage')}}" class="navbar-brand">
+                    <small>
+                        <i class="{% block sitebrand_icon %}{% endblock %}"></i>
+                        {% block sitebrand_text %}site.brand_text{% endblock %}
+                    </small>
+                  </a><!-- /.brand -->
+                </div><!-- /.navbar-header -->
+              {% endblock %}
+              {% block navbarheader %}{% endblock %}
+                {#
+                <div class="navbar-header pull-right" role="navigation">
+                    {% block topbar_tasks %}<ul class="nav ace-nav"><li>{ {> layout.topbar.tasks} }</li></ul>{% endblock %}
+                    {% block topbar_notifications %}<ul class="nav ace-nav"><li>{ {> layout.topbar.notifications} }</li></ul>{% endblock %}
+                    {% block topbar_messages %}<ul class="nav ace-nav"><li>{ {> layout.topbar.messages} }</li></ul>{% endblock %}
+                    {% block topbar_user_menu%}<ul class="nav ace-nav"><li>{ {> layout.topbar.user_menu} }</li></ul>{% endblock %}
+                </div><!-- /.navbar-header -->
+                #}
+          </div><!-- /.container -->
+        </div>
+    {% endblock %}
+    <div class="main-container {%block container_class %}{% endblock %}" id="main-container">
+        <script type="text/javascript">
+            try{ace.settings.check('main-container' , 'fixed');}catch(e){}
+        </script>
+             {% block sidenav %}
+                <div class="sidebar responsive {% block sidebar_class %}{% endblock %}" id="sidebar">
+                    <script type="text/javascript">
+                        try{ace.settings.check('sidebar' , 'fixed');}catch(e){}
+                    </script>
+
+                    {% block sidenav_shortcuts %}
+                        <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+                            <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                                <button class="btn btn-success"><i class="fa fa-signal"></i></button>
+                                <button class="btn btn-info"><i class="fa fa-pencil"></i></button>
+                                <button class="btn btn-warning"><i class="fa fa-group"></i></button>
+                                <button class="btn btn-danger"><i class="fa fa-cogs"></i></button>
+                            </div>
+                            <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                                <span class="btn btn-success"></span>
+                                <span class="btn btn-info"></span>
+                                <span class="btn btn-warning"></span>
+                                <span class="btn btn-danger"></span>
+                            </div>
+                        </div><!-- #sidebar-shortcuts -->
+                    {% endblock %}
+
+                    {% block sidenav_menu %}{% endblock %}
+
+                    {% block sidebar_toggle %}
+                    <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+                        <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+                    </div>
+                    {% endblock %}
+
+                    <script type="text/javascript">
+                        try{ace.settings.check('sidebar' , 'collapsed');}catch(e){}
+                    </script>
+                    {% block sidenav_footer %}{% endblock %}
+                </div>
+            {% endblock %}
+
+            <div class="main-content">
+                {% block breadcrumbs %}{% endblock %}
+                <div class="page-content">
+                    {% if block('pagetitle') is defined %}
+                        {% if block('pageheader') is not defined %}
+                            <div class="page-header">
+                                {% block pageactions %}{% endblock %}
+                                <h1>{{ block('pagetitle') }} {% if block('pagedescription') is defined %}<small><i class="fa fa-double-angle-right"></i> {{ block('pagedescription') }}</small>{% endif %}</h1>
+                            </div>
+                        {% else %}
+                            {{ block('pageheader') }}
+                        {% endif %}
+                    {% endif %}
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            {% block flash %}
+                                {% if bundleExists('NSFlashBundle') %}
+                                    {{ flash_messages() }}
+                                {% endif %}
+                            {% endblock %}
+                            {% block body %}{% endblock %}
+                        </div><!--/.col-->
+                    </div><!--/.row-->
+                </div><!--/.page-content-->
+            </div><!--/.main-content -->
+
+            {% block footer %}{% endblock footer %}
+            {% block globalModals %}{% endblock globalModals %}
+
+            {% block ace_settings %}
+            <div class="ace-settings-container" id="ace-settings-container">
+                <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+                    <i class="fa fa-cog bigger-150"></i>
+                </div>
+                <div class="ace-settings-box" id="ace-settings-box">
+                    <div>
+                        <div class="pull-left">
+                            <select id="skin-colorpicker" class="hide">
+                                <option data-skin="default" value="#438EB9">#438EB9</option>
+                                <option data-skin="skin-1" value="#222A2D">#222A2D</option>
+                                <option data-skin="skin-2" value="#C6487E">#C6487E</option>
+                                <option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+                            </select>
+                        </div>
+                        <span>&nbsp; Choose Skin</span>
+                    </div>
+                    <div><input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" /><label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label></div>
+                    <div><input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" /><label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label></div>
+                    <div><input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" /><label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label></div>
+                    <div><input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" /><label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label></div>
+                    <div><input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" /><label class="lbl" for="ace-settings-add-container"> Inside <b>.container</b> </label></div>
+                </div>
+            </div><!--/#ace-settings-container-->
+            {% endblock %}
+    </div><!--/.main-container-->
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse display">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+
+    {% if bundleExists('PunkAveFileUploaderBundle') %}
+        {% include "PunkAveFileUploaderBundle:Default:templates.html.twig" %}
+    {% endif %}
+</body>
+</html>
