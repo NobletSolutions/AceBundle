@@ -24,7 +24,7 @@
         "symfony/routing":          "^6.0|^7.0",
         "twig/twig":                "^2.0|^3.0",
         "knplabs/knp-menu-bundle":  "^3.0",
-        "doctrine/orm":             "*"
+        "doctrine/orm":             "^2.0|^3.0"
     },
     "require-dev": {
         "spiriitlabs/form-filter-bundle": "^11.0",
