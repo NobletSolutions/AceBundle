@@ -2,6 +2,9 @@
 VERSION 7  ALLOW FOR FIXED HEADERS
 ==================================
 
+   Version 7.2 - Fix misc issues and provide legacy layout markup
+      12/09/2025 08:49  7.2.0  initial release
+
    Version 7.1 - Added sidenav footer and changed asset paths
       20/12/2024 10:58  7.1.0  initial release
 
