@@ -28,13 +28,11 @@
     },
     "require-dev": {
         "spiriitlabs/form-filter-bundle": "^11.0",
-        "phpunit/phpunit":          "^9.0",
-        "liip/rmt":                 "^1.6"
+        "phpunit/phpunit":                "^9.0"
     },
     "suggest": {
-        "punkave/symfony2-file-uploader-bundle": "Allows for drag & drop or multiple file upload",
         "craue/formflow-bundle": "Provides multi-step forms for which we have a theme",
-        "lexik/form-filter-bundle": "Form filtering"
+        "spiriitlabs/form-filter-bundle": "Form filtering"
     },
     "autoload": {
         "psr-4": { "NS\\AceBundle\\": "src" }
