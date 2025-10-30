@@ -93,7 +93,7 @@ function handleAddForm(target) {
         $form[0].ContextualForm.AddConfigFromPrototype($form, index);
     }
 
-    $(document).trigger('nsFormUpdate').trigger('nsAddForm');
+    $(document).trigger('nsFormUpdate').trigger('nsAddForm', newForm);
 }
 
 $(document).on('click', '.nsAddForm', function (ev) {
