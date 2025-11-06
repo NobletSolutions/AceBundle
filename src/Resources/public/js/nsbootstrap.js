@@ -60,7 +60,7 @@ $(document).ready(function () {
 });
 
 function handleAddForm(target) {
-    var collection     = $('[data-collection=' + target.data('collectionholder') + ']').first();
+    var collection     = $('[data-collection="' + target.data('collectionholder') + '"]').first();
     var prototype_name = collection.data('prototype-name');
     if (typeof prototype_name !== "undefined") {
         prototype_name = new RegExp(prototype_name, 'g');
