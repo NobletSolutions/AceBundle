@@ -415,14 +415,15 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
                         return {results: data.results};
                     }
                 };
-                const templateResult = $this.data('nstemplateresult');
-                config.templateResult = typeof window[templateResult] === 'function' ? window[templateResult] : state => {
-                    if (state.raw) {
-                        return state.raw;
-                    }
+            }
 
-                    return state.text;
+            const templateResult = $this.data('nstemplateresult');
+            config.templateResult = typeof window[templateResult] === 'function' ? window[templateResult] : state => {
+                if (state.raw) {
+                    return state.raw;
                 }
+
+                return state.text;
             }
 
             let modal = $(el).closest('.modal');
