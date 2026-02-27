@@ -2,12 +2,13 @@
 
 namespace NS\AceBundle\Form;
 
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\Routing\RouterInterface;
 
 class Select2Type extends AbstractType
@@ -26,21 +27,18 @@ class Select2Type extends AbstractType
 
     public function preSubmit(FormEvent $event): void
     {
-        $data   = $event->getData();
-        $form   = $event->getForm();
+        $data = $event->getData();
+        $form = $event->getForm();
         $config = $form->getConfig();
 
         if ($config->getOption('url') || $config->getOption('route')) {
-            $name   = $form->getName();
+            $name = $form->getName();
             $parent = $form->getParent();
 
             if ($parent && !in_array($data, $form->getConfig()->getOption('choices'), true)) {
                 $parent->add($name, __CLASS__, $this->getOptions($event));
 
-                $newForm = $parent->get($name);
-                $newData = $newForm->getData();
-
-                $newForm->submit($data);
+                $parent->get($name)?->submit($data);
             }
         }
     }

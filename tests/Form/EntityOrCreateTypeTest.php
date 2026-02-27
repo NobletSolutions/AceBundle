@@ -14,8 +14,7 @@ use Symfony\Component\Form\PreloadedExtension;
 
 class EntityOrCreateTypeTest extends BaseFormTestType
 {
-    /** @var EntityManagerInterface|MockObject */
-    private EntityManagerInterface $entityMgr;
+    private EntityManagerInterface|MockObject $entityMgr;
 
     public function testFormType(): void
     {

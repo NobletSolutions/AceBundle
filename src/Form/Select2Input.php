@@ -80,26 +80,35 @@ trait Select2Input
 
         foreach ($this->params as $param) {
             if (isset($options[$param]) && $options[$param]) {
-                $pname                             = implode('-', preg_split('/(?=[A-Z])/', $param, -1, PREG_SPLIT_NO_EMPTY));
+                $pname                             = strtolower(implode('-', preg_split('/(?=[A-Z])/', $param, -1, PREG_SPLIT_NO_EMPTY)));
                 $view->vars['attr']["data-$pname"] = is_array($options[$param]) ? json_encode($options[$param]) : $options[$param];
             }
         }
 
         if (isset($options['config']) && $options['config']) {
             foreach ($options['config'] as $key => $param) {
-                $pname                             = implode('-', preg_split('/(?=[A-Z])/', $key, -1, PREG_SPLIT_NO_EMPTY));
+                $pname                             = strtolower(implode('-', preg_split('/(?=[A-Z])/', $key, -1, PREG_SPLIT_NO_EMPTY)));
                 $view->vars['attr']["data-$pname"] = $param;
             }
         }
 
+        // Don't pre-populate the dropdown if we're loading results via ajax, but leave the existing value if it was added by the presetdata event
         if (isset($options['url']) && !$view->vars['value']) {
-            $view->vars['choices'] = [];//Don't pre-populate the dropdown if we're loading results via ajax, but leave the existing value if it was added by the presetdata event
+            $view->vars['choices'] = [];
         }
 
-        if (isset($options['language']) && !empty($options['language'])) {
+        if (!empty($options['language'])) {
             $view->vars['attr']['data-language-config'] = json_encode($options['language']);
         }
 
         $view->vars['attr']['class'] = isset($view->vars['attr']['class']) ? $view->vars['attr']['class'] . ' nsSelect2' : 'nsSelect2';
+        if (!isset($view->vars['attr']['style'])) {
+            $view->vars['attr']['style'] = 'width: 100%;';
+            return;
+        }
+
+        if (!str_contains($view->vars['attr']['style'], 'width')) {
+            $view->vars['attr']['style'] .= 'width: 100%;';
+        }
     }
 }
