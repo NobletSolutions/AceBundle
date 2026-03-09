@@ -397,3 +397,20 @@ span.button-label > span.label + .btn {
     border-left: 1px solid #404040;
 }
 
+@media (max-width: 1399px) {
+    .modal-xl {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1400px) {
+    .modal-xl {
+        width: 1400px;
+    }
+}
+
+@media (min-width: 1800px) {
+    .modal-xl {
+        width: 1600px;
+    }
+}
