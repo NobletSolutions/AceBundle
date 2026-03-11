@@ -30,34 +30,34 @@ class DatePickerType extends AbstractType
         'toggle-active', //false
         'z-index-offset',
 
-        //'assume-nearby-year', //false
-        //'before-show-day',
-        //'before-show-month',
-        //'before-show-year',
-        //'before-show-decade',
-        //'before-show-century',
-        //'calendar-weeks', //false
-        //'clear-btn', //false
-        //'container', //'body',
-        //'dates-disabled', //[]
-        //'days-of-week-disabled', //[]
-        //'days-of-week-highlighted', //[]
-        //'default-view-date', //today
-        //'disable-touch-keyboard', //false
-        //'enable-on-readonly', //true
-        //'force-parse', //true
-        //'immediate-updates', //false
-        //'inputs',
-        //'keep-empty-values', //false
-        //'keyboard-navigation', //true
-        //'language', //'en',
-        //'max-view-mode', //4 'centuries',
-        //'min-view-mode', //0 'days',
-        //'multidate', //false
-        //'multidate-separator', //',',
-        //'orientation', //'auto',
-        //'show-on-focus', //true
-        //'templates',
+        'assume-nearby-year', //false
+        'before-show-day',
+        'before-show-month',
+        'before-show-year',
+        'before-show-decade',
+        'before-show-century',
+        'calendar-weeks', //false
+        'clear-btn', //false
+        'container', //'body',
+        'dates-disabled', //[]
+        'days-of-week-disabled', //[]
+        'days-of-week-highlighted', //[]
+        'default-view-date', //today
+        'disable-touch-keyboard', //false
+        'enable-on-readonly', //true
+        'force-parse', //true
+        'immediate-updates', //false
+        'inputs',
+        'keep-empty-values', //false
+        'keyboard-navigation', //true
+        'language', //'en',
+        'max-view-mode', //4 'centuries',
+        'min-view-mode', //0 'days',
+        'multidate', //false
+        'multidate-separator', //',',
+        'orientation', //'auto',
+        'show-on-focus', //true
+        'templates',
     ];
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -87,7 +87,7 @@ class DatePickerType extends AbstractType
 
         foreach ($this->dataAttributes as $attribute) {
             if (isset($options[$attribute])) {
-                $view->vars['attr']['data-date-'.$attribute] = $attribute;
+                $view->vars['attr']['data-date-'.$attribute] = $options[$attribute];
             }
         }
     }
