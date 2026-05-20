@@ -3,6 +3,7 @@ VERSION 7  ALLOW FOR FIXED HEADERS
 ==================================
 
    Version 7.2 - Fix misc issues and provide legacy layout markup
+      20/05/2026 10:13  7.2.5  Fix date picker
       09/03/2026 13:33  7.2.4  Added XL Modal CSS
       27/02/2026 13:06  7.2.3  Updated Select2Type
       23/02/2026 13:21  7.2.2  Added info flash message and templated results
