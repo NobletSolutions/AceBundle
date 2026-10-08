@@ -57,8 +57,11 @@
 <a href="{%- if item.uri is not empty and (not item.current or options.currentAsLink) %}{{ item.uri }}{%else%}#{%endif%}"{{ macros.attributes(item.linkAttributes) }} {{ item.hasChildren?'class="dropdown-toggle"':'' }}>
     {% if item.getExtra('icon', false) %}
     <i class="menu-icon {{ item.getExtra('icon')}}"></i> 
-    {%endif %}
-
+    {% elseif item.getExtra('asset_icon', false) %}
+        <img src="{{ asset(item.getExtra('icon_asset')) }}" class="menu-icon" alt="{{ item.getExtra('asset_icon_alt', 'menu icon img') }}"/>
+    {% elseif item.getExtra('asset_url', false) %}
+        <img src="{{ item.getExtra('asset_url') }}" class="menu-icon" alt="{{ item.getExtra('asset_url_alt', 'menu icon img') }}"/>
+    {% endif %}
     <span class="menu-text" {%- if item.uri is empty or item.current or not options.currentAsLink %}{{ macros.attributes(item.labelAttributes) }}{%endif%}> {{block('label')}}</span>
 
     {% if item.hasChildren %}
