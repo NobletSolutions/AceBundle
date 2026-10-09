@@ -58,7 +58,7 @@
     {% if item.getExtra('icon', false) %}
     <i class="menu-icon {{ item.getExtra('icon')}}"></i> 
     {% elseif item.getExtra('asset_icon', false) %}
-        <img src="{{ asset(item.getExtra('icon_asset')) }}" class="menu-icon" alt="{{ item.getExtra('asset_icon_alt', 'menu icon img') }}"/>
+        <img src="{{ asset(item.getExtra('asset_icon')) }}" class="menu-icon" alt="{{ item.getExtra('asset_icon_alt', 'menu icon img') }}"/>
     {% elseif item.getExtra('asset_url', false) %}
         <img src="{{ item.getExtra('asset_url') }}" class="menu-icon" alt="{{ item.getExtra('asset_url_alt', 'menu icon img') }}"/>
     {% endif %}
