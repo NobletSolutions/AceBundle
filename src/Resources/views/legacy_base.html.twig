@@ -95,6 +95,7 @@
             <script src="{{ asset('bundles/nsace/components/jquery.tokeninput/dist/jquery.tokeninput.js') }}"></script>
             <script src="{{ asset('bundles/nsace/components/_mod/bootstrap-tag/bootstrap-tag.min.js') }}"></script>
             <script src="{{ asset('bundles/nsace/components/select2/dist/js/select2.full.js') }}"></script>
+            <script src="{{ asset('bundles/nsace/js/dependencies.js') }}"></script>
 
             <!-- ace scripts -->
             <script src="{{ asset('bundles/nsace/dist/js/ace-elements.min.js') }}"></script>
@@ -113,6 +114,12 @@
                     $('<link href="{{ asset('bundles/nsace/css/font-awesome.min.css') }}" rel="stylesheet" />').appendTo('head');
                     $('<link href="{{ asset('bundles/nsace/css/jquery-ui.css') }}" rel="stylesheet" />').appendTo('head');
                 }
+            </script>
+
+            <script type="module">
+                import Alert from "{{asset('bundles/nsace/js/alert.js')}}";
+
+                Alert.run();
             </script>
 
             <!-- inline scripts related to this page -->
