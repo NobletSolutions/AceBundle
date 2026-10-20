@@ -152,7 +152,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
         }
     });
 
-    $('input[type=file]:not([multiple])').each(function (i, el) {
+    $('input[type=file]:not([multiple]):not(.swal2-file)').each(function (i, el) {
         if (el.nsFieldActive !== true) {
             el.nsFieldActive = true;
             var $el          = $(el);
