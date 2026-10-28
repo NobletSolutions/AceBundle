@@ -3,6 +3,7 @@ VERSION 7  ALLOW FOR FIXED HEADERS
 ==================================
 
    Version 7.3 - Added the menu asset img for the knp menus
+      27/10/2026 22:19  7.3.4  Misc fancyConfirm improvements
       09/10/2026 10:20  7.3.1  Fix typo in asset icon
       08/10/2026 16:56  7.3.0  initial release
 
