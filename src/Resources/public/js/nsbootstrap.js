@@ -365,7 +365,7 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
         //if($(el).is(':visible')) // Why are we doing this? I can't imagine why we would want to restrict this to visible elements.
         //{
         if (el.nsFieldActive !== true) {
-            var msg = 'Are you sure you wish to continue?';
+            let msg = 'Are you sure you wish to continue?';
 
             if ($(el).data('confirm-message')) {
                 msg = $(el).data('confirm-message');
@@ -374,12 +374,20 @@ $(document).on('nsFormUpdate shown.bs.tab shown.bs.modal shown.bs.collapse sonat
             el.nsFieldActive = true;
 
             if ($(el).is('form')) {
-                $(el).submit(function () {
-                    return confirm(msg);
+                $(el).submit(async function (e) {
+                    e.preventDefault(); // Stop the form from submitting immediately
+                    const confirmed = await fancyConfirm(msg);
+                    if (confirmed) {
+                        el.submit(); // Use native DOM submit() to bypass this jQuery handler and avoid an infinite loop
+                    }
                 });
             } else {
-                $(el).click(function () {
-                    return confirm(msg);
+                $(el).click(async function (e) {
+                    e.preventDefault(); // Stop the form from submitting immediately
+                    const confirmed = await fancyConfirm(msg);
+                    if (confirmed && $(el).is('a') && el.href) {
+                        window.location.href = el.href;
+                    }
                 });
             }
         }
