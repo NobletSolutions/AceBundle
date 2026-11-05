@@ -1,6 +1,7 @@
-{% if bundleExists('LexikFormFilterBundle') %}
-{% extends '@LexikFormFilter/Form/form_div_layout.html.twig' %}
-{% endif %}
+{% extends bundleExists('SpiriitFormFilterBundle')
+    ? '@SpiriitFormFilter/Form/form_div_layout.html.twig'
+    : 'form_div_layout.html.twig'
+%}
 
 {% block form_row %}
     <div class="form-group">
