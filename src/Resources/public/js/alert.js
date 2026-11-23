@@ -82,5 +82,7 @@ export default {
                 },
             }).then(result => result.isConfirmed);
         };
+
+        loadDependencies();
     },
 };
